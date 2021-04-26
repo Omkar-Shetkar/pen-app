@@ -1,10 +1,14 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
+import AppDateTimePicker from "./app/components/AppDateTimePicker";
+import Sample from "./app/components/Sample";
+import ScribeSearchScreen from "./app/screens/ScribeSearchScreen";
 import LoginScreen from "./app/screens/LoginScreen";
 
 export default function App() {
-  return <LoginScreen></LoginScreen>;
+  // return <AppDateTimePicker></AppDateTimePicker>;
+  return <ScribeSearchScreen></ScribeSearchScreen>;
+  // return <LoginScreen></LoginScreen>;
 }
 
 const styles = StyleSheet.create({
