@@ -1,42 +1,81 @@
 import React, { useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
 
 import Screen from "../components/Screen";
 import AppForm from "../components/forms/AppForm";
 import AppFormField from "../components/forms/AppFormField";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
 import SubmitButton from "../components/forms/SubmitButton";
-import AppDateTimePicker from "../components/AppDateTimePicker";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import moment from "moment";
 
 function ScribeSearchScreen(props) {
   const [error, setError] = useState();
-  const [from, setFrom] = useState();
-  const [to, setTo] = useState();
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [date, setDate] = useState();
+  const [time, setTime] = useState();
+  const [mode, setMode] = useState("date");
 
-  const selectFrom = () => {
-    setShowDatePicker(true);
-    console.log("showDatePikcer", showDatePicker);
+  const onDateSelection = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowDatePicker(Platform.OS === "ios");
+    setDate(currentDate);
+  };
+
+  const onTimeSelection = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowTimePicker(Platform.OS === "ios");
+    setTime(currentDate);
   };
 
   return (
     <Screen style={styles.container}>
       <AppForm>
         <AppErrorMessage error={error} visible={error} />
-        {showDatePicker && <AppDateTimePicker />}
-        <TouchableOpacity onPress={selectFrom}>
-          <AppFormField
-            icon="timetable"
-            name="from"
-            placeholder="From"
-            editable={false}
+        {showDatePicker && (
+          <DateTimePicker
+            value={new Date()}
+            mode={"date"}
+            is24Hour={false}
+            display="default"
+            onChange={onDateSelection}
           />
-        </TouchableOpacity>
-        <AppFormField icon="timetable" name="to" placeholder="To" />
+        )}
+        {showTimePicker && (
+          <DateTimePicker
+            value={new Date()}
+            mode={"time"}
+            is24Hour={false}
+            display="default"
+            onChange={onTimeSelection}
+          />
+        )}
+        <Pressable onPress={() => setShowDatePicker(true)}>
+          <AppFormField
+            icon="calendar"
+            name="examDate"
+            placeholder="Exam Date"
+            editable={false}
+            value={date ? date.toDateString() : false}
+          />
+        </Pressable>
+
+        <Pressable onPress={() => setShowTimePicker(true)}>
+          <AppFormField
+            icon="clock-outline"
+            name="examTime"
+            editable={false}
+            placeholder="Exam Time"
+            value={time ? moment(time).format("LT") : false}
+          />
+        </Pressable>
+
+        <AppFormField icon="av-timer" name="duration" placeholder="Duration" />
+
         <AppFormField
           autoCorrect={false}
-          // FIXME: Use proper icon
-          icon="mail"
+          icon="alpha"
           name="language"
           placeholder="Language"
         />
