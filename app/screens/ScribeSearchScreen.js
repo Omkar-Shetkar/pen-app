@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 
 import Screen from "../components/Screen";
 import AppForm from "../components/forms/AppForm";
@@ -8,6 +8,7 @@ import AppErrorMessage from "../components/forms/AppErrorMessage";
 import SubmitButton from "../components/forms/SubmitButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
+import AppFormDurationField from "../components/forms/AppFormDurationField";
 
 function ScribeSearchScreen(props) {
   const [error, setError] = useState();
@@ -71,7 +72,11 @@ function ScribeSearchScreen(props) {
           />
         </Pressable>
 
-        <AppFormField icon="av-timer" name="duration" placeholder="Duration" />
+        <AppFormDurationField
+          icon="av-timer"
+          name="duration"
+          placeholder="Duration"
+        />
 
         <AppFormField
           autoCorrect={false}
