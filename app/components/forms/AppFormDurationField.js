@@ -1,9 +1,9 @@
 import { useFormikContext } from "formik";
 import React, { useState } from "react";
-import { Picker, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker";
 
-import AppTextInput from "../AppTextInput";
 import AppErrorMessage from "./AppErrorMessage";
 import defaultStyles from "../../config/styles";
 
