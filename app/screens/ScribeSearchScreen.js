@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 
 import Screen from "../components/Screen";
 import AppForm from "../components/forms/AppForm";
@@ -8,7 +8,7 @@ import AppErrorMessage from "../components/forms/AppErrorMessage";
 import SubmitButton from "../components/forms/SubmitButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
-import AppFormDurationField from "../components/forms/AppFormDurationField";
+import AppFormPickerField from "../components/forms/AppFormPickerField";
 
 function ScribeSearchScreen(props) {
   const [error, setError] = useState();
@@ -29,6 +29,16 @@ function ScribeSearchScreen(props) {
     setShowTimePicker(Platform.OS === "ios");
     setTime(currentDate);
   };
+
+  const hours = [];
+  for (let i = 0; i <= 12; i++) {
+    hours.push({ label: i, value: i });
+  }
+
+  const minutes = [];
+  for (let i = 0; i <= 59; i++) {
+    minutes.push({ label: i, value: i });
+  }
 
   return (
     <Screen style={styles.container}>
@@ -72,11 +82,26 @@ function ScribeSearchScreen(props) {
           />
         </Pressable>
 
-        <AppFormDurationField
-          icon="av-timer"
-          name="duration"
-          placeholder="Duration"
-        />
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <AppFormPickerField
+            icon="av-timer"
+            name="durationHours"
+            items={hours}
+            placeholder={{ label: "Hours", value: "hours" }}
+          />
+
+          <AppFormPickerField
+            icon="av-timer"
+            name="durationMinutes"
+            items={minutes}
+            placeholder={{ label: "Minutes", value: "minutes" }}
+          />
+        </View>
 
         <AppFormField
           autoCorrect={false}

@@ -7,20 +7,27 @@ import { Picker } from "@react-native-picker/picker";
 import AppErrorMessage from "./AppErrorMessage";
 import defaultStyles from "../../config/styles";
 
-function AppFormDurationField({ name, icon, width, ...otherProps }) {
+function AppFormPickerField({
+  name,
+  items,
+  placeholder,
+  icon,
+  width,
+  ...otherProps
+}) {
   const { setFieldTouched, handleChange, errors, touched } = useFormikContext();
 
-  const [selectedHours, setSelectedHours] = useState("hours");
+  const [selectedValue, setSelectedValue] = useState(placeholder.value);
   const [selectedMinutes, setSelectedMinutes] = useState("minutes");
 
-  const hours = [];
+  const pickerItems = [];
   const minutes = [];
 
-  for (let hour = 0; hour <= 12; hour++) {
-    hours.push(
+  for (let item of items) {
+    pickerItems.push(
       <Picker.Item
-        label={hour.toString()}
-        value={hour.toString()}
+        label={item.label.toString()}
+        value={item.value.toString()}
       ></Picker.Item>
     );
   }
@@ -35,7 +42,7 @@ function AppFormDurationField({ name, icon, width, ...otherProps }) {
   }
 
   const handleHoursSelection = (itemValue, itemIndex) => {
-    setSelectedHours(itemValue);
+    setSelectedValue(itemValue);
     handleChange(name);
   };
 
@@ -58,21 +65,12 @@ function AppFormDurationField({ name, icon, width, ...otherProps }) {
         <Picker
           mode="dropdown"
           onBlur={() => setFieldTouched(name)}
-          selectedValue={selectedHours}
+          selectedValue={selectedValue}
           style={styles.duration}
           onValueChange={handleHoursSelection}
         >
-          <Picker.Item label="Hours" value="hours" />
-          {hours}
-        </Picker>
-        <Picker
-          mode="dropdown"
-          selectedValue={selectedMinutes}
-          style={styles.duration}
-          onValueChange={handleMinutesSelection}
-        >
-          <Picker.Item label="Minutes" value="minutes" />
-          {minutes}
+          <Picker.Item label={placeholder.label} value={placeholder.value} />
+          {pickerItems}
         </Picker>
       </View>
 
@@ -88,7 +86,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 15,
     marginVertical: 10,
-    alignItems: "center",
+    justifyContent: "center",
   },
   icon: {
     marginRight: 10,
@@ -99,4 +97,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppFormDurationField;
+export default AppFormPickerField;
