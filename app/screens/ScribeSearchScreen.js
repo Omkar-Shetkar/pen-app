@@ -16,7 +16,6 @@ function ScribeSearchScreen(props) {
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [date, setDate] = useState();
   const [time, setTime] = useState();
-  const [mode, setMode] = useState("date");
 
   const onDateSelection = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -32,13 +31,19 @@ function ScribeSearchScreen(props) {
 
   const hours = [];
   for (let i = 0; i <= 12; i++) {
-    hours.push({ label: i, value: i });
+    hours.push({ label: i.toString(), value: i.toString() });
   }
 
   const minutes = [];
   for (let i = 0; i <= 59; i++) {
-    minutes.push({ label: i, value: i });
+    minutes.push({ label: i.toString(), value: i.toString() });
   }
+
+  const languages = [
+    { label: "English", value: "english" },
+    { label: "Hindi", value: "hindi" },
+    { label: "Kannada", value: "kannada" },
+  ];
 
   return (
     <Screen style={styles.container}>
@@ -88,6 +93,7 @@ function ScribeSearchScreen(props) {
             name="durationHours"
             items={hours}
             placeholder={{ label: "Hours", value: "hours" }}
+            suffix="hr"
           />
 
           <AppFormPickerField
@@ -95,15 +101,17 @@ function ScribeSearchScreen(props) {
             name="durationMinutes"
             items={minutes}
             placeholder={{ label: "Minutes", value: "minutes" }}
+            suffix="min"
           />
         </View>
 
-        <AppFormField
-          autoCorrect={false}
+        <AppFormPickerField
           icon="alpha"
           name="language"
-          placeholder="Language"
+          items={languages}
+          placeholder={{ label: "Language", value: "language" }}
         />
+
         <AppFormField
           autoCorrect={false}
           icon="map-marker-outline"
@@ -120,7 +128,10 @@ const styles = StyleSheet.create({
   container: {},
   durations: {
     flexDirection: "row",
+    width: "100%",
+    alignItems: "center",
     justifyContent: "center",
+    paddingHorizontal: 15,
   },
 });
 

@@ -2,15 +2,17 @@ import { useFormikContext } from "formik";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
+import RNPickerSelect from "react-native-picker-select";
 
 import AppErrorMessage from "./AppErrorMessage";
 import defaultStyles from "../../config/styles";
+import AppText from "../AppText";
 
 function AppFormPickerField({
   name,
   items,
   placeholder,
+  suffix,
   icon,
   width,
   ...otherProps
@@ -19,22 +21,16 @@ function AppFormPickerField({
 
   const [selectedValue, setSelectedValue] = useState(placeholder.value);
 
-  const pickerItems = [];
-
-  for (let item of items) {
-    pickerItems.push(
-      <Picker.Item
-        label={item.label.toString()}
-        value={item.value.toString()}
-      ></Picker.Item>
-    );
-  }
-
   const handleValueSelection = (itemValue, itemIndex) => {
     setSelectedValue(itemValue);
-    handleChange(name);
   };
 
+  console.log(
+    "selected value",
+    selectedValue,
+    " placeholder ",
+    placeholder.value
+  );
   return (
     <>
       <View style={styles.container}>
@@ -46,16 +42,19 @@ function AppFormPickerField({
             style={styles.icon}
           />
         )}
-        <Picker
-          mode="dropdown"
-          onBlur={() => setFieldTouched(name)}
-          selectedValue={selectedValue}
-          style={styles.duration}
-          onValueChange={handleValueSelection}
-        >
-          <Picker.Item label={placeholder.label} value={placeholder.value} />
-          {pickerItems}
-        </Picker>
+        <View style={styles.duration}>
+          <RNPickerSelect
+            placeholder={placeholder}
+            items={items}
+            onValueChange={(value) => {
+              setSelectedValue(value);
+            }}
+            style={([{ width: 500 }], { ...pickerSelectStyles })}
+            value={selectedValue}
+          />
+        </View>
+
+        {selectedValue !== placeholder.value && <AppText>{suffix}</AppText>}
       </View>
 
       <AppErrorMessage error={errors[name]} visible={touched[name]} />
@@ -65,19 +64,40 @@ function AppFormPickerField({
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: "center",
     backgroundColor: defaultStyles.colors.light,
     borderRadius: 25,
-    padding: 15,
     flexDirection: "row",
-    marginVertical: 10,
+    width: "50%",
+    margin: 10,
+  },
+  duration: {
+    flex: 0.5,
   },
   icon: {
     marginRight: 10,
   },
-  duration: {
-    height: 25,
-    width: 120,
+});
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 4,
+    color: "black",
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 0.5,
+    borderColor: "purple",
+    borderRadius: 8,
+    color: "black",
+    paddingRight: 30, // to ensure the text is never behind the icon
   },
 });
-
 export default AppFormPickerField;
