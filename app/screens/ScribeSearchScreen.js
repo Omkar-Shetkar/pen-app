@@ -45,6 +45,11 @@ function ScribeSearchScreen(props) {
     { label: "Kannada", value: "kannada" },
   ];
 
+  const exams = [
+    { label: "SSLC", value: "sslc" },
+    { label: "PUC", value: "puc" },
+    { label: "BSc", value: "bsc" },
+  ];
   return (
     <Screen style={styles.container}>
       <AppForm>
@@ -110,6 +115,13 @@ function ScribeSearchScreen(props) {
           name="language"
           items={languages}
           placeholder={{ label: "Language", value: "language" }}
+        />
+
+        <AppFormPickerField
+          icon="tournament"
+          name="language"
+          items={exams}
+          placeholder={{ label: "Exam", value: "exam" }}
         />
 
         <AppFormField

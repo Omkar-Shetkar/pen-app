@@ -49,7 +49,7 @@ function AppFormPickerField({
             onValueChange={(value) => {
               setSelectedValue(value);
             }}
-            style={([{ width: 500 }], { ...pickerSelectStyles })}
+            style={{ ...pickerSelectStyles }}
             value={selectedValue}
           />
         </View>
@@ -69,10 +69,11 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     flexDirection: "row",
     width: "50%",
+    height: 50,
     margin: 10,
   },
   duration: {
-    flex: 0.5,
+    flex: 0.9,
   },
   icon: {
     marginRight: 10,
