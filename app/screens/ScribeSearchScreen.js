@@ -82,12 +82,7 @@ function ScribeSearchScreen(props) {
           />
         </Pressable>
 
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
+        <View style={styles.durations}>
           <AppFormPickerField
             icon="av-timer"
             name="durationHours"
@@ -123,6 +118,10 @@ function ScribeSearchScreen(props) {
 
 const styles = StyleSheet.create({
   container: {},
+  durations: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
 });
 
 export default ScribeSearchScreen;

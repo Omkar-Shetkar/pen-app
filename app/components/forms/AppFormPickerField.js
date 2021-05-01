@@ -18,10 +18,8 @@ function AppFormPickerField({
   const { setFieldTouched, handleChange, errors, touched } = useFormikContext();
 
   const [selectedValue, setSelectedValue] = useState(placeholder.value);
-  const [selectedMinutes, setSelectedMinutes] = useState("minutes");
 
   const pickerItems = [];
-  const minutes = [];
 
   for (let item of items) {
     pickerItems.push(
@@ -32,22 +30,8 @@ function AppFormPickerField({
     );
   }
 
-  for (let minute = 0; minute <= 59; minute++) {
-    minutes.push(
-      <Picker.Item
-        label={minute.toString()}
-        value={minute.toString()}
-      ></Picker.Item>
-    );
-  }
-
-  const handleHoursSelection = (itemValue, itemIndex) => {
+  const handleValueSelection = (itemValue, itemIndex) => {
     setSelectedValue(itemValue);
-    handleChange(name);
-  };
-
-  const handleMinutesSelection = (itemValue, itemIndex) => {
-    setSelectedMinutes(itemValue);
     handleChange(name);
   };
 
@@ -67,7 +51,7 @@ function AppFormPickerField({
           onBlur={() => setFieldTouched(name)}
           selectedValue={selectedValue}
           style={styles.duration}
-          onValueChange={handleHoursSelection}
+          onValueChange={handleValueSelection}
         >
           <Picker.Item label={placeholder.label} value={placeholder.value} />
           {pickerItems}
@@ -83,17 +67,16 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: defaultStyles.colors.light,
     borderRadius: 25,
-    flexDirection: "row",
     padding: 15,
+    flexDirection: "row",
     marginVertical: 10,
-    justifyContent: "center",
   },
   icon: {
     marginRight: 10,
   },
   duration: {
     height: 25,
-    width: 150,
+    width: 120,
   },
 });
 
