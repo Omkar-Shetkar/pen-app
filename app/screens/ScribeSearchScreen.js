@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
+import * as Yup from "yup";
+import moment from "moment";
 
 import Screen from "../components/Screen";
 import AppForm from "../components/forms/AppForm";
@@ -7,21 +9,22 @@ import AppFormField from "../components/forms/AppFormField";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
 import SubmitButton from "../components/forms/SubmitButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import moment from "moment";
 import AppFormPickerField from "../components/forms/AppFormPickerField";
+import AppFormDateTimePicker from "../components/forms/AppFormDateTimePicker";
+
+const validationSchema = Yup.object().shape({
+  examDate: Yup.date().required().label("examDate"),
+  examDate: Yup.date().required().label("examDate"),
+  durationHours: Yup.number().required().min(0).label("durationHours"),
+  durationMinutes: Yup.number().required().min(0).label("durationMinutes"),
+  language: Yup.string().required().label("language"),
+  exam: Yup.string().required().label("exam"),
+});
 
 function ScribeSearchScreen(props) {
   const [error, setError] = useState();
-  const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
-  const [date, setDate] = useState();
   const [time, setTime] = useState();
-
-  const onDateSelection = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShowDatePicker(Platform.OS === "ios");
-    setDate(currentDate);
-  };
 
   const onTimeSelection = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -49,20 +52,25 @@ function ScribeSearchScreen(props) {
     { label: "SSLC", value: "sslc" },
     { label: "PUC", value: "puc" },
     { label: "BSc", value: "bsc" },
+    { label: "Others", value: "others" },
   ];
+
   return (
     <Screen style={styles.container}>
-      <AppForm>
+      <AppForm
+        initialValues={{
+          examDate: "",
+          examTime: "",
+          durationHours: "",
+          durationMinutes: "",
+          language: "",
+          exam: "",
+        }}
+        onSubmit={(values) => console.log(values)}
+        validationSchema={validationSchema}
+      >
         <AppErrorMessage error={error} visible={error} />
-        {showDatePicker && (
-          <DateTimePicker
-            value={new Date()}
-            mode={"date"}
-            is24Hour={false}
-            display="default"
-            onChange={onDateSelection}
-          />
-        )}
+
         {showTimePicker && (
           <DateTimePicker
             value={new Date()}
@@ -72,15 +80,13 @@ function ScribeSearchScreen(props) {
             onChange={onTimeSelection}
           />
         )}
-        <Pressable onPress={() => setShowDatePicker(true)}>
-          <AppFormField
-            icon="calendar"
-            name="examDate"
-            placeholder="Exam Date"
-            editable={false}
-            value={date ? date.toDateString() : false}
-          />
-        </Pressable>
+
+        <AppFormDateTimePicker
+          icon="calendar"
+          name="examDate"
+          placeholder="Exam Date"
+          editable={false}
+        />
 
         <Pressable onPress={() => setShowTimePicker(true)}>
           <AppFormField
@@ -119,9 +125,17 @@ function ScribeSearchScreen(props) {
 
         <AppFormPickerField
           icon="tournament"
-          name="language"
+          name="exam"
           items={exams}
           placeholder={{ label: "Exam", value: "exam" }}
+        />
+
+        <AppFormField
+          autoCorrect={false}
+          icon="tournament"
+          name="otherExamName"
+          placeholder="Exam Name"
+          // visible={}
         />
 
         <AppFormField

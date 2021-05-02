@@ -17,20 +17,23 @@ function AppFormPickerField({
   width,
   ...otherProps
 }) {
-  const { setFieldTouched, handleChange, errors, touched } = useFormikContext();
+  const {
+    values,
+    setFieldTouched,
+    handleChange,
+    errors,
+    touched,
+  } = useFormikContext();
 
-  const [selectedValue, setSelectedValue] = useState(placeholder.value);
+  // const [selectedValue, setSelectedValue] = useState(placeholder.value);
 
-  const handleValueSelection = (itemValue, itemIndex) => {
-    setSelectedValue(itemValue);
-  };
+  const formikContext = useFormikContext();
+  console.log("formik context: ", formikContext.values);
 
-  console.log(
-    "selected value",
-    selectedValue,
-    " placeholder ",
-    placeholder.value
-  );
+  // const handleValueSelection = (itemValue, itemIndex) => {
+  //   setSelectedValue(itemValue);
+  // };
+
   return (
     <>
       <View style={styles.container}>
@@ -46,15 +49,17 @@ function AppFormPickerField({
           <RNPickerSelect
             placeholder={placeholder}
             items={items}
-            onValueChange={(value) => {
-              setSelectedValue(value);
-            }}
+            onValueChange={handleChange(name)}
             style={{ ...pickerSelectStyles }}
-            value={selectedValue}
+            // value={values.}
           />
         </View>
 
-        {selectedValue !== placeholder.value && <AppText>{suffix}</AppText>}
+        {
+          /* selectedValue !== placeholder.value && */ <AppText>
+            {suffix}
+          </AppText>
+        }
       </View>
 
       <AppErrorMessage error={errors[name]} visible={touched[name]} />
