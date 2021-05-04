@@ -3,11 +3,12 @@ import { View, StyleSheet, Pressable } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useFormikContext } from "formik";
 import { useState } from "react";
+import moment from "moment";
 
 import AppFormField from "./AppFormField";
 import defaultStyles from "../../config/styles";
 
-function AppFormDateTimePicker({ name, width, ...otherProps }) {
+function AppFormDateTimePicker({ name, width, mode, ...otherProps }) {
   const {
     setFieldTouched,
     setFieldValue,
@@ -17,24 +18,27 @@ function AppFormDateTimePicker({ name, width, ...otherProps }) {
     touched,
   } = useFormikContext();
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [date, setDate] = useState();
 
   const onDateSelection = (event, selectedDate) => {
-    console.log("selectedDate", selectedDate);
-    const currentDate = selectedDate || date;
     setShowDatePicker(Platform.OS === "ios");
-    setDate(currentDate);
-    setFieldValue(name, currentDate);
-    console.log("values[name]**********", values[name]);
+    setFieldValue(name, selectedDate);
   };
 
+  const format = (mode) => {
+    switch (mode) {
+      case "date":
+        return "MMMM Do YYYY";
+      case "time":
+        return "LT";
+    }
+  };
   return (
     <View style={styles.container}>
       {showDatePicker && (
         <DateTimePicker
           name="dateTimePicker"
           value={new Date()}
-          mode={"date"}
+          mode={mode}
           is24Hour={false}
           display="default"
           onChange={onDateSelection}
@@ -45,10 +49,12 @@ function AppFormDateTimePicker({ name, width, ...otherProps }) {
           icon="calendar"
           name="examDate"
           name="examDateTime"
-          placeholder="Exam Date"
           editable={false}
           color={defaultStyles.colors.medium}
-          value={values[name] ? values[name].toDateString() : false}
+          {...otherProps}
+          value={
+            values[name] ? moment(values[name]).format(format(mode)) : false
+          }
         />
       </Pressable>
     </View>

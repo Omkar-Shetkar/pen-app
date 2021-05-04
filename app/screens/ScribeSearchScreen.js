@@ -23,8 +23,6 @@ const validationSchema = Yup.object().shape({
 
 function ScribeSearchScreen(props) {
   const [error, setError] = useState();
-  const [showTimePicker, setShowTimePicker] = useState(false);
-  const [time, setTime] = useState();
 
   const onTimeSelection = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -71,32 +69,21 @@ function ScribeSearchScreen(props) {
       >
         <AppErrorMessage error={error} visible={error} />
 
-        {showTimePicker && (
-          <DateTimePicker
-            value={new Date()}
-            mode={"time"}
-            is24Hour={false}
-            display="default"
-            onChange={onTimeSelection}
-          />
-        )}
-
         <AppFormDateTimePicker
           icon="calendar"
           name="examDate"
+          mode="date"
           placeholder="Exam Date"
           editable={false}
         />
 
-        <Pressable onPress={() => setShowTimePicker(true)}>
-          <AppFormField
-            icon="clock-outline"
-            name="examTime"
-            editable={false}
-            placeholder="Exam Time"
-            value={time ? moment(time).format("LT") : false}
-          />
-        </Pressable>
+        <AppFormDateTimePicker
+          icon="calendar"
+          name="examTime"
+          mode="time"
+          placeholder="Exam Time"
+          editable={false}
+        />
 
         <View style={styles.durations}>
           <AppFormPickerField
