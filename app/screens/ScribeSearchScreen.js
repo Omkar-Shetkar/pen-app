@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import * as Yup from "yup";
-import moment from "moment";
 
 import Screen from "../components/Screen";
 import AppForm from "../components/forms/AppForm";
 import AppFormField from "../components/forms/AppFormField";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
 import SubmitButton from "../components/forms/SubmitButton";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import AppFormPickerField from "../components/forms/AppFormPickerField";
 import AppFormDateTimePicker from "../components/forms/AppFormDateTimePicker";
 
@@ -90,7 +88,10 @@ function ScribeSearchScreen(props) {
             icon="av-timer"
             name="durationHours"
             items={hours}
-            placeholder={{ label: "Hours", value: "hours" }}
+            placeholder={{
+              label: "Hours",
+              value: "hours",
+            }}
             suffix="hr"
           />
 
@@ -98,7 +99,10 @@ function ScribeSearchScreen(props) {
             icon="av-timer"
             name="durationMinutes"
             items={minutes}
-            placeholder={{ label: "Minutes", value: "minutes" }}
+            placeholder={{
+              label: "Minutes",
+              value: "minutes",
+            }}
             suffix="min"
           />
         </View>
@@ -107,14 +111,20 @@ function ScribeSearchScreen(props) {
           icon="alpha"
           name="language"
           items={languages}
-          placeholder={{ label: "Language", value: "language" }}
+          placeholder={{
+            label: "Language",
+            value: "language",
+          }}
         />
 
         <AppFormPickerField
           icon="tournament"
           name="exam"
           items={exams}
-          placeholder={{ label: "Exam", value: "exam" }}
+          placeholder={{
+            label: "Exam",
+            value: "exam",
+          }}
         />
 
         <AppFormField

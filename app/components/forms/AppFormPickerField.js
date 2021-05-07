@@ -7,6 +7,7 @@ import RNPickerSelect from "react-native-picker-select";
 import AppErrorMessage from "./AppErrorMessage";
 import defaultStyles from "../../config/styles";
 import AppText from "../AppText";
+import colors from "../../config/colors";
 
 function AppFormPickerField({ name, items, placeholder, suffix, icon, width }) {
   const { values, handleChange, errors, touched } = useFormikContext();
@@ -24,8 +25,8 @@ function AppFormPickerField({ name, items, placeholder, suffix, icon, width }) {
         )}
         <View style={styles.duration}>
           <RNPickerSelect
-            placeholder={placeholder}
-            items={items}
+            placeholder={{ ...placeholder, color: colors.secondary }}
+            items={items.map((item) => ({ ...item, color: colors.black }))}
             onValueChange={handleChange(name)}
             style={{ ...pickerSelectStyles }}
           />
