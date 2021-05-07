@@ -8,32 +8,9 @@ import AppErrorMessage from "./AppErrorMessage";
 import defaultStyles from "../../config/styles";
 import AppText from "../AppText";
 
-function AppFormPickerField({
-  name,
-  items,
-  placeholder,
-  suffix,
-  icon,
-  width,
-  ...otherProps
-}) {
-  const {
-    values,
-    setFieldTouched,
-    handleChange,
-    errors,
-    touched,
-  } = useFormikContext();
-
-  // const [selectedValue, setSelectedValue] = useState(placeholder.value);
-
-  const formikContext = useFormikContext();
-  console.log("formik context: ", formikContext.values);
-
-  // const handleValueSelection = (itemValue, itemIndex) => {
-  //   setSelectedValue(itemValue);
-  // };
-
+function AppFormPickerField({ name, items, placeholder, suffix, icon, width }) {
+  const { values, handleChange, errors, touched } = useFormikContext();
+  console.log("formik contex values: ", values);
   return (
     <>
       <View style={styles.container}>
@@ -55,11 +32,7 @@ function AppFormPickerField({
           />
         </View>
 
-        {
-          /* selectedValue !== placeholder.value && */ <AppText>
-            {suffix}
-          </AppText>
-        }
+        <AppText>{values[name] && suffix}</AppText>
       </View>
 
       <AppErrorMessage error={errors[name]} visible={touched[name]} />
