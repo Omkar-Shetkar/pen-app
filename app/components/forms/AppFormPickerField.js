@@ -28,11 +28,12 @@ function AppFormPickerField({ name, items, placeholder, suffix, icon, width }) {
             items={items}
             onValueChange={handleChange(name)}
             style={{ ...pickerSelectStyles }}
-            // value={values.}
           />
         </View>
 
-        <AppText>{values[name] && suffix}</AppText>
+        <AppText>
+          {values[name] && values[name] !== placeholder.value && suffix}
+        </AppText>
       </View>
 
       <AppErrorMessage error={errors[name]} visible={touched[name]} />
