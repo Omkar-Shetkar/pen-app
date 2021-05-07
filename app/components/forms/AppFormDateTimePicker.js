@@ -9,19 +9,16 @@ import AppFormField from "./AppFormField";
 import defaultStyles from "../../config/styles";
 
 function AppFormDateTimePicker({ name, width, mode, ...otherProps }) {
-  const {
-    setFieldTouched,
-    setFieldValue,
-    handleChange,
-    values,
-    errors,
-    touched,
-  } = useFormikContext();
+  const { setFieldValue, values, errors, touched } = useFormikContext();
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [dateTime, setDateTime] = useState(new Date());
 
   const onDateSelection = (event, selectedDate) => {
     setShowDatePicker(Platform.OS === "ios");
-    setFieldValue(name, selectedDate);
+    if (selectedDate) {
+      setFieldValue(name, selectedDate);
+      setDateTime(selectedDate);
+    }
   };
 
   const format = (mode) => {
@@ -32,12 +29,13 @@ function AppFormDateTimePicker({ name, width, mode, ...otherProps }) {
         return "LT";
     }
   };
+
   return (
     <View style={styles.container}>
       {showDatePicker && (
         <DateTimePicker
           name="dateTimePicker"
-          value={new Date()}
+          value={dateTime ? dateTime : new Date()}
           mode={mode}
           is24Hour={false}
           display="default"
@@ -52,9 +50,7 @@ function AppFormDateTimePicker({ name, width, mode, ...otherProps }) {
           editable={false}
           color={defaultStyles.colors.medium}
           {...otherProps}
-          value={
-            values[name] ? moment(values[name]).format(format(mode)) : false
-          }
+          value={values[name] ? moment(values[name]).format(format(mode)) : ""}
         />
       </Pressable>
     </View>
