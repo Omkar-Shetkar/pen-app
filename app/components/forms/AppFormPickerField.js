@@ -8,6 +8,7 @@ import AppErrorMessage from "./AppErrorMessage";
 import defaultStyles from "../../config/styles";
 import AppText from "../AppText";
 import colors from "../../config/colors";
+import AppTextInput from "../AppTextInput";
 
 function AppFormPickerField({ name, items, placeholder, suffix, icon, width }) {
   const { values, handleChange, errors, touched } = useFormikContext();
@@ -23,7 +24,7 @@ function AppFormPickerField({ name, items, placeholder, suffix, icon, width }) {
             style={styles.icon}
           />
         )}
-        <View style={styles.duration}>
+        <View style={styles.picker}>
           <RNPickerSelect
             placeholder={{ ...placeholder, color: colors.secondary }}
             items={items.map((item) => ({ ...item, color: colors.black }))}
@@ -31,10 +32,18 @@ function AppFormPickerField({ name, items, placeholder, suffix, icon, width }) {
             style={{ ...pickerSelectStyles }}
           />
         </View>
-
         <AppText>
           {values[name] && values[name] !== placeholder.value && suffix}
         </AppText>
+        {values[name] === "others" && (
+          <View style={styles.textInput}>
+            <AppTextInput
+              onChangeText={handleChange(name)}
+              placeholder={"Enter " + placeholder.label}
+              autoFocus
+            />
+          </View>
+        )}
       </View>
 
       <AppErrorMessage error={errors[name]} visible={touched[name]} />
@@ -45,15 +54,19 @@ function AppFormPickerField({ name, items, placeholder, suffix, icon, width }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
+    justifyContent: "flex-start",
     backgroundColor: defaultStyles.colors.light,
     borderRadius: 25,
     flexDirection: "row",
-    width: "50%",
-    height: 50,
-    margin: 10,
+    flex: 1,
+    marginVertical: 10,
+    paddingLeft: 10,
   },
-  duration: {
-    flex: 0.9,
+  picker: {
+    flex: 0.7,
+  },
+  textInput: {
+    flex: 1,
   },
   icon: {
     marginRight: 10,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 
 import Screen from "../components/Screen";
@@ -53,96 +53,90 @@ function ScribeSearchScreen(props) {
 
   return (
     <Screen style={styles.container}>
-      <AppForm
-        initialValues={{
-          examDate: "",
-          examTime: "",
-          durationHours: "",
-          durationMinutes: "",
-          language: "",
-          exam: "",
-        }}
-        onSubmit={(values) => console.log(values)}
-        validationSchema={validationSchema}
-      >
-        <AppErrorMessage error={error} visible={error} />
+      <ScrollView>
+        <AppForm
+          initialValues={{
+            examDate: "",
+            examTime: "",
+            durationHours: "",
+            durationMinutes: "",
+            language: "",
+            exam: "",
+          }}
+          onSubmit={(values) => console.log(values)}
+          validationSchema={validationSchema}
+        >
+          <AppErrorMessage error={error} visible={error} />
 
-        <AppFormDateTimePicker
-          icon="calendar"
-          name="examDate"
-          mode="date"
-          placeholder="Exam Date"
-          editable={false}
-        />
+          <AppFormDateTimePicker
+            icon="calendar"
+            name="examDate"
+            mode="date"
+            placeholder="Exam Date"
+            editable={false}
+          />
 
-        <AppFormDateTimePicker
-          icon="calendar"
-          name="examTime"
-          mode="time"
-          placeholder="Exam Time"
-          editable={false}
-        />
+          <AppFormDateTimePicker
+            icon="calendar"
+            name="examTime"
+            mode="time"
+            placeholder="Exam Time"
+            editable={false}
+          />
 
-        <View style={styles.durations}>
+          <View style={styles.durations}>
+            <AppFormPickerField
+              icon="av-timer"
+              name="durationHours"
+              items={hours}
+              placeholder={{
+                label: "Hours",
+                value: "hours",
+              }}
+              suffix="hr"
+            />
+
+            <AppFormPickerField
+              icon="av-timer"
+              name="durationMinutes"
+              items={minutes}
+              placeholder={{
+                label: "Minutes",
+                value: "minutes",
+              }}
+              suffix="min"
+            />
+          </View>
+
           <AppFormPickerField
-            icon="av-timer"
-            name="durationHours"
-            items={hours}
+            icon="alpha"
+            name="language"
+            items={languages}
             placeholder={{
-              label: "Hours",
-              value: "hours",
+              label: "Language",
+              value: "language",
             }}
-            suffix="hr"
           />
 
           <AppFormPickerField
-            icon="av-timer"
-            name="durationMinutes"
-            items={minutes}
+            icon="tournament"
+            name="exam"
+            items={exams}
             placeholder={{
-              label: "Minutes",
-              value: "minutes",
+              label: "Exam",
+              value: "exam",
             }}
-            suffix="min"
           />
-        </View>
 
-        <AppFormPickerField
-          icon="alpha"
-          name="language"
-          items={languages}
-          placeholder={{
-            label: "Language",
-            value: "language",
-          }}
-        />
-
-        <AppFormPickerField
-          icon="tournament"
-          name="exam"
-          items={exams}
-          placeholder={{
-            label: "Exam",
-            value: "exam",
-          }}
-        />
-
-        <AppFormField
-          autoCorrect={false}
-          icon="tournament"
-          name="otherExamName"
-          placeholder="Exam Name"
-          // visible={}
-        />
-
-        <AppFormField
-          autoCorrect={false}
-          icon="map-marker-outline"
-          name="location"
-          placeholder="Exam Location"
-        />
-        <SubmitButton title="Search" />
-      </AppForm>
+          <AppFormField
+            autoCorrect={false}
+            icon="map-marker-outline"
+            name="location"
+            placeholder="Exam Location"
+          />
+          <SubmitButton title="Search" />
+        </AppForm>
+      </ScrollView>
     </Screen>
   );
 }
@@ -151,10 +145,8 @@ const styles = StyleSheet.create({
   container: {},
   durations: {
     flexDirection: "row",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 15,
+    flex: 0.6,
+    justifyContent: "space-evenly",
   },
 });
 
