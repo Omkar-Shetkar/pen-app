@@ -8,7 +8,7 @@ import colors from "../config/colors";
 import defaultStyles from "../config/styles";
 import AppButton from "./AppButton";
 
-function CardComponent({ title, subTitle, thumbnailIcon }) {
+function CardComponent({ title, subTitle, onPress, thumbnailIcon }) {
   return (
     <TouchableWithoutFeedback>
       <View style={styles.card}>
@@ -28,7 +28,7 @@ function CardComponent({ title, subTitle, thumbnailIcon }) {
           </AppText>
         </View>
         <View style={styles.button}>
-          <AppButton title="Request" />
+          <AppButton title="Request" onPress={() => onPress()} />
         </View>
       </View>
     </TouchableWithoutFeedback>

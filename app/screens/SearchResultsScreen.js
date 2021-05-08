@@ -5,15 +5,20 @@ import Screen from "../components/Screen";
 
 function SearchResultsScreen(props) {
   const listing = [
-    { id: 1, name: "candidate-1", qualification: "MCA", gender: "M" },
-    { id: 2, name: "candidate-2", qualification: "BSc", gender: "F" },
-    { id: 3, name: "candidate-3", qualification: "Phd", gender: "M" },
-    { id: 4, name: "candidate-4", qualification: "MCA", gender: "F" },
-    { id: 5, name: "candidate-5", qualification: "PUC", gender: "M" },
-    { id: 6, name: "candidate-6", qualification: "MA", gender: "F" },
-    { id: 7, name: "candidate-7", qualification: "MCA", gender: "M" },
-    { id: 8, name: "candidate-8", qualification: "MSc", gender: "F" },
+    { id: 1, name: "scribe-1", qualification: "MCA", gender: "M" },
+    { id: 2, name: "scribe-2", qualification: "BSc", gender: "F" },
+    { id: 3, name: "scribe-3", qualification: "Phd", gender: "M" },
+    { id: 4, name: "scribe-4", qualification: "MCA", gender: "F" },
+    { id: 5, name: "scribe-5", qualification: "PUC", gender: "M" },
+    { id: 6, name: "scribe-6", qualification: "MA", gender: "F" },
+    { id: 7, name: "scribe-7", qualification: "MCA", gender: "M" },
+    { id: 8, name: "scribe-8", qualification: "MSc", gender: "F" },
   ];
+
+  const handleOnPress = (scribe) => {
+    console.log("Send request to ", scribe.name);
+  };
+
   return (
     <Screen>
       <FlatList
@@ -24,6 +29,7 @@ function SearchResultsScreen(props) {
             title={item.name}
             subTitle={item.qualification}
             thumbnailIcon={item.gender === "M" ? "face" : "face-woman"}
+            onPress={() => handleOnPress(item)}
           ></CardComponent>
         )}
       ></FlatList>
