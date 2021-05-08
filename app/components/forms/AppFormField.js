@@ -22,7 +22,7 @@ function AppFormField({ name, width, ...otherProps }) {
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { flex: 1 },
 });
 
 export default AppFormField;

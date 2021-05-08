@@ -12,7 +12,9 @@ import AppTextInput from "../AppTextInput";
 
 function AppFormPickerField({ name, items, placeholder, suffix, icon, width }) {
   const { values, handleChange, errors, touched } = useFormikContext();
+
   console.log("formik contex values: ", values);
+
   return (
     <>
       <View style={styles.container}>
@@ -35,15 +37,6 @@ function AppFormPickerField({ name, items, placeholder, suffix, icon, width }) {
         <AppText>
           {values[name] && values[name] !== placeholder.value && suffix}
         </AppText>
-        {values[name] === "others" && (
-          <View style={styles.textInput}>
-            <AppTextInput
-              onChangeText={handleChange(name)}
-              placeholder={"Enter " + placeholder.label}
-              autoFocus
-            />
-          </View>
-        )}
       </View>
 
       <AppErrorMessage error={errors[name]} visible={touched[name]} />

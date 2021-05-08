@@ -58,7 +58,7 @@ function AppFormDateTimePicker({ name, width, mode, ...otherProps }) {
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { flex: 1 },
 });
 
 export default AppFormDateTimePicker;

@@ -13,8 +13,16 @@ import AppFormDateTimePicker from "../components/forms/AppFormDateTimePicker";
 const validationSchema = Yup.object().shape({
   examDate: Yup.date().required().label("examDate"),
   examDate: Yup.date().required().label("examDate"),
-  durationHours: Yup.number().required().min(0).label("durationHours"),
-  durationMinutes: Yup.number().required().min(0).label("durationMinutes"),
+  durationHours: Yup.number()
+    .required("**")
+    .min(0)
+    .typeError("**")
+    .label("durationHours"),
+  durationMinutes: Yup.number()
+    .required("**")
+    .min(0)
+    .typeError("**")
+    .label("durationMinutes"),
   language: Yup.string().required().label("language"),
   exam: Yup.string().required().label("exam"),
 });
@@ -68,21 +76,23 @@ function ScribeSearchScreen(props) {
         >
           <AppErrorMessage error={error} visible={error} />
 
-          <AppFormDateTimePicker
-            icon="calendar"
-            name="examDate"
-            mode="date"
-            placeholder="Exam Date"
-            editable={false}
-          />
+          <View style={styles.durations}>
+            <AppFormDateTimePicker
+              icon="calendar"
+              name="examDate"
+              mode="date"
+              placeholder="Exam Date"
+              editable={false}
+            />
 
-          <AppFormDateTimePicker
-            icon="calendar"
-            name="examTime"
-            mode="time"
-            placeholder="Exam Time"
-            editable={false}
-          />
+            <AppFormDateTimePicker
+              icon="calendar"
+              name="examTime"
+              mode="time"
+              placeholder="Exam Time"
+              editable={false}
+            />
+          </View>
 
           <View style={styles.durations}>
             <AppFormPickerField
@@ -145,7 +155,7 @@ const styles = StyleSheet.create({
   container: {},
   durations: {
     flexDirection: "row",
-    flex: 0.6,
+    flex: 1,
     justifyContent: "space-evenly",
   },
 });

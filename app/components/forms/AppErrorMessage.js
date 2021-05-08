@@ -9,6 +9,6 @@ function AppErrorMessage({ error, visible }) {
 }
 
 const styles = StyleSheet.create({
-  error: { color: "red" },
+  error: { flex: 0.25, color: "red" },
 });
 export default AppErrorMessage;
