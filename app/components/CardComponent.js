@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppText from "./AppText";
 import colors from "../config/colors";
 import defaultStyles from "../config/styles";
+import AppButton from "./AppButton";
 
 function CardComponent({ title, subTitle, thumbnailIcon }) {
   return (
@@ -19,12 +20,15 @@ function CardComponent({ title, subTitle, thumbnailIcon }) {
           />
         </View>
         <View style={styles.detailsContainer}>
-          <AppText numberOfLines={1} style={styles.title}>
+          <AppText numberOfLines={2} style={styles.title}>
             {title}
           </AppText>
           <AppText numberOfLines={2} style={styles.subTitle}>
             {subTitle}
           </AppText>
+        </View>
+        <View style={styles.button}>
+          <AppButton title="Request" />
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -36,6 +40,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     marginBottom: 20,
     borderRadius: 15,
+    elevation: 2,
     flexDirection: "row",
     justifyContent: "flex-start",
     marginBottom: 20,
@@ -43,6 +48,7 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     padding: 20,
+    flex: 0.8,
   },
   icon: {
     alignItems: "center",
@@ -58,6 +64,12 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 7,
+  },
+  button: {
+    height: 30,
+    width: 150,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 export default CardComponent;
