@@ -1,5 +1,5 @@
 import { useFormikContext } from "formik";
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import RNPickerSelect from "react-native-picker-select";
@@ -8,7 +8,6 @@ import AppErrorMessage from "./AppErrorMessage";
 import defaultStyles from "../../config/styles";
 import AppText from "../AppText";
 import colors from "../../config/colors";
-import AppTextInput from "../AppTextInput";
 
 function AppFormPickerField({ name, items, placeholder, suffix, icon, width }) {
   const { values, handleChange, errors, touched } = useFormikContext();
