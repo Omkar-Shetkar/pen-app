@@ -26,15 +26,26 @@ function RequestCardComponent({
             color={defaultStyles.colors.medium}
           />
         </View>
-        <View style={styles.detailsContainer}>
+        <View style={styles.content}>
           <AppText numberOfLines={2} style={styles.title}>
             {title}
           </AppText>
-          <AppText numberOfLines={2} style={styles.subTitle}>
-            {subTitle}
-          </AppText>
+
+          <View style={styles.subTitleContainer}>
+            {icons["subTitle"] && (
+              <MaterialCommunityIcons
+                name={icons["subTitle"]}
+                size={15}
+                color={defaultStyles.colors.medium}
+              />
+            )}
+            <AppText numberOfLines={2} style={styles.subTitle}>
+              {subTitle}
+            </AppText>
+          </View>
+
           {Object.keys(details).map((key) => (
-            <View>
+            <View style={styles.details}>
               <MaterialCommunityIcons
                 name={icons[key]}
                 size={15}
@@ -71,9 +82,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     overflow: "hidden",
   },
-  detailsContainer: {
+  content: {
     padding: 20,
     flex: 0.8,
+  },
+  details: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 5,
+    marginTop: 5,
   },
   icon: {
     alignItems: "center",
@@ -88,8 +105,10 @@ const styles = StyleSheet.create({
     color: colors.secondary,
     fontWeight: "bold",
   },
-  title: {
-    marginBottom: 7,
+  subTitleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
   },
   button: {
     alignItems: "center",

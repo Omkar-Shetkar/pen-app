@@ -41,6 +41,7 @@ function ScribeReceivedScreen(props) {
   ];
 
   const icons = {
+    subTitle: "pencil-outline",
     examDate: "calendar",
     duration: "av-timer",
     language: "alpha",

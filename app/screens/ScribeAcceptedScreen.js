@@ -51,6 +51,7 @@ function ScribeAcceptedScreen(props) {
   ];
 
   const icons = {
+    subTitle: "pencil-outline",
     examDate: "calendar",
     duration: "av-timer",
     language: "alpha",
@@ -75,7 +76,7 @@ function ScribeAcceptedScreen(props) {
             title={item.name}
             subTitle={item.exam}
             icons={icons}
-            details={details(item)}
+            examDetails={details(item)}
             thumbnailIcon={item.gender === "M" ? "face" : "face-woman"}
             onPress={() => handleOnPress(item)}
           ></RequestCardComponent>
