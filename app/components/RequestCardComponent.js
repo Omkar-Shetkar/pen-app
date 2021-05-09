@@ -6,9 +6,16 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppText from "./AppText";
 import colors from "../config/colors";
 import defaultStyles from "../config/styles";
-import AppButton from "./AppButton";
+import ListItemButton from "./ListItemButton";
 
-function CardComponent({ title, subTitle, onPress, thumbnailIcon }) {
+function RequestCardComponent({
+  actions,
+  title,
+  subTitle,
+  details,
+  icons,
+  thumbnailIcon,
+}) {
   return (
     <TouchableWithoutFeedback>
       <View style={styles.card}>
@@ -26,9 +33,27 @@ function CardComponent({ title, subTitle, onPress, thumbnailIcon }) {
           <AppText numberOfLines={2} style={styles.subTitle}>
             {subTitle}
           </AppText>
+          {Object.keys(details).map((key) => (
+            <View>
+              <MaterialCommunityIcons
+                name={icons[key]}
+                size={15}
+                color={defaultStyles.colors.medium}
+              />
+              <AppText numberOfLines={5} style={styles.title}>
+                {details[key]}
+              </AppText>
+            </View>
+          ))}
         </View>
         <View style={styles.button}>
-          <AppButton title="Request" onPress={() => onPress()} />
+          {actions.map((item) => (
+            <ListItemButton
+              title={item.name}
+              onPress={item.action}
+              color={item.color}
+            />
+          ))}
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -36,7 +61,6 @@ function CardComponent({ title, subTitle, onPress, thumbnailIcon }) {
 }
 const styles = StyleSheet.create({
   card: {
-    alignItems: "center",
     backgroundColor: colors.white,
     marginBottom: 20,
     borderRadius: 15,
@@ -56,6 +80,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     height: 50,
     justifyContent: "center",
+    marginVertical: 20,
     width: 50,
   },
   subTitle: {
@@ -66,10 +91,9 @@ const styles = StyleSheet.create({
     marginBottom: 7,
   },
   button: {
-    height: 30,
-    width: 150,
     alignItems: "center",
     justifyContent: "center",
   },
 });
-export default CardComponent;
+
+export default RequestCardComponent;

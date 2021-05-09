@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, FlatList } from "react-native";
-import CardComponent from "../components/CardComponent";
+import SearchResultsCardComponent from "../components/SearchResultsCardComponent";
 import Screen from "../components/Screen";
 
 function SearchResultsScreen(props) {
@@ -25,12 +25,12 @@ function SearchResultsScreen(props) {
         data={listing}
         keyExtractor={(listing) => listing.id.toString()}
         renderItem={({ item }) => (
-          <CardComponent
+          <SearchResultsCardComponent
             title={item.name}
             subTitle={item.qualification}
             thumbnailIcon={item.gender === "M" ? "face" : "face-woman"}
             onPress={() => handleOnPress(item)}
-          ></CardComponent>
+          ></SearchResultsCardComponent>
         )}
       ></FlatList>
     </Screen>
