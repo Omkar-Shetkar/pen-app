@@ -47,13 +47,14 @@ function RequestCardComponent({
           ))}
         </View>
         <View style={styles.button}>
-          {actions.map((item) => (
-            <ListItemButton
-              title={item.name}
-              onPress={item.action}
-              color={item.color}
-            />
-          ))}
+          {actions &&
+            actions.map((item) => (
+              <ListItemButton
+                title={item.name}
+                onPress={item.action}
+                color={item.color}
+              />
+            ))}
         </View>
       </View>
     </TouchableWithoutFeedback>
