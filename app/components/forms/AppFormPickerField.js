@@ -31,6 +31,7 @@ function AppFormPickerField({ name, items, placeholder, suffix, icon, width }) {
             items={items.map((item) => ({ ...item, color: colors.black }))}
             onValueChange={handleChange(name)}
             style={{ ...pickerSelectStyles }}
+            value={values[name]}
           />
         </View>
         <AppText>

@@ -86,7 +86,7 @@ function ScribeSearchScreen(props) {
             />
 
             <AppFormDateTimePicker
-              icon="calendar"
+              icon="av-timer"
               name="examTime"
               mode="time"
               placeholder="Exam Time"
@@ -96,7 +96,7 @@ function ScribeSearchScreen(props) {
 
           <View style={styles.durations}>
             <AppFormPickerField
-              icon="av-timer"
+              icon="timer-sand"
               name="durationHours"
               items={hours}
               placeholder={{
@@ -107,7 +107,6 @@ function ScribeSearchScreen(props) {
             />
 
             <AppFormPickerField
-              icon="av-timer"
               name="durationMinutes"
               items={minutes}
               placeholder={{
