@@ -11,12 +11,12 @@ import AppFormPickerField from "../components/forms/AppFormPickerField";
 import AppFormDateTimePicker from "../components/forms/AppFormDateTimePicker";
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required().label("name"),
-  gender: Yup.string().required().label("gender"),
-  qualification: Yup.string().required().label("qualification"),
-  mobile: Yup.number().required().label("mobile"),
-  email: Yup.string().required().label("email"),
-  availability: Yup.string().required().label("availability"),
+  name: Yup.string().required().label("Name"),
+  gender: Yup.string().required().label("Gender"),
+  qualification: Yup.string().required().label("Qualification"),
+  mobile: Yup.number().required().label("Mobile"),
+  email: Yup.string().required().label("Email"),
+  availability: Yup.string().required().label("Availability"),
 });
 
 function AccountScreen(props) {

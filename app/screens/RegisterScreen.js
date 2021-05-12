@@ -17,8 +17,13 @@ import AppFormMultiSelectField from "../components/forms/AppFormMultiSelectField
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
+  mobile: Yup.number().required().label("Mobile"),
   email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
+  password: Yup.string().required().min(8).label("Password"),
+  gender: Yup.string().required().label("Gender"),
+  qualification: Yup.string().required().label("Qualification"),
+  languages: Yup.array().required().min(1).label("Languages"),
+  location: Yup.string().required().label("Location"),
 });
 
 function RegisterScreen({ isScribe }) {
@@ -49,6 +54,13 @@ function RegisterScreen({ isScribe }) {
       name: "Telugu",
     },
   ];
+
+  const genders = [
+    { label: "Male", value: "M" },
+    { label: "Female", value: "F" },
+    { label: "Others", value: "others" },
+  ];
+
   isScribe = true;
 
   const onSelectedItemsChange = (selectedItems) => {
@@ -59,7 +71,16 @@ function RegisterScreen({ isScribe }) {
     <Screen style={styles.container}>
       <ScrollView>
         <AppForm
-          initialValues={{ name: "", email: "", password: "" }}
+          initialValues={{
+            name: "",
+            mobile: "",
+            email: "",
+            password: "",
+            gender: "",
+            qualification: "",
+            languages: [],
+            location: "",
+          }}
           onSubmit={(values) => console.log(values)}
           validationSchema={validationSchema}
         >
@@ -70,24 +91,6 @@ function RegisterScreen({ isScribe }) {
             icon="account-outline"
             name="name"
             placeholder="Name"
-          />
-          {isScribe && (
-            <AppFormPickerField
-              icon="school-outline"
-              name="qualification"
-              items={qualifications}
-              placeholder={{
-                label: "Qualification",
-                value: "qualification",
-              }}
-            />
-          )}
-          <AppFormMultiSelectField
-            uniqueKey="id"
-            name="languages"
-            items={languages}
-            selectText="Pick Languages"
-            searchInputPlaceholderText="Search Languages..."
           />
           <AppFormField
             autoCorrect={false}
@@ -115,6 +118,42 @@ function RegisterScreen({ isScribe }) {
             placeholder="Password"
             secureTextEntry
             textContentType="password"
+          />
+          <AppFormPickerField
+            icon="gender-male-female"
+            name="gender"
+            items={genders}
+            placeholder={{
+              label: "Gender",
+              value: "gender",
+            }}
+          />
+          {isScribe && (
+            <>
+              <AppFormPickerField
+                icon="school-outline"
+                name="qualification"
+                items={qualifications}
+                placeholder={{
+                  label: "Qualification",
+                  value: "qualification",
+                }}
+              />
+              <AppFormMultiSelectField
+                uniqueKey="id"
+                name="languages"
+                items={languages}
+                selectText="Pick Languages"
+                searchInputPlaceholderText="Search Languages..."
+              />
+            </>
+          )}
+
+          <AppFormField
+            autoCorrect={false}
+            icon="map-marker-outline"
+            name="location"
+            placeholder="Location"
           />
           <SubmitButton title="Register" />
         </AppForm>
