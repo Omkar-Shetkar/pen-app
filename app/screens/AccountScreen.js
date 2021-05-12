@@ -71,7 +71,7 @@ function AccountScreen(props) {
             items={genders}
             placeholder={{
               label: "Gender",
-              value: "gender",
+              value: "",
             }}
           />
           <AppFormPickerField
@@ -80,7 +80,7 @@ function AccountScreen(props) {
             items={qualifications}
             placeholder={{
               label: "Qualification",
-              value: "qualification",
+              value: "",
             }}
           />
           <AppFormField
@@ -103,7 +103,7 @@ function AccountScreen(props) {
             items={availabilities}
             placeholder={{
               label: "Availability",
-              value: "availability",
+              value: "",
             }}
           />
           <SubmitButton title="Update" />

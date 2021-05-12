@@ -18,11 +18,12 @@ import AppFormMultiSelectField from "../components/forms/AppFormMultiSelectField
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
   mobile: Yup.number().required().label("Mobile"),
-  email: Yup.string().required().email().label("Email"),
+  email: Yup.string().optional().email().label("Email"),
   password: Yup.string().required().min(8).label("Password"),
   gender: Yup.string().required().label("Gender"),
   qualification: Yup.string().required().label("Qualification"),
   languages: Yup.array().required().min(1).label("Languages"),
+  availability: Yup.string().required().label("Availability"),
   location: Yup.string().required().label("Location"),
 });
 
@@ -61,7 +62,14 @@ function RegisterScreen({ isScribe }) {
     { label: "Others", value: "others" },
   ];
 
-  isScribe = true;
+  const availabilities = [
+    { label: "Weekends", value: "weekends" },
+    { label: "Weekdays", value: "weekdays" },
+    { label: "Any Day", value: "any day" },
+    { label: "Not Available", value: "not available" },
+  ];
+
+  isScribe = false;
 
   const onSelectedItemsChange = (selectedItems) => {
     setSelectedItems(selectedItems);
@@ -79,6 +87,7 @@ function RegisterScreen({ isScribe }) {
             gender: "",
             qualification: "",
             languages: [],
+            availability: "",
             location: "",
           }}
           onSubmit={(values) => console.log(values)}
@@ -125,7 +134,7 @@ function RegisterScreen({ isScribe }) {
             items={genders}
             placeholder={{
               label: "Gender",
-              value: "gender",
+              value: "",
             }}
           />
           {isScribe && (
@@ -136,7 +145,7 @@ function RegisterScreen({ isScribe }) {
                 items={qualifications}
                 placeholder={{
                   label: "Qualification",
-                  value: "qualification",
+                  value: "",
                 }}
               />
               <AppFormMultiSelectField
@@ -145,6 +154,15 @@ function RegisterScreen({ isScribe }) {
                 items={languages}
                 selectText="Pick Languages"
                 searchInputPlaceholderText="Search Languages..."
+              />
+              <AppFormPickerField
+                icon="calendar-check-outline"
+                name="availability"
+                items={availabilities}
+                placeholder={{
+                  label: "Availability",
+                  value: "",
+                }}
               />
             </>
           )}
