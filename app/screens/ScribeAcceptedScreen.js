@@ -76,7 +76,7 @@ function ScribeAcceptedScreen(props) {
             title={item.name}
             subTitle={item.exam}
             icons={icons}
-            examDetails={details(item)}
+            details={details(item)}
             thumbnailIcon={item.gender === "M" ? "face" : "face-woman"}
             onPress={() => handleOnPress(item)}
           ></RequestCardComponent>
