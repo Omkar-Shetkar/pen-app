@@ -1,12 +1,9 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import ScribeReceivedScreen from "../screens/ScribeReceivedScreen";
 import ScribeSearchScreen from "../screens/ScribeSearchScreen";
-import routes from "./routes";
-import SearchButton from "./SearchButton";
 import AccountScreen from "../screens/AccountScreen";
 import NotificationsScreen from "../screens/NotificationsScreen";
 import RequestsNavigator from "./RequestsNavigator";

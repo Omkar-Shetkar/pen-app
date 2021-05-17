@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
-import ScribeReceivedScreen from "./app/screens/ScribeReceivedScreen";
-import ScribeSearchScreen from "./app/screens/ScribeSearchScreen";
-import AccountScreen from "./app/screens/AccountScreen";
-import RegisterScreen from "./app/screens/RegisterScreen";
 import AppNavigator from "./app/navigation/AppNavigator";
 import AuthContext from "./app/auth/context";
 

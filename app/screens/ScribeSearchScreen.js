@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 
@@ -9,6 +9,8 @@ import AppErrorMessage from "../components/forms/AppErrorMessage";
 import SubmitButton from "../components/forms/SubmitButton";
 import AppFormPickerField from "../components/forms/AppFormPickerField";
 import AppFormDateTimePicker from "../components/forms/AppFormDateTimePicker";
+import languagesApi from "../api/languages";
+import useApi from "../hooks/useApi";
 
 const validationSchema = Yup.object().shape({
   examDate: Yup.date().required().label("examDate"),
@@ -58,6 +60,19 @@ function ScribeSearchScreen(props) {
     { label: "BSc", value: "bsc" },
     { label: "Others", value: "others" },
   ];
+
+  const {
+    data,
+    // error,
+    // loading,
+    request: loadLanguages,
+  } = useApi(languagesApi.getLanguages);
+
+  useEffect(() => {
+    loadLanguages();
+  }, []);
+
+  console.log("languages ", data);
 
   return (
     <Screen style={styles.container}>
