@@ -10,6 +10,7 @@ import SubmitButton from "../components/forms/SubmitButton";
 import AppFormPickerField from "../components/forms/AppFormPickerField";
 import AppFormDateTimePicker from "../components/forms/AppFormDateTimePicker";
 import languagesApi from "../api/languages";
+import examsApi from "../api/exams";
 import useApi from "../hooks/useApi";
 
 const validationSchema = Yup.object().shape({
@@ -25,8 +26,18 @@ const validationSchema = Yup.object().shape({
     .min(0)
     .typeError("**")
     .label("durationMinutes"),
-  language: Yup.string().required().label("language"),
-  exam: Yup.string().required().label("exam"),
+  language: Yup.string()
+    .matches(/\b(?!language\b)\w+/, {
+      message: "Language is a required field!",
+    })
+    .required()
+    .label("language"),
+  exam: Yup.string()
+    .matches(/\b(?!exam\b)\w+/, {
+      message: "Exam is a required field!",
+    })
+    .required()
+    .label("exam"),
 });
 
 function ScribeSearchScreen(props) {
@@ -48,31 +59,38 @@ function ScribeSearchScreen(props) {
     minutes.push({ label: i.toString(), value: i.toString() });
   }
 
-  const languages = [
-    { label: "English", value: "english" },
-    { label: "Hindi", value: "hindi" },
-    { label: "Kannada", value: "kannada" },
-  ];
-
-  const exams = [
-    { label: "SSLC", value: "sslc" },
-    { label: "PUC", value: "puc" },
-    { label: "BSc", value: "bsc" },
-    { label: "Others", value: "others" },
-  ];
-
   const {
-    data,
+    data: languageData,
     // error,
     // loading,
     request: loadLanguages,
   } = useApi(languagesApi.getLanguages);
 
+  const languages = languageData
+    ? languageData.map(({ id, name }) => ({
+        label: name,
+        value: id.toString(),
+      }))
+    : [];
+
+  const {
+    data: examData,
+    // error,
+    // loading,
+    request: loadExams,
+  } = useApi(examsApi.getExams);
+
+  const exams = examData
+    ? examData.map(({ id, name }) => ({
+        label: name,
+        value: id.toString(),
+      }))
+    : [];
+
   useEffect(() => {
     loadLanguages();
+    loadExams();
   }, []);
-
-  console.log("languages ", data);
 
   return (
     <Screen style={styles.container}>
