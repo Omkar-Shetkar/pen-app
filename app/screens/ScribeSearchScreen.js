@@ -12,6 +12,7 @@ import AppFormDateTimePicker from "../components/forms/AppFormDateTimePicker";
 import languagesApi from "../api/languages";
 import examsApi from "../api/exams";
 import useApi from "../hooks/useApi";
+import strings from "../config/strings";
 
 const validationSchema = Yup.object().shape({
   examDate: Yup.date().required().label("examDate"),
@@ -28,13 +29,13 @@ const validationSchema = Yup.object().shape({
     .label("durationMinutes"),
   language: Yup.string()
     .matches(/\b(?!language\b)\w+/, {
-      message: "Language is a required field!",
+      message: strings.search.languageError,
     })
     .required()
     .label("language"),
   exam: Yup.string()
     .matches(/\b(?!exam\b)\w+/, {
-      message: "Exam is a required field!",
+      message: strings.search.examError,
     })
     .required()
     .label("exam"),
