@@ -7,6 +7,7 @@ import moment from "moment";
 
 import AppFormField from "./AppFormField";
 import defaultStyles from "../../config/styles";
+import AppErrorMessage from "./AppErrorMessage";
 
 function AppFormDateTimePicker({ name, width, mode, ...otherProps }) {
   const { setFieldValue, values, errors, touched } = useFormikContext();
@@ -53,6 +54,7 @@ function AppFormDateTimePicker({ name, width, mode, ...otherProps }) {
           value={values[name] ? moment(values[name]).format(format(mode)) : ""}
         />
       </Pressable>
+      <AppErrorMessage error={errors[name]} visible={touched[name]} />
     </View>
   );
 }

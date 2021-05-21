@@ -15,30 +15,33 @@ import useApi from "../hooks/useApi";
 import strings from "../config/strings";
 
 const validationSchema = Yup.object().shape({
-  examDate: Yup.date().required().label("examDate"),
-  examDate: Yup.date().required().label("examDate"),
+  examDate: Yup.date()
+    .min(new Date().toDateString())
+    .required()
+    .label("Exam date"),
+  examTime: Yup.date().required().label("Exam time"),
   durationHours: Yup.number()
     .required("**")
     .min(0)
     .typeError("**")
-    .label("durationHours"),
+    .label("Hours"),
   durationMinutes: Yup.number()
     .required("**")
     .min(0)
     .typeError("**")
-    .label("durationMinutes"),
+    .label("Minutes"),
   language: Yup.string()
     .matches(/\b(?!language\b)\w+/, {
       message: strings.search.languageError,
     })
     .required()
-    .label("language"),
+    .label("Language"),
   exam: Yup.string()
     .matches(/\b(?!exam\b)\w+/, {
       message: strings.search.examError,
     })
     .required()
-    .label("exam"),
+    .label("Exam"),
 });
 
 function ScribeSearchScreen(props) {
