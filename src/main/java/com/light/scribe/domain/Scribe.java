@@ -2,12 +2,11 @@ package com.light.scribe.domain;
 
 import com.light.domain.Gender;
 import com.light.domain.Language;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.util.Assert;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,11 +14,10 @@ import java.util.Set;
  * Represents person who will be writing exam for a candidate.
  */
 @Data
-@AllArgsConstructor
 public class Scribe {
 
     @Id
-    private long id;
+    private Long id;
 
     private String firstName;
 
@@ -38,12 +36,21 @@ public class Scribe {
     private String email;
 
     public Scribe(String firstName, String lastName, Gender gender, String location, String phone, String email) {
+        this.id = null;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.location = location;
         this.phone = phone;
         this.email = email;
+    }
+
+    public Set<Availability> getAvailabilities() {
+        return Collections.unmodifiableSet(availabilities);
+    }
+
+    public Set<LanguageRef> getLanguages() {
+        return Collections.unmodifiableSet(languages);
     }
 
     public void addLanguage(Language language) {
@@ -54,14 +61,8 @@ public class Scribe {
         Assert.notNull(language, "Language must not be null");
         Assert.notNull(language.getId(), "Language id, must not be null");
 
-        LanguageRef languageRef = new LanguageRef();
-        languageRef.language = language.getId();
+        LanguageRef languageRef = new LanguageRef(language.getId());
         return languageRef;
     }
 
-}
-
-@Table("scribe_languages")
-class LanguageRef {
-    Long language;
 }

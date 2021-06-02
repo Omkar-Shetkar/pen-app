@@ -1,0 +1,46 @@
+package com.light.scribe.controller;
+
+import com.light.scribe.client.ScribeUpdate;
+import com.light.scribe.domain.Scribe;
+import com.light.scribe.service.ScribeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import static org.springframework.http.HttpStatus.CREATED;
+
+@RestController
+@RequestMapping("/rest/scribes")
+public class ScribeController {
+
+    public static final String ALL = "/rest/scribes/";
+    public static final String UPDATE = ALL + "{id}/";
+
+    @Autowired
+    private ScribeService scribeService;
+
+    //TODO: Creation of Scribe to be handled
+    @PostMapping
+    public ResponseEntity<Scribe> create() {
+        return ResponseEntity.status(CREATED).body(null);
+    }
+
+    /**
+     * @param id           Scribe id
+     * @param scribeUpdate
+     * @return
+     */
+    @PutMapping("{id}/")
+    public ResponseEntity<Scribe> updateScribe(@PathVariable long id, @Validated @RequestBody ScribeUpdate scribeUpdate) {
+        try {
+            Scribe scribe = scribeService.updateScribeAvailability(id, scribeUpdate);
+            return ResponseEntity.status(CREATED).body(scribe);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
+}
