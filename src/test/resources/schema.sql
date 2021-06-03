@@ -1,5 +1,5 @@
 create TABLE IF NOT EXISTS candidate (
-    id INTEGER IDENTITY PRIMARY KEY,
+    id INTEGER  PRIMARY KEY,
     first_name VARCHAR(200),
     last_name VARCHAR(200),
     gender VARCHAR(200),
@@ -9,13 +9,13 @@ create TABLE IF NOT EXISTS candidate (
 -------------------------------------------------------------
 
 create TABLE IF NOT EXISTS language (
-    id INTEGER IDENTITY PRIMARY KEY,
+    id INTEGER  PRIMARY KEY,
     name VARCHAR(200)
 );
 -------------------------------------------------------------
 
 create TABLE IF NOT EXISTS scribe (
-    id INTEGER IDENTITY PRIMARY KEY,
+    id INTEGER  PRIMARY KEY,
     first_name VARCHAR(200),
     last_name VARCHAR(200),
     gender VARCHAR(200),

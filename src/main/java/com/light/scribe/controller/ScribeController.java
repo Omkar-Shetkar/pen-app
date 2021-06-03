@@ -1,5 +1,6 @@
 package com.light.scribe.controller;
 
+import com.light.scribe.client.ScribeSearchFilter;
 import com.light.scribe.client.ScribeUpdate;
 import com.light.scribe.domain.Scribe;
 import com.light.scribe.service.ScribeService;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Set;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -41,6 +44,18 @@ public class ScribeController {
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
+    }
+
+    /**
+     * Find by exam schedule, language, and venue location
+     *
+     * @param searchFilter
+     * @return
+     */
+    @GetMapping
+    public ResponseEntity<Set<Scribe>> find(@Validated ScribeSearchFilter searchFilter) {
+        Set<Scribe> all = scribeService.searchScribes(searchFilter);
+        return ResponseEntity.ok(all);
     }
 
 }

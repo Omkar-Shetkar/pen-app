@@ -30,7 +30,7 @@ insert into scribe_language(scribe, language) values (3, 3);
 -------------------------------------------------------------
 
 insert into availability(scribe, available_from, available_to) values (1, '2020-12-24 06:00:00', '2020-12-24 10:00:00');
-insert into availability(scribe, available_from, available_to) values (1, '2020-12-24 06:00:00', '2020-12-24 10:00:00');
+insert into availability(scribe, available_from, available_to) values (2, '2020-12-24 06:00:00', '2020-12-24 10:00:00');
 insert into availability(scribe, available_from, available_to) values (2, '2020-12-25 06:00:00', '2020-12-25 10:00:00');
 insert into availability(scribe, available_from, available_to) values (1, '2020-12-26 06:00:00', '2020-12-26 10:00:00');
 insert into availability(scribe, available_from, available_to) values (2, '2020-12-26 06:00:00', '2020-12-26 10:00:00');

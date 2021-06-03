@@ -1,10 +1,13 @@
 package com.light.scribe.service;
 
+import com.light.scribe.client.ScribeSearchFilter;
 import com.light.scribe.client.ScribeUpdate;
 import com.light.scribe.domain.Scribe;
 import com.light.scribe.repository.ScribeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 public class ScribeService {
@@ -30,4 +33,8 @@ public class ScribeService {
                 .orElseThrow(() -> new IllegalArgumentException("Couldn't find scribe id: " + scribeId));
     }
 
+    public Set<Scribe> searchScribes(ScribeSearchFilter searchFilter) {
+        return scribeRepository.findByAvailabilityAndLanguage(searchFilter.getFrom(),
+                searchFilter.getTo(), searchFilter.getLanguage());
+    }
 }
