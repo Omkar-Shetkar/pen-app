@@ -1,8 +1,8 @@
 package com.light.scribe;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.light.LanguageRepository;
 import com.light.domain.Gender;
+import com.light.repository.LanguageRepository;
 import com.light.scribe.client.ScribeUpdate;
 import com.light.scribe.domain.Availability;
 import com.light.scribe.domain.Scribe;
