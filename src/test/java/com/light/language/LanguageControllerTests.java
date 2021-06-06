@@ -1,12 +1,14 @@
 package com.light.language;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.light.BaseTestSetup;
 import com.light.domain.Language;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -19,7 +21,8 @@ import static com.light.language.controller.LanguageController.ALL;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class LanguageControllerTests {
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+public class LanguageControllerTests extends BaseTestSetup {
 
     @Autowired
     private MockMvc mockMvc;
@@ -34,7 +37,7 @@ public class LanguageControllerTests {
                 .andReturn().getResponse().getContentAsString();
         List<Language> languages = mapper.readValue(response, List.class);
 
-        Assertions.assertEquals(5,languages.size());
+        Assertions.assertEquals(5, languages.size());
     }
 
 }
