@@ -1,4 +1,4 @@
-package com.light.language.controller;
+package com.light.controller;
 
 import com.light.domain.Language;
 import com.light.repository.LanguageRepository;

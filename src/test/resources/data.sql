@@ -4,6 +4,10 @@ INSERT INTO language (id, name) VALUES (3, 'Hindi');
 INSERT INTO language (id, name) VALUES (4, 'Tamil');
 INSERT INTO language (id, name) VALUES (5, 'Telugu');
 
+INSERT INTO exam (id, name) VALUES (101, 'SSLC');
+INSERT INTO exam (id, name) VALUES (102, 'PUC');
+INSERT INTO exam (id, name) VALUES (103, 'BSc');
+
 -------------------------------------------------------------
 INSERT INTO candidate (id, first_name, last_name, gender, phone)
                VALUES (1, 'candidate1-fn','candidate1-ln', 'MALE', '123-111');

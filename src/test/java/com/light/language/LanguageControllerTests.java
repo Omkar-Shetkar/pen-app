@@ -6,23 +6,15 @@ import com.light.domain.Language;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
-import static com.light.language.controller.LanguageController.ALL;
+import static com.light.controller.LanguageController.ALL;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@AutoConfigureMockMvc
-@ActiveProfiles("test")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class LanguageControllerTests extends BaseTestSetup {
+class LanguageControllerTests extends BaseTestSetup {
 
     @Autowired
     private MockMvc mockMvc;
@@ -31,7 +23,7 @@ public class LanguageControllerTests extends BaseTestSetup {
     private ObjectMapper mapper;
 
     @Test
-    public void getLanguages() throws Exception {
+    void getLanguages() throws Exception {
         String response = mockMvc.perform(MockMvcRequestBuilders.get(ALL))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();

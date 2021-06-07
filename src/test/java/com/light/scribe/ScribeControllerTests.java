@@ -3,12 +3,9 @@ package com.light.scribe;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.light.BaseTestSetup;
 import com.light.domain.Gender;
-import com.light.domain.Language;
-import com.light.repository.LanguageRepository;
 import com.light.scribe.client.ScribeUpdate;
 import com.light.scribe.domain.Availability;
 import com.light.scribe.domain.Scribe;
-import com.light.scribe.repository.ScribeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -34,8 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class ScribeControllerTests extends BaseTestSetup {
+class ScribeControllerTests extends BaseTestSetup {
 
     @Autowired
     private MockMvc mockMvc;

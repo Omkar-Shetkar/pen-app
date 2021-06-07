@@ -12,6 +12,11 @@ create TABLE IF NOT EXISTS language (
     id INTEGER  PRIMARY KEY,
     name VARCHAR(200)
 );
+
+create TABLE IF NOT EXISTS exam (
+    id INTEGER  PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(200)
+);
 -------------------------------------------------------------
 
 create TABLE IF NOT EXISTS scribe (
