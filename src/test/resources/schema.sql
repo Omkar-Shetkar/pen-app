@@ -46,3 +46,59 @@ create TABLE IF NOT EXISTS scribe_language (
 );
 
 -------------------------------------------------------------
+
+create TABLE IF NOT EXISTS country (
+    id INTEGER  PRIMARY KEY,
+    name VARCHAR(250)
+);
+
+
+create TABLE IF NOT EXISTS state (
+    id INTEGER  PRIMARY KEY,
+    name VARCHAR(250),
+    country INTEGER,
+    FOREIGN KEY (country) REFERENCES country(id)
+);
+
+
+create TABLE IF NOT EXISTS city (
+    id INTEGER  PRIMARY KEY,
+    name VARCHAR(250),
+    state INTEGER,
+    FOREIGN KEY (state) REFERENCES state(id)
+);
+
+create TABLE IF NOT EXISTS address (
+    id INTEGER  PRIMARY KEY,
+    city INTEGER,
+    state INTEGER,
+    country INTEGER,
+    pincode VARCHAR(25),
+    gps_location VARCHAR(200),
+    FOREIGN KEY (city) REFERENCES city(id),
+    FOREIGN KEY (state) REFERENCES state(id),
+    FOREIGN KEY (country) REFERENCES country(id)
+);
+
+create TABLE IF NOT EXISTS exam_schedule (
+    id INTEGER  PRIMARY KEY AUTO_INCREMENT,
+    start_time TIMESTAMP,
+    end_time TIMESTAMP,
+    exam INTEGER,
+    language INTEGER,
+    address INTEGER,
+    FOREIGN KEY (exam) REFERENCES exam(id),
+    FOREIGN KEY (language) REFERENCES language(id),
+    FOREIGN KEY (address) REFERENCES address(id)
+);
+
+create TABLE IF NOT EXISTS request (
+    id INTEGER  PRIMARY KEY AUTO_INCREMENT,
+    candidate INTEGER,
+    scribe INTEGER,
+    exam_schedule INTEGER,
+    status VARCHAR(200),
+    FOREIGN KEY (candidate) REFERENCES candidate(id),
+    FOREIGN KEY (scribe) REFERENCES scribe(id),
+    FOREIGN KEY (exam_schedule) REFERENCES exam_schedule(id)
+);

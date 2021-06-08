@@ -8,5 +8,5 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("SCRIBE_LANGUAGE")
 @AllArgsConstructor
 public class LanguageRef {
-    Long language;
+    private Long language;
 }

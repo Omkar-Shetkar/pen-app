@@ -41,3 +41,17 @@ INSERT INTO availability(scribe, available_from, available_to) VALUES (3, '2020-
 INSERT INTO availability(scribe, available_from, available_to) VALUES (3, '2020-12-28 06:00:00', '2020-12-28 10:00:00');
 
 -------------------------------------------------------------
+
+INSERT INTO country(id, name) VALUES (1, 'India');
+INSERT INTO country(id, name) VALUES (2, 'USA');
+
+INSERT INTO state(id, name, country) VALUES (1, 'Karnataka', 1);
+INSERT INTO state(id, name, country) VALUES (2, 'NYC', 2);
+
+INSERT INTO city(id, name, state) VALUES (1, 'Bangalore', 1);
+INSERT INTO city(id, name, state) VALUES (2, 'NY', 2);
+
+INSERT INTO address(id, city, state, country, pincode, gps_location) VALUES (1, 1, 1,1,'560102','location-01');
+INSERT INTO address(id, city, state, country, pincode, gps_location) VALUES (2, 2, 2,2,'110882','location-02');
+
+-------------------------------------------------------------

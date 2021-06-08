@@ -37,4 +37,9 @@ public class ScribeService {
         return scribeRepository.findByAvailabilityAndLanguage(searchFilter.getFrom(),
                 searchFilter.getTo(), searchFilter.getLanguage());
     }
+
+    public Iterable<Scribe> getAll() {
+        return scribeRepository.findAll();
+    }
+
 }

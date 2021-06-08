@@ -2,6 +2,8 @@ package com.light;
 
 import com.light.candidate.repository.CandidateRepository;
 import com.light.repository.LanguageRepository;
+import com.light.request.repository.ExamScheduleRepository;
+import com.light.request.repository.RequestRepository;
 import com.light.scribe.repository.ScribeRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +27,16 @@ public abstract class BaseTestSetup {
     @Autowired
     private CandidateRepository candidateRepository;
 
+    @Autowired
+    private RequestRepository requestRepository;
+
+    @Autowired
+    private ExamScheduleRepository examScheduleRepository;
+
     @AfterEach
     void cleanUpData() {
+        requestRepository.deleteAll();
+        examScheduleRepository.deleteAll();
         scribeRepository.deleteAll();
         languageRepository.deleteAll();
         candidateRepository.deleteAll();
