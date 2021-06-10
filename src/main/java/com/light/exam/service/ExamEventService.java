@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
 @Transactional
@@ -18,9 +20,15 @@ public class ExamEventService {
 
     public ExamEvent create(ExamEventUpdate examEventUpdate) {
 
-        ExamEvent examEvent = new ExamEvent(examEventUpdate.getCandidate(), examEventUpdate.getScribe(),
-                examEventUpdate.getExamSchedule());
+        var examEvent = new ExamEvent(examEventUpdate.getRequestId(), examEventUpdate.getCandidate(),
+                examEventUpdate.getScribe(), examEventUpdate.getExamSchedule());
 
         return examEventRepository.save(examEvent);
     }
+
+    public void delete(long requestId) {
+        Optional<ExamEvent> examEventOptional = examEventRepository.findByRequest(requestId);
+        examEventOptional.ifPresent(e -> examEventRepository.delete(e));
+    }
+
 }

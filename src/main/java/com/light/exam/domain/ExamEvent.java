@@ -19,9 +19,11 @@ public class ExamEvent {
     @Id
     private Long id;
 
-    private Long scribeId;
+    private Long request;
 
-    private Long candidateId;
+    private Long scribe;
+
+    private Long candidate;
 
     private Boolean otpGenerated;
 
@@ -35,9 +37,10 @@ public class ExamEvent {
 
     private Long examSchedule;
 
-    public ExamEvent(final Long candidateId, final Long scribeId, final Long examSchedule) {
-        this.scribeId = scribeId;
-        this.candidateId = candidateId;
+    public ExamEvent(final Long request, final Long candidate, final Long scribe, final Long examSchedule) {
+        this.request = request;
+        this.scribe = scribe;
+        this.candidate = candidate;
         this.examSchedule = examSchedule;
     }
 

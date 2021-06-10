@@ -61,8 +61,7 @@ public class Scribe {
         Assert.notNull(language, "Language must not be null");
         Assert.notNull(language.getId(), "Language id, must not be null");
 
-        LanguageRef languageRef = new LanguageRef(language.getId());
-        return languageRef;
+        return new LanguageRef(language.getId());
     }
 
 }

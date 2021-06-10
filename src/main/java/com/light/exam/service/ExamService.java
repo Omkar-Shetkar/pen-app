@@ -15,7 +15,7 @@ public class ExamService {
     private ExamRepository examRepository;
 
     public Exam save(ExamUpdate examUpdate) {
-        Exam exam = new Exam(examUpdate.getExamName());
+        var exam = new Exam(examUpdate.getExamName());
         return examRepository.save(exam);
     }
 

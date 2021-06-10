@@ -102,3 +102,25 @@ create TABLE IF NOT EXISTS request (
     FOREIGN KEY (scribe) REFERENCES scribe(id),
     FOREIGN KEY (exam_schedule) REFERENCES exam_schedule(id)
 );
+
+create TABLE IF NOT EXISTS exam_event (
+    id INTEGER  PRIMARY KEY AUTO_INCREMENT,
+    request INTEGER,
+    scribe INTEGER,
+    candidate INTEGER,
+    otp_generated BOOLEAN,
+    otp_verified BOOLEAN,
+    exam_status VARCHAR(30),
+    exam_schedule INTEGER,
+
+    FOREIGN KEY (request) REFERENCES request(id),
+    FOREIGN KEY (scribe) REFERENCES scribe(id),
+    FOREIGN KEY (candidate) REFERENCES candidate(id),
+    FOREIGN KEY (exam_schedule) REFERENCES exam_schedule(id)
+);
+
+create TABLE IF NOT EXISTS feedback (
+    rating INTEGER,
+    comment VARCHAR,
+    exam_event INTEGER REFERENCES exam_event(id)
+);

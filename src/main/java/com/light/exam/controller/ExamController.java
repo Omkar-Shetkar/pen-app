@@ -24,8 +24,8 @@ public class ExamController {
 
     @PostMapping
     public ResponseEntity<Exam> create(@RequestBody ExamUpdate examUpdate) {
-        Exam exam = examService.save(examUpdate);
-        URI location = ServletUriComponentsBuilder
+        var exam = examService.save(examUpdate);
+        var location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(exam.getId()).toUri();
         return ResponseEntity.created(location).body(exam);
@@ -44,7 +44,7 @@ public class ExamController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Exam> get(@PathVariable long id) {
-        Exam exam = examService.get(id)
+        var exam = examService.get(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Exam with id {%d} not found!", id)));
 
         return ResponseEntity.ok(exam);

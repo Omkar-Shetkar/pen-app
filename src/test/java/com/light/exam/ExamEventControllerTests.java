@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
-import static com.light.exam.controller.ExamEventController.SINGLE;
 import static com.light.request.RequestController.ALL;
+import static com.light.request.RequestController.SINGLE;
 import static com.light.request.domain.RequestStatus.ACCEPTED;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static org.junit.jupiter.api.Assertions.assertEquals;

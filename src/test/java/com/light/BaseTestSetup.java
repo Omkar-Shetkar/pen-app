@@ -1,6 +1,7 @@
 package com.light;
 
 import com.light.candidate.repository.CandidateRepository;
+import com.light.exam.repository.ExamEventRepository;
 import com.light.repository.LanguageRepository;
 import com.light.request.repository.ExamScheduleRepository;
 import com.light.request.repository.RequestRepository;
@@ -33,8 +34,12 @@ public abstract class BaseTestSetup {
     @Autowired
     private ExamScheduleRepository examScheduleRepository;
 
+    @Autowired
+    private ExamEventRepository examEventRepository;
+
     @AfterEach
     void cleanUpData() {
+        examEventRepository.deleteAll();
         requestRepository.deleteAll();
         examScheduleRepository.deleteAll();
         scribeRepository.deleteAll();
