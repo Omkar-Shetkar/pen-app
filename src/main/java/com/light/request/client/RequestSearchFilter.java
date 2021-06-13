@@ -18,7 +18,7 @@ public class RequestSearchFilter {
 
     private long scribe = UNASSIGNED_ID;
 
-    private long schedule;
+    private long schedule = UNASSIGNED_ID;
 
     private RequestStatus requestStatus;
 

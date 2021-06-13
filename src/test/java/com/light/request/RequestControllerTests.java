@@ -132,6 +132,60 @@ class RequestControllerTests extends BaseTestSetup {
         Assertions.assertEquals(requestSet.iterator().next().get("status"), RequestStatus.PENDING.toString());
     }
 
+    /**
+     * Suppose Candidate raised request for an exam schedule.
+     * No Scribe accepted the request yet.
+     * Now, Candidate again searches for Scribe for the schedule. He finds new Scribes.
+     * Then, he should be able to raise request for the same schedule.
+     */
+    @Test
+    void testRequestSomeMoreScribes() throws Exception {
+        // Candidate requests a Scribe
+        Request request = createRequest(1L);
+
+        // Since no response from Scribe, Candidate requests some more Scribes for the same schedule
+        request = createRequest(2l);
+
+        Long examSchedule = request.getExamSchedule();
+
+        // Now, Candidate should have total of two requests for the corresponding schedule
+        String response = mockMvc.perform(get((ALL))
+                .param("candidate", String.valueOf(request.getCandidate()))
+                .param("schedule", String.valueOf(examSchedule))
+                .param("requestStatus", RequestStatus.PENDING.toString()))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        List<LinkedHashMap<String, String>> requestSet = mapper.readValue(response, List.class);
+        Assertions.assertEquals(2, requestSet.size());
+
+    }
+
+    /**
+     * Scribe can't accept more than one request for the same time slot.
+     */
+    @Test
+    void testMultipleRequestsForSameTimeSlot() throws Exception {
+        Request request = candidateCreatesRequestAndScribeAcceptsIt();
+
+        // Scribe accepts the request
+        String content = mapper.writeValueAsString(ACCEPTED);
+        mockMvc.perform(patch(SINGLE, request.getId())
+                .contentType(APPLICATION_JSON)
+                .content(content))
+                .andExpect(status().isBadRequest());
+
+        // Now, scribe should have only one request in ACCEPTED status
+        String response = mockMvc.perform(get((ALL))
+                .param("scribe", String.valueOf(request.getScribe()))
+                .param("requestStatus", ACCEPTED.toString()))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        List<LinkedHashMap<String, String>> requestSet = mapper.readValue(response, List.class);
+        Assertions.assertEquals(1, requestSet.size());
+        Assertions.assertEquals(String.valueOf(request.getId()), String.valueOf(requestSet.iterator().next().get("id")));
+    }
+
     private Request candidateCreatesRequestAndScribeAcceptsIt() throws Exception {
         // Candidate sends request to all scribes
         Iterable<Scribe> scribes = scribeService.getAll();

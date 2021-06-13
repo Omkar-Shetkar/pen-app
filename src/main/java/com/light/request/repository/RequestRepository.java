@@ -24,7 +24,7 @@ public interface RequestRepository extends CrudRepository<Request, Long> {
             SELECT * FROM request r 
             WHERE 
             (r.scribe = :scribe OR r.candidate = :candidate) AND  
-            (:examSchedule IS NULL OR r.exam_schedule = :examSchedule) AND  
+            (:examSchedule IS NULL OR :examSchedule = 0 OR r.exam_schedule = :examSchedule) AND  
             (:status IS NULL OR r.status = :status)
             """)
     List<Request> search(Long candidate, Long scribe, Long examSchedule, RequestStatus status);
