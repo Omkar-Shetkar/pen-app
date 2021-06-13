@@ -1,13 +1,19 @@
 package com.light.exam.service;
 
+import com.light.exam.client.ExamEventSearchFilter;
 import com.light.exam.client.ExamEventUpdate;
+import com.light.exam.client.FeedbackDetails;
+import com.light.exam.client.UserType;
+import com.light.exam.domain.CandidateFeedback;
 import com.light.exam.domain.ExamEvent;
+import com.light.exam.domain.ScribeFeedback;
 import com.light.exam.repository.ExamEventRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +35,39 @@ public class ExamEventService {
     public void delete(long requestId) {
         Optional<ExamEvent> examEventOptional = examEventRepository.findByRequest(requestId);
         examEventOptional.ifPresent(e -> examEventRepository.delete(e));
+    }
+
+    public List<ExamEvent> search(ExamEventSearchFilter filter) {
+        return examEventRepository.search(filter.getCandidate(), filter.getScribe());
+    }
+
+    public Optional<ExamEvent> getByRequestId(long requestId) {
+        return examEventRepository.findByRequest(requestId);
+    }
+
+    public Optional<ExamEvent> get(long id) {
+        return examEventRepository.findById(id);
+    }
+
+    public void updateFeedback(long examEventId, FeedbackDetails feedbackDetails) {
+        ExamEvent examEvent = get(examEventId)
+                .orElseThrow(()
+                        -> new IllegalArgumentException(String.format("Exam event with id {%d} not found!", examEventId)));
+
+        if (feedbackDetails.getUserType() == UserType.CANDIDATE) {
+            CandidateFeedback candidateFeedback = new CandidateFeedback();
+            candidateFeedback.setRating(feedbackDetails.getRating());
+            candidateFeedback.setComment(feedbackDetails.getComment());
+            examEvent.setCandidateFeedback(candidateFeedback);
+        } else if (feedbackDetails.getUserType() == UserType.SCRIBE) {
+            ScribeFeedback scribeFeedback = new ScribeFeedback();
+            scribeFeedback.setRating(feedbackDetails.getRating());
+            scribeFeedback.setComment(feedbackDetails.getComment());
+            examEvent.setScribeFeedback(scribeFeedback);
+        } else {
+            throw new IllegalArgumentException("Feedback should correspond to either scribe or candidate!");
+        }
+        examEventRepository.save(examEvent);
     }
 
 }

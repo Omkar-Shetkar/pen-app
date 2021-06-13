@@ -31,9 +31,9 @@ public class ExamEvent {
 
     private ExamStatus examStatus = ExamStatus.NOT_STARTED;
 
-    private Feedback scribeFeedback;
+    private ScribeFeedback scribeFeedback;
 
-    private Feedback candidateFeedback;
+    private CandidateFeedback candidateFeedback;
 
     private Long examSchedule;
 

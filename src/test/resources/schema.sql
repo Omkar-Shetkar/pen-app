@@ -120,7 +120,13 @@ create TABLE IF NOT EXISTS exam_event (
     FOREIGN KEY (exam_schedule) REFERENCES exam_schedule(id)
 );
 
-create TABLE IF NOT EXISTS feedback (
+create TABLE IF NOT EXISTS candidate_feedback (
+    rating INTEGER,
+    comment VARCHAR,
+    exam_event INTEGER REFERENCES exam_event(id)
+);
+
+create TABLE IF NOT EXISTS scribe_feedback (
     rating INTEGER,
     comment VARCHAR,
     exam_event INTEGER REFERENCES exam_event(id)
