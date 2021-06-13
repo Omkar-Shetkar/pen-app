@@ -1,5 +1,6 @@
 package com.light.request;
 
+import com.light.request.client.RequestSearchFilter;
 import com.light.request.client.RequestUpdate;
 import com.light.request.domain.Request;
 import com.light.request.domain.RequestStatus;
@@ -10,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/rest/requests")
@@ -50,6 +53,12 @@ public class RequestController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
 
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Request>> find(@Validated RequestSearchFilter searchFilter) {
+        List<Request> requests = requestService.search(searchFilter);
+        return ResponseEntity.ok(requests);
     }
 
 }

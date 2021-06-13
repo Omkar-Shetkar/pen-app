@@ -3,10 +3,15 @@ package com.light.request;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.light.BaseTestSetup;
+import com.light.exam.domain.ExamSchedule;
 import com.light.request.client.RequestUpdate;
 import com.light.request.domain.Request;
+import com.light.request.domain.RequestStatus;
 import com.light.request.repository.ExamScheduleRepository;
+import com.light.scribe.domain.Scribe;
 import com.light.scribe.service.ScribeService;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
@@ -14,6 +19,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import static com.light.request.RequestController.ALL;
 import static com.light.request.RequestController.SINGLE;
@@ -22,8 +30,7 @@ import static com.light.request.domain.RequestStatus.REJECTED;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class RequestControllerTests extends BaseTestSetup {
@@ -78,6 +85,74 @@ class RequestControllerTests extends BaseTestSetup {
                 .content(content))
                 .andExpect(status().isBadRequest());
 
+    }
+
+    /**
+     * Candidate raises request with multiple scribes for an exam for a specific exam schedule.
+     * A scribe accepts the request. Then all remaining requests raised for corresponding exam schedule become disabled.
+     * But after some time same scribe rejects the accepted request.
+     * Then, remaining requests raised for corresponding exam schedule get enabled again.
+     */
+    @Test
+    @DisplayName("Other scribe accepts and rejects the request")
+    void testRequestDisableStatus() throws Exception {
+
+        Request request = candidateCreatesRequestAndScribeAcceptsIt();
+
+        //************** Remaining requests for the same schedule should be disabled **********************
+
+        // Get all requests for the given Candidate and exam schedule
+        Long examScheduleId = request.getExamSchedule();
+        ExamSchedule examSchedule = examScheduleRepository.findById(examScheduleId)
+                .orElseThrow(() -> new IllegalStateException("Exam schedule not found " + examScheduleId));
+        String response = mockMvc.perform(get((ALL))
+                .param("candidate", "1")
+                .param("schedule", String.valueOf(examSchedule.getId()))
+                .param("requestStatus", RequestStatus.DISABLED.toString()))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        List<LinkedHashMap<String, String>> requestSet = mapper.readValue(response, List.class);
+        Assertions.assertEquals(2, requestSet.size());
+        Assertions.assertEquals(requestSet.iterator().next().get("status"), RequestStatus.DISABLED.toString());
+
+        //************ Scribe rejects the request, then remaining requests get enabled again *********************
+        scribeRejectsRequest(request);
+
+        // Get all requests for the given Candidate and exam schedule
+        response = mockMvc.perform(get((ALL))
+                .param("candidate", String.valueOf(request.getCandidate()))
+                .param("schedule", String.valueOf(examSchedule.getId()))
+                .param("requestStatus", RequestStatus.PENDING.toString()))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        requestSet = mapper.readValue(response, List.class);
+        Assertions.assertEquals(2, requestSet.size());
+        Assertions.assertEquals(requestSet.iterator().next().get("status"), RequestStatus.PENDING.toString());
+    }
+
+    private Request candidateCreatesRequestAndScribeAcceptsIt() throws Exception {
+        // Candidate sends request to all scribes
+        Iterable<Scribe> scribes = scribeService.getAll();
+
+        List<Request> requests = new ArrayList<>();
+        for (Scribe scribe : scribes) {
+            Request request = createRequest(scribe.getId());
+            requests.add(request);
+        }
+
+        // Scribe accepts the request
+        String content = mapper.writeValueAsString(ACCEPTED);
+        String response = mockMvc.perform(patch(SINGLE, requests.get(0).getId())
+                .contentType(APPLICATION_JSON)
+                .content(content))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        Request request = mapper.readValue(response, Request.class);
+        assertEquals(ACCEPTED, request.getStatus());
+        return request;
     }
 
     private RequestUpdate createRequestUpdate(long scribeId) {

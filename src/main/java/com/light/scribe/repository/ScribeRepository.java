@@ -16,7 +16,8 @@ public interface ScribeRepository extends CrudRepository<Scribe, Long> {
             SELECT * FROM scribe s 
             INNER JOIN availability a ON a.scribe = s.id 
             INNER JOIN scribe_language l ON l.scribe = s.id 
-            WHERE a.available_from <= :from 
+            WHERE 
+            a.available_from <= :from 
             AND a.available_to >= :to 
             AND l.language = :language 
             """)

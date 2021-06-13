@@ -50,16 +50,19 @@ public class RequestService {
         Scribe scribe = scribeService.findById(requestUpdate.getScribeId());
         Candidate candidate = candidateService.findById(requestUpdate.getCandidateId());
 
-        //TODO: Use existing exam schedule, if available
-//        Optional<ExamSchedule> scheduleOptional = examScheduleRepository
-//                .findByStartTimeAndEndTime(schedule.getStartTime(), schedule.getEndTime());
+        // Use existing exam schedule, if available
+        ExamSchedule examSchedule = examScheduleRepository.find(requestUpdate.getExam(),
+                requestUpdate.getStartTime(), requestUpdate.getEndTime(), requestUpdate.getLanguage())
+                .orElseGet(() ->
+                        {
+                            ExamSchedule newSchedule = new ExamSchedule(requestUpdate.getStartTime(),
+                                    requestUpdate.getEndTime(), requestUpdate.getLanguage(),
+                                    requestUpdate.getAddress(), requestUpdate.getExam());
+                            return examScheduleRepository.save(newSchedule);
+                        }
+                );
 
-        ExamSchedule examSchedule = new ExamSchedule(requestUpdate.getStartTime(),
-                requestUpdate.getEndTime(), requestUpdate.getLanguage(),
-                requestUpdate.getAddress(), requestUpdate.getExam());
-        ExamSchedule savedSchedule = examScheduleRepository.save(examSchedule);
-
-        Request request = new Request(scribe.getId(), candidate.getId(), savedSchedule.getId());
+        Request request = new Request(scribe.getId(), candidate.getId(), examSchedule.getId());
 
         return requestRepository.save(request);
 
@@ -178,6 +181,7 @@ public class RequestService {
     }
 
     public List<Request> search(RequestSearchFilter searchFilter) {
-        return requestRepository.search(searchFilter.getScribe(), searchFilter.getSchedule(), searchFilter.getRequestStatus());
+        return requestRepository.search(searchFilter.getCandidate(), searchFilter.getScribe(),
+                searchFilter.getSchedule(), searchFilter.getRequestStatus());
     }
 }

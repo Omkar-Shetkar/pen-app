@@ -89,7 +89,8 @@ create TABLE IF NOT EXISTS exam_schedule (
     address INTEGER,
     FOREIGN KEY (exam) REFERENCES exam(id),
     FOREIGN KEY (language) REFERENCES language(id),
-    FOREIGN KEY (address) REFERENCES address(id)
+    FOREIGN KEY (address) REFERENCES address(id),
+    UNIQUE(start_time, end_time, exam, language)
 );
 
 create TABLE IF NOT EXISTS request (
