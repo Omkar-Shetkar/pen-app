@@ -50,7 +50,7 @@ class RequestControllerTests extends BaseTestSetup {
     private ExamScheduleRepository examScheduleRepository;
 
     @Test
-    void candidateRequestsForExam() throws Exception {
+    void testCandidateRequestsForExam() throws Exception {
 
         RequestUpdate requestUpdate = createRequestUpdate(1L);
         String content = mapper.writeValueAsString(requestUpdate);
@@ -60,7 +60,7 @@ class RequestControllerTests extends BaseTestSetup {
     }
 
     @Test
-    void scribeAcceptsRequest() throws Exception {
+    void testScribeAcceptsRequest() throws Exception {
 
         Request request = createRequest(1L);
 

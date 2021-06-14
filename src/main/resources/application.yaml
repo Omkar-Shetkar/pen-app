@@ -6,6 +6,11 @@ spring:
 ---
 spring:
   profiles: dev, prod
+
+light.exam:
+  schedule.delay-in-ms: 2700000 # 45 Mins - OTP is generated at the most given delay before start of the exam
+  otp.expire-in-ms: 3600000 # 60 Mins - OTP Expires after 1 Hr of generation
+  initial-delay-in-ms: 300000 # 5 Min
 ---
 spring:
   profiles: test
@@ -16,3 +21,19 @@ spring:
   h2:
     console:
       enabled: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+light.exam:
+  schedule.delay-in-ms: 5000 # 5 Secs - OTP is generated at the most given delay before start of the exam
+  otp.expire-in-ms: 5000 # 5 Secs - OTP Expires after 1 Hr of generation
+  initial-delay-in-ms: 5000 # 5 Secs

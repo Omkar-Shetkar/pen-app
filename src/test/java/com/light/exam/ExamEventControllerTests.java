@@ -40,9 +40,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ExamEventControllerTests extends BaseTestSetup {
 
     public static final long CANDIDATE_ID = 1L;
-    public static final long EXAM_ID = 101;
-    public static final long LANGUAGE_ID = 1;
-    public static final long ADDRESS_ID = 1;
+    public static final long EXAM_ID = 101L;
+    public static final long LANGUAGE_ID = 1L;
+    public static final long ADDRESS_ID = 1L;
 
     @Autowired
     private MockMvc mockMvc;
@@ -108,13 +108,6 @@ class ExamEventControllerTests extends BaseTestSetup {
 
     }
 
-    private ResultActions rejectRequest(Request request) throws Exception {
-        String content = mapper.writeValueAsString(REJECTED);
-        return mockMvc.perform(patch(SINGLE, request.getId())
-                .contentType(APPLICATION_JSON)
-                .content(content));
-    }
-
     /**
      * Candidate and Scribe give feedback on each other after completion of exam.
      */
@@ -141,7 +134,7 @@ class ExamEventControllerTests extends BaseTestSetup {
                 .content(content))
                 .andExpect(status().isNoContent());
 
-        ExamEvent event = examEventService.get(examEvent.getId())
+        ExamEvent event = examEventService.getById(examEvent.getId())
                 .orElseThrow(()
                         -> new IllegalStateException(String.format("Exam event with id {%d} not found!",
                         examEvent.getId())));
@@ -162,13 +155,20 @@ class ExamEventControllerTests extends BaseTestSetup {
                 .content(content))
                 .andExpect(status().isNoContent());
 
-        event = examEventService.get(examEvent.getId())
+        event = examEventService.getById(examEvent.getId())
                 .orElseThrow(()
                         -> new IllegalStateException(String.format("Exam event with id {%d} not found!",
                         examEvent.getId())));
         assertEquals(5, event.getCandidateFeedback().getRating());
         assertEquals("Thanks!!", event.getCandidateFeedback().getComment());
 
+    }
+
+    private ResultActions rejectRequest(Request request) throws Exception {
+        String content = mapper.writeValueAsString(REJECTED);
+        return mockMvc.perform(patch(SINGLE, request.getId())
+                .contentType(APPLICATION_JSON)
+                .content(content));
     }
 
     private Request candidateCreatesRequestAndScribeAcceptsIt(ExamSchedule examSchedule) throws Exception {

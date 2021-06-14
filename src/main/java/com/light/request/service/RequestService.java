@@ -79,6 +79,10 @@ public class RequestService {
         return updateStatus(request, targetStatus);
     }
 
+    public void deleteByExamScheduleAndNotStatus(long examSchedule, RequestStatus status) {
+        requestRepository.deleteByExamScheduleAndNotStatus(examSchedule, status);
+    }
+
     /**
      * Updates status for all related requests for the given Candidate and exam schedule
      *

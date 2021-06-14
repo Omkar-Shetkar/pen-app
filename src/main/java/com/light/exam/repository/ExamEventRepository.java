@@ -13,7 +13,28 @@ public interface ExamEventRepository extends CrudRepository<ExamEvent, Long> {
     @Query("""
             SELECT * FROM exam_event e
             WHERE
-            e.candidate = :candidate
+            ((e.candidate IS NULL OR e.candidate = :candidate) OR
+            (e.scribe IS NULL OR e.scribe = :scribe)) OR
+            e.exam_schedule IN
+            (:scheduledInNextHours IS NULL OR
+                SELECT id FROM exam_schedule es 
+                WHERE
+                extract(epoch from es.start_time - CURRENT_TIMESTAMP)/3600 <= :scheduledInNextHours 
+            )
             """)
-    List<ExamEvent> search(Long candidate, Long scribe);
+    List<ExamEvent> search(Long candidate, Long scribe, Integer scheduledInNextHours);
+
+    @Query("""
+            SELECT * FROM exam_event e
+            WHERE
+            e.exam_status = 'STARTED' AND
+            e.exam_schedule IN
+            (
+                SELECT id FROM exam_schedule es
+                WHERE
+                es.end_time > CURRENT_TIME
+                        
+            )
+            """)
+    List<ExamEvent> getAllExamsEligibleForCompletion();
 }

@@ -38,19 +38,19 @@ public class ExamEventService {
     }
 
     public List<ExamEvent> search(ExamEventSearchFilter filter) {
-        return examEventRepository.search(filter.getCandidate(), filter.getScribe());
+        return examEventRepository.search(filter.getCandidate(), filter.getScribe(), filter.getScheduledInNextHours());
     }
 
     public Optional<ExamEvent> getByRequestId(long requestId) {
         return examEventRepository.findByRequest(requestId);
     }
 
-    public Optional<ExamEvent> get(long id) {
+    public Optional<ExamEvent> getById(long id) {
         return examEventRepository.findById(id);
     }
 
     public void updateFeedback(long examEventId, FeedbackDetails feedbackDetails) {
-        ExamEvent examEvent = get(examEventId)
+        ExamEvent examEvent = getById(examEventId)
                 .orElseThrow(()
                         -> new IllegalArgumentException(String.format("Exam event with id {%d} not found!", examEventId)));
 
@@ -68,6 +68,18 @@ public class ExamEventService {
             throw new IllegalArgumentException("Feedback should correspond to either scribe or candidate!");
         }
         examEventRepository.save(examEvent);
+    }
+
+    public ExamEvent save(ExamEvent event) {
+        return examEventRepository.save(event);
+    }
+
+    public Iterable<ExamEvent> saveAll(Iterable<ExamEvent> events) {
+        return examEventRepository.saveAll(events);
+    }
+
+    public List<ExamEvent> getAllExamsEligibleForCompletion() {
+        return examEventRepository.getAllExamsEligibleForCompletion();
     }
 
 }
