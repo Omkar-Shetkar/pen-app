@@ -12,13 +12,11 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class RequestSearchFilter {
 
-    public static final long UNASSIGNED_ID = 0;
+    private Long candidate;
 
-    private long candidate = UNASSIGNED_ID;
+    private Long scribe;
 
-    private long scribe = UNASSIGNED_ID;
-
-    private long schedule = UNASSIGNED_ID;
+    private Long schedule;
 
     private RequestStatus requestStatus;
 

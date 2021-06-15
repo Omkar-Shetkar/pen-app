@@ -69,10 +69,9 @@ class LightBackendApplicationTests extends BaseTestSetup {
     public static final long LANGUAGE_ID = 1L;
     public static final long ADDRESS_ID = 1L;
 
-    //FIXME: Check unit test failure
     @Test
     void applicationLifeCycle() throws Exception {
-        ExamSchedule examSchedule = createExamSchedule(LocalDateTime.now().plusSeconds(10));
+        ExamSchedule examSchedule = createExamSchedule(LocalDateTime.now().plusSeconds(25));
         Request request = candidateCreatesRequestAndScribeAcceptsIt(examSchedule);
         long requestId = request.getId();
 
