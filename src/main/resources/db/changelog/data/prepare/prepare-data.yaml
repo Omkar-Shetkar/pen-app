@@ -1,0 +1,253 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: loadData-country
+      author: omkars
+      changes:
+        - loadData:
+            catalogName: country
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: NUMERIC
+              - column:
+                  header: name
+                  name: name
+                  type: STRING
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: countries.csv
+            quotchar: ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            separator: '\t'
+            tableName: country
+            usePreparedStatements: false
+
+  - changeSet:
+      id: loadData-state
+      author: omkars
+      changes:
+        - loadData:
+            catalogName: state
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: NUMERIC
+              - column:
+                  header: name
+                  name: name
+                  type: STRING
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: states.csv
+            quotchar: ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            separator: '\t'
+            tableName: state
+            usePreparedStatements: false
+
+  - changeSet:
+      id: loadData-city
+      author: omkars
+      changes:
+        - loadData:
+            catalogName: city
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: NUMERIC
+              - column:
+                  header: name
+                  name: name
+                  type: STRING
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: cities.csv
+            quotchar: ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            separator: '\t'
+            tableName: city
+            usePreparedStatements: false
+
+  - changeSet:
+      id: loadData-address
+      author: omkars
+      changes:
+        - loadData:
+            catalogName: address
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: NUMERIC
+              - column:
+                  header: city
+                  name: city
+                  type: NUMERIC
+              - column:
+                  header: country
+                  name: country
+                  type: NUMERIC
+              - column:
+                  header: gps_location
+                  name: gps_location
+                  type: STRING
+              - column:
+                  header: pincode
+                  name: pincode
+                  type: STRING
+              - column:
+                  header: state
+                  name: state
+                  type: NUMERIC
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: addresses.csv
+            quotchar: ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            separator: '\t'
+            tableName: address
+            usePreparedStatements: false
+
+  - changeSet:
+      id: loadData-scribe
+      author: omkars
+      changes:
+        - loadData:
+            catalogName: scribe
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: NUMERIC
+              - column:
+                  header: email
+                  name: email
+                  type: STRING
+              - column:
+                  header: first_name
+                  name: first_name
+                  type: STRING
+              - column:
+                  header: gender
+                  name: gender
+                  type: STRING
+              - column:
+                  header: last_name
+                  name: last_name
+                  type: STRING
+              - column:
+                  header: phone
+                  name: phone
+                  type: STRING
+              - column:
+                  header: location
+                  name: location
+                  type: STRING
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: scribes.csv
+            quotchar: ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            separator: '\t'
+            tableName: scribe
+            usePreparedStatements: false
+
+  - changeSet:
+        id: loadData-availability
+        author: omkars
+        changes:
+            - loadData:
+                  catalogName: availability
+                  columns:
+                      - column:
+                            header: scribe
+                            name: scribe
+                            type: NUMERIC
+                      - column:
+                            header: available_from
+                            name: available_from
+                            type: DATE
+                      - column:
+                            header: available_to
+                            name: available_to
+                            type: DATE
+                  commentLineStartsWith: //
+                  encoding: UTF-8
+                  file: availabilities.csv
+                  quotchar: ''''
+                  relativeToChangelogFile: true
+                  schemaName: public
+                  separator: '\t'
+                  tableName: availability
+                  usePreparedStatements: false
+
+  - changeSet:
+        id: loadData-scribe-languages
+        author: omkars
+        changes:
+            - loadData:
+                  catalogName: scribe-languages
+                  columns:
+                      - column:
+                            header: scribe
+                            name: scribe
+                            type: NUMERIC
+                      - column:
+                            header: language
+                            name: language
+                            type: NUMERIC
+                  commentLineStartsWith: //
+                  encoding: UTF-8
+                  file: scribe-languages.csv
+                  quotchar: ''''
+                  relativeToChangelogFile: true
+                  schemaName: public
+                  separator: '\t'
+                  tableName: scribe_language
+                  usePreparedStatements: false
+
+  - changeSet:
+        id: loadData-candidates
+        author: omkars
+        changes:
+            - loadData:
+                  catalogName: candidates
+                  columns:
+                      - column:
+                            header: id
+                            name: id
+                            type: NUMERIC
+                      - column:
+                            header: first_name
+                            name: first_name
+                            type: STRING
+                      - column:
+                            header: last_name
+                            name: last_name
+                            type: STRING
+                      - column:
+                            header: gender
+                            name: gender
+                            type: STRING
+                      - column:
+                            header: phone
+                            name: phone
+                            type: STRING
+                  commentLineStartsWith: //
+                  encoding: UTF-8
+                  file: candidates.csv
+                  quotchar: ''''
+                  relativeToChangelogFile: true
+                  schemaName: public
+                  separator: '\t'
+                  tableName: candidate
+                  usePreparedStatements: false

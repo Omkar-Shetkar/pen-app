@@ -6,6 +6,19 @@ spring:
 ---
 spring:
   profiles: dev, prod
+  liquibase:
+    enabled: true
+  jpa:
+    show-sql: true
+    database: postgresql
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/light
+    username: postgres
+    password: password
+    initialization-mode: always
 
 light.exam:
   schedule.delay-in-ms: 2700000 # 45 Mins - OTP is generated at the most given delay before start of the exam
