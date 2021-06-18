@@ -11,6 +11,7 @@ import AppFormPickerField from "../components/forms/AppFormPickerField";
 import AppFormDateTimePicker from "../components/forms/AppFormDateTimePicker";
 import languagesApi from "../api/languages";
 import examsApi from "../api/exams";
+import scribesApi from "../api/scribes";
 import useApi from "../hooks/useApi";
 import strings from "../config/strings";
 
@@ -19,7 +20,6 @@ const validationSchema = Yup.object().shape({
     .min(new Date().toDateString())
     .required()
     .label("Exam date"),
-  examTime: Yup.date().required().label("Exam time"),
   durationHours: Yup.number()
     .required("**")
     .min(0)
@@ -96,19 +96,34 @@ function ScribeSearchScreen(props) {
     loadExams();
   }, []);
 
+  const handleSubmit = async (searchCriteria, { resetForm }) => {
+    // setProgress(0);
+    // setUploadVisible(true);
+    console.log("on submit called...");
+    console.log("from", searchCriteria);
+    const result = await scribesApi.find(searchCriteria);
+
+    console.log("Result: ", result);
+
+    // if (!result.ok) {
+    //   setUploadVisible(false);
+    //   return alert("Could not save the listing.");
+    // }
+    // resetForm();
+  };
+
   return (
     <Screen style={styles.container}>
       <ScrollView>
         <AppForm
           initialValues={{
             examDate: "",
-            examTime: "",
             durationHours: "",
             durationMinutes: "",
             language: "",
             exam: "",
           }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
           <AppErrorMessage error={error} visible={error} />
@@ -119,14 +134,6 @@ function ScribeSearchScreen(props) {
               name="examDate"
               mode="date"
               placeholder="Exam Date"
-              editable={false}
-            />
-
-            <AppFormDateTimePicker
-              icon="av-timer"
-              name="examTime"
-              mode="time"
-              placeholder="Exam Time"
               editable={false}
             />
           </View>

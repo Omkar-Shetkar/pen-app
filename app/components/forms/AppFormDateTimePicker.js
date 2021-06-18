@@ -13,21 +13,19 @@ function AppFormDateTimePicker({ name, width, mode, ...otherProps }) {
   const { setFieldValue, values, errors, touched } = useFormikContext();
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dateTime, setDateTime] = useState(new Date());
+  const [pickerMode, setPickerMode] = useState(mode);
 
   const onDateSelection = (event, selectedDate) => {
     setShowDatePicker(Platform.OS === "ios");
     if (selectedDate) {
       setFieldValue(name, selectedDate);
       setDateTime(selectedDate);
-    }
-  };
-
-  const format = (mode) => {
-    switch (mode) {
-      case "date":
-        return "MMMM Do YYYY";
-      case "time":
-        return "LT";
+      if (pickerMode === "date") {
+        setPickerMode("time");
+        setShowDatePicker(true);
+      } else {
+        setPickerMode("date");
+      }
     }
   };
 
@@ -37,7 +35,7 @@ function AppFormDateTimePicker({ name, width, mode, ...otherProps }) {
         <DateTimePicker
           name="dateTimePicker"
           value={dateTime ? dateTime : new Date()}
-          mode={mode}
+          mode={pickerMode}
           is24Hour={false}
           display="default"
           onChange={onDateSelection}
@@ -51,7 +49,11 @@ function AppFormDateTimePicker({ name, width, mode, ...otherProps }) {
           editable={false}
           color={defaultStyles.colors.medium}
           {...otherProps}
-          value={values[name] ? moment(values[name]).format(format(mode)) : ""}
+          value={
+            values[name]
+              ? moment(values[name]).format("MMMM Do YYYY, h:mm A")
+              : ""
+          }
         />
       </Pressable>
       <AppErrorMessage error={errors[name]} visible={touched[name]} />

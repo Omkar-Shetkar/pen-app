@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import * as Yup from "yup";
 
 import Screen from "../components/Screen";
@@ -8,7 +8,6 @@ import AppFormField from "../components/forms/AppFormField";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
 import SubmitButton from "../components/forms/SubmitButton";
 import AppFormPickerField from "../components/forms/AppFormPickerField";
-import AppFormDateTimePicker from "../components/forms/AppFormDateTimePicker";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
