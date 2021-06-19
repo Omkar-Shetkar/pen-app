@@ -104,13 +104,16 @@ function ScribeSearchScreen({ navigation }) {
     console.log("from", searchCriteria);
     const result = await scribesApi.find(searchCriteria);
 
-    navigation.navigate(routes.SCRIBE_SEARCH_RESULTS, result);
-    console.log("In Search screen Result: ", result);
+    if (result.data.length == 0) {
+      return alert(strings.search.noScribeFound);
+    }
+    navigation.navigate(routes.SCRIBE_SEARCH_RESULTS, result.data);
 
     // if (!result.ok) {
     //   setUploadVisible(false);
     //   return alert("Could not save the listing.");
     // }
+
     // resetForm();
   };
 
