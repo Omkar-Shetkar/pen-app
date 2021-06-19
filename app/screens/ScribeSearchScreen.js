@@ -14,6 +14,7 @@ import examsApi from "../api/exams";
 import scribesApi from "../api/scribes";
 import useApi from "../hooks/useApi";
 import strings from "../config/strings";
+import routes from "../navigation/routes";
 
 const validationSchema = Yup.object().shape({
   examDate: Yup.date()
@@ -44,7 +45,7 @@ const validationSchema = Yup.object().shape({
     .label("Exam"),
 });
 
-function ScribeSearchScreen(props) {
+function ScribeSearchScreen({ navigation }) {
   const [error, setError] = useState();
 
   const onTimeSelection = (event, selectedDate) => {
@@ -103,7 +104,8 @@ function ScribeSearchScreen(props) {
     console.log("from", searchCriteria);
     const result = await scribesApi.find(searchCriteria);
 
-    console.log("Result: ", result);
+    navigation.navigate(routes.SCRIBE_SEARCH_RESULTS, result);
+    console.log("In Search screen Result: ", result);
 
     // if (!result.ok) {
     //   setUploadVisible(false);

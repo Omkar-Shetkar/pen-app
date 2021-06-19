@@ -3,7 +3,9 @@ import { View, StyleSheet, FlatList } from "react-native";
 import SearchResultsCardComponent from "../components/SearchResultsCardComponent";
 import Screen from "../components/Screen";
 
-function SearchResultsScreen(props) {
+function ScribeSearchResultsScreen({ route }) {
+  const result = route.params;
+  console.log("**************** In results screen ", result);
   const listing = [
     { id: 1, name: "scribe-1", qualification: "MCA", gender: "M" },
     { id: 2, name: "scribe-2", qualification: "BSc", gender: "F" },
@@ -41,4 +43,4 @@ const styles = StyleSheet.create({
   container: {},
 });
 
-export default SearchResultsScreen;
+export default ScribeSearchResultsScreen;
