@@ -7,28 +7,13 @@ const find = (searchCriteria, language) => {
 
   console.log("search criteria: ", searchCriteria);
 
-  const fromDate = new Date(
-    Date.UTC(
-      from.getFullYear(),
-      from.getMonth(),
-      from.getDate(),
-      from.getHours(),
-      from.getMinutes()
-    )
-  );
-  const toDate = new Date(
-    Date.UTC(
-      from.getFullYear(),
-      from.getMonth(),
-      from.getDate(),
-      from.getHours() + parseInt(searchCriteria.durationHours),
-      from.getMinutes() + parseInt(searchCriteria.durationMinutes)
-    )
-  );
+  const to = new Date(from);
+  to.setHours(to.getHours() + parseInt(searchCriteria.durationHours));
+  to.setMinutes(to.getMinutes() + parseInt(searchCriteria.durationMinutes));
 
   return apiClient.get(endPoint, {
-    from: fromDate.toISOString(),
-    to: toDate.toISOString(),
+    from: from.toISOString(),
+    to: to.toISOString(),
     language: searchCriteria.language,
   });
 };

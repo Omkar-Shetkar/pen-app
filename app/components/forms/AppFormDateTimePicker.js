@@ -44,8 +44,7 @@ function AppFormDateTimePicker({ name, width, mode, ...otherProps }) {
       <Pressable onPress={() => setShowDatePicker(true)}>
         <AppFormField
           icon="calendar"
-          name="examDate"
-          name="examDateTime"
+          name="dateTime"
           editable={false}
           color={defaultStyles.colors.medium}
           {...otherProps}

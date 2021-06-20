@@ -64,12 +64,9 @@ function ScribeSearchScreen({ navigation }) {
     minutes.push({ label: i.toString(), value: i.toString() });
   }
 
-  const {
-    data: languageData,
-    // error,
-    // loading,
-    request: loadLanguages,
-  } = useApi(languagesApi.getLanguages);
+  const { data: languageData, request: loadLanguages } = useApi(
+    languagesApi.getLanguages
+  );
 
   const languages = languageData
     ? languageData.map(({ id, name }) => ({
@@ -78,12 +75,7 @@ function ScribeSearchScreen({ navigation }) {
       }))
     : [];
 
-  const {
-    data: examData,
-    // error,
-    // loading,
-    request: loadExams,
-  } = useApi(examsApi.getExams);
+  const { data: examData, request: loadExams } = useApi(examsApi.getExams);
 
   const exams = examData
     ? examData.map(({ id, name }) => ({
@@ -98,23 +90,27 @@ function ScribeSearchScreen({ navigation }) {
   }, []);
 
   const handleSubmit = async (searchCriteria, { resetForm }) => {
-    // setProgress(0);
-    // setUploadVisible(true);
-    console.log("on submit called...");
-    console.log("from", searchCriteria);
     const result = await scribesApi.find(searchCriteria);
+
+    console.log(result);
 
     if (result.data.length == 0) {
       return alert(strings.search.noScribeFound);
     }
-    navigation.navigate(routes.SCRIBE_SEARCH_RESULTS, result.data);
-
-    // if (!result.ok) {
-    //   setUploadVisible(false);
-    //   return alert("Could not save the listing.");
-    // }
-
-    // resetForm();
+    if (!result.ok) {
+      return alert(strings.common.serverError);
+    }
+    navigation.navigate(routes.SCRIBE_SEARCH_RESULTS, {
+      data: result.data,
+      requestUpdate: {
+        candidateId: 1,
+        startTime: result.config.params.from,
+        endTime: result.config.params.to,
+        language: searchCriteria.language,
+        exam: searchCriteria.exam,
+        address: searchCriteria.address,
+      },
+    });
   };
 
   return (
