@@ -13,12 +13,13 @@ public interface ExamEventRepository extends CrudRepository<ExamEvent, Long> {
     @Query("""
             SELECT * FROM exam_event e
             WHERE
-            ((e.candidate IS NULL OR e.candidate = :candidate) OR
-            (e.scribe IS NULL OR e.scribe = :scribe)) OR
+            ((:candidate IS NULL OR e.candidate = :candidate) OR
+            (:scribe IS NULL OR e.scribe = :scribe)) OR
             e.exam_schedule IN
-            (:scheduledInNextHours IS NULL OR
+            (
                 SELECT id FROM exam_schedule es 
                 WHERE
+                :scheduledInNextHours IS NOT NULL AND
                 extract(epoch from es.start_time - CURRENT_TIMESTAMP)/3600 <= :scheduledInNextHours 
             )
             """)
@@ -32,7 +33,7 @@ public interface ExamEventRepository extends CrudRepository<ExamEvent, Long> {
             (
                 SELECT id FROM exam_schedule es
                 WHERE
-                es.end_time > CURRENT_TIME
+                es.end_time > now()::timestamp
                         
             )
             """)

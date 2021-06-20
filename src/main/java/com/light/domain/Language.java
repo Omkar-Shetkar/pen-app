@@ -8,7 +8,6 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Data
 @AllArgsConstructor
-@Table("LANGUAGE")
 public class Language {
 
     @Id

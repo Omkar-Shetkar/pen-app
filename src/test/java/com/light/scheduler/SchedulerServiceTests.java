@@ -15,14 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Date;
 
 import static com.light.request.RequestController.ALL;
 import static com.light.request.RequestController.SINGLE;
 import static com.light.request.domain.RequestStatus.ACCEPTED;
 import static java.time.temporal.ChronoUnit.HOURS;
+import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -69,6 +72,7 @@ class SchedulerServiceTests extends BaseTestSetup {
 
     }
 
+    //FIXME: Unit test fix
     @Test
     void testNonSchedulingOfOtpGeneration() {
         // Candidate creates a request
@@ -78,8 +82,8 @@ class SchedulerServiceTests extends BaseTestSetup {
 
         long requestId = request.getId();
         // On the day of exam, OTP is generated for the exam event
-        Awaitility.waitAtMost(Durations.ONE_MINUTE).untilAsserted(() -> {
-            Mockito.verify(schedulerService, Mockito.atLeast(2)).scheduleOtpGeneration();
+        Awaitility.waitAtMost(Duration.of(30, SECONDS)).untilAsserted(() -> {
+            Mockito.verify(schedulerService, Mockito.atLeast(1)).scheduleOtpGeneration();
             ExamEvent examEvent = examEventService.getByRequestId(requestId)
                     .orElseThrow(() -> new IllegalArgumentException(String.format("Exam event with request id {%d} not found!",
                             requestId)));
@@ -87,15 +91,15 @@ class SchedulerServiceTests extends BaseTestSetup {
         });
     }
 
-    private ExamSchedule createExamSchedule(LocalDateTime startTime) {
-        Instant start = startTime
+    private ExamSchedule createExamSchedule(LocalDateTime start) {
+        Instant startTime = start.atZone(ZoneId.systemDefault()).toInstant();
+        Instant endTime = startTime.plus(2, HOURS)
                 .atZone(ZoneId.systemDefault())
                 .toInstant();
-        Instant end = start.plus(2, HOURS);
 
         ExamSchedule examSchedule = new ExamSchedule();
-        examSchedule.setStartTime(start);
-        examSchedule.setEndTime(end);
+        examSchedule.setStartTime(new Date(startTime.toEpochMilli()));
+        examSchedule.setEndTime(new Date(endTime.toEpochMilli()));
         examSchedule.setLanguage(LANGUAGE_ID);
         examSchedule.setAddress(ADDRESS_ID);
         examSchedule.setExam(EXAM_ID);

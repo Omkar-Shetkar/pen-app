@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
 
 /**
  * Candidate sends request to Scribe for exam writing
@@ -12,7 +11,6 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table("REQUEST")
 public class Request {
 
     @Id

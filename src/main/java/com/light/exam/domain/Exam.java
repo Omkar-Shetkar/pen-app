@@ -9,7 +9,6 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table("EXAM")
 public class Exam {
 
     @Id

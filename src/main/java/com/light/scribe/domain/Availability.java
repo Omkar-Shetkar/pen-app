@@ -3,14 +3,14 @@ package com.light.scribe.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
 public class Availability {
 
-    private LocalDateTime availableFrom;
+    private Date availableFrom;
 
-    private LocalDateTime availableTo;
+    private Date availableTo;
 
 }

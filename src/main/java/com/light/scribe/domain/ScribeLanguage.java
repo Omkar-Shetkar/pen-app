@@ -2,11 +2,9 @@ package com.light.scribe.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.relational.core.mapping.Table;
 
 @Data
-@Table("SCRIBE_LANGUAGE")
 @AllArgsConstructor
-public class LanguageRef {
+public class ScribeLanguage {
     private Long language;
 }

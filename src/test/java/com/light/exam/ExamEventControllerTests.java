@@ -23,6 +23,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -202,15 +203,13 @@ class ExamEventControllerTests extends BaseTestSetup {
         return candidateCreatesRequestAndScribeAcceptsIt(examSchedule);
     }
 
-    private ExamSchedule createExamSchedule(LocalDateTime startTime) {
-        Instant start = startTime
-                .atZone(ZoneId.systemDefault())
-                .toInstant();
-        Instant end = start.plus(2, HOURS);
+    private ExamSchedule createExamSchedule(LocalDateTime start) {
+        Instant startTime = start.atZone(ZoneId.systemDefault()).toInstant();
+        Instant endTime = startTime.plus(2, HOURS);
 
         ExamSchedule examSchedule = new ExamSchedule();
-        examSchedule.setStartTime(start);
-        examSchedule.setEndTime(end);
+        examSchedule.setStartTime(new Date(startTime.toEpochMilli()));
+        examSchedule.setEndTime(new Date(endTime.toEpochMilli()));
         examSchedule.setLanguage(LANGUAGE_ID);
         examSchedule.setAddress(ADDRESS_ID);
         examSchedule.setExam(EXAM_ID);
@@ -218,14 +217,12 @@ class ExamEventControllerTests extends BaseTestSetup {
     }
 
     private ExamSchedule createExamSchedule() {
-        Instant start = LocalDateTime.now().plusDays(2)
-                .atZone(ZoneId.systemDefault())
-                .toInstant();
+        Instant start = LocalDateTime.now().plusDays(2).atZone(ZoneId.systemDefault()).toInstant();
         Instant end = start.plus(2, HOURS);
 
         ExamSchedule examSchedule = new ExamSchedule();
-        examSchedule.setStartTime(start);
-        examSchedule.setEndTime(end);
+        examSchedule.setStartTime(new Date(start.toEpochMilli()));
+        examSchedule.setEndTime(new Date(end.toEpochMilli()));
         examSchedule.setLanguage(LANGUAGE_ID);
         examSchedule.setAddress(ADDRESS_ID);
         examSchedule.setExam(EXAM_ID);

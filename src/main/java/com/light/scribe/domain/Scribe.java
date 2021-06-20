@@ -25,7 +25,7 @@ public class Scribe {
 
     private Gender gender;
 
-    private Set<LanguageRef> languages = new HashSet<>();
+    private Set<ScribeLanguage> languages = new HashSet<>();
 
     private String location;
 
@@ -49,7 +49,7 @@ public class Scribe {
         return Collections.unmodifiableSet(availabilities);
     }
 
-    public Set<LanguageRef> getLanguages() {
+    public Set<ScribeLanguage> getLanguages() {
         return Collections.unmodifiableSet(languages);
     }
 
@@ -57,11 +57,11 @@ public class Scribe {
         languages.add(createLanguageRef(language));
     }
 
-    private LanguageRef createLanguageRef(Language language) {
+    private ScribeLanguage createLanguageRef(Language language) {
         Assert.notNull(language, "Language must not be null");
         Assert.notNull(language.getId(), "Language id, must not be null");
 
-        return new LanguageRef(language.getId());
+        return new ScribeLanguage(language.getId());
     }
 
 }

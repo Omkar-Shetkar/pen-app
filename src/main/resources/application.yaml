@@ -23,7 +23,7 @@ spring:
 light.exam:
   schedule.delay-in-ms: 2700000 # 45 Mins - OTP is generated at the most given delay before start of the exam
   otp.expire-in-ms: 3600000 # 60 Mins - OTP Expires after 1 Hr of generation
-  initial-delay-in-ms: 300000 # 5 Min
+  initial-delay-in-ms: 180000 # 3 Min
 ---
 spring:
   profiles: test

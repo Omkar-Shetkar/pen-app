@@ -156,7 +156,7 @@ public class RequestService {
         if (request.getStatus() == ACCEPTED) {
             var examSchedule = examScheduleRepository.findById(request.getExamSchedule())
                     .orElseThrow(() -> new IllegalStateException("No exam schedule exists for request: " + request.getId()));
-            long durationInHrs = Duration.between(Instant.now(), examSchedule.getStartTime()).toHours();
+            long durationInHrs = Duration.between(Instant.now(), examSchedule.getStartTime().toInstant()).toHours();
             return durationInHrs > REQUEST_CANCELLATION_CUT_OFF_HRS;
         }
         return false;

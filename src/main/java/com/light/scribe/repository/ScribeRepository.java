@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 public interface ScribeRepository extends CrudRepository<Scribe, Long> {
@@ -21,6 +21,6 @@ public interface ScribeRepository extends CrudRepository<Scribe, Long> {
             AND a.available_to >= :to 
             AND l.language = :language 
             """)
-    Set<Scribe> findByAvailabilityAndLanguage(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to,
+    Set<Scribe> findByAvailabilityAndLanguage(@Param("from") Date from, @Param("to") Date to,
                                               @Param("language") Long language);
 }

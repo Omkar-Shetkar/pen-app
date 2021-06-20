@@ -28,6 +28,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.light.request.RequestController.ALL;
@@ -106,7 +107,7 @@ class LightBackendApplicationTests extends BaseTestSetup {
          * - Mark completed exam event as COMPLETED
          * - All but ACCEPTED request to be deleted
          */
-        Duration duration = Duration.between(Instant.now(), examSchedule.getEndTime());
+        Duration duration = Duration.between(Instant.now(), examSchedule.getEndTime().toInstant());
         Awaitility.waitAtMost(duration).untilAsserted(() -> {
             ExamEvent updatedExamEvent = examEventService.getById(examEventId)
                     .orElseThrow(() -> new IllegalArgumentException(String.format("Exam event with id {%d} not found!",
@@ -145,15 +146,13 @@ class LightBackendApplicationTests extends BaseTestSetup {
         return request;
     }
 
-    private ExamSchedule createExamSchedule(LocalDateTime startTime) {
-        Instant start = startTime
-                .atZone(ZoneId.systemDefault())
-                .toInstant();
-        Instant end = start.plus(10, SECONDS);
+    private ExamSchedule createExamSchedule(LocalDateTime start) {
+        Instant startTime = start.atZone(ZoneId.systemDefault()).toInstant();
+        Instant endTime = startTime.plus(10, SECONDS);
 
         ExamSchedule examSchedule = new ExamSchedule();
-        examSchedule.setStartTime(start);
-        examSchedule.setEndTime(end);
+        examSchedule.setStartTime(new Date(startTime.toEpochMilli()));
+        examSchedule.setEndTime(new Date(endTime.toEpochMilli()));
         examSchedule.setLanguage(LANGUAGE_ID);
         examSchedule.setAddress(ADDRESS_ID);
         examSchedule.setExam(EXAM_ID);

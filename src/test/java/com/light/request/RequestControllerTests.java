@@ -20,6 +20,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -216,7 +217,8 @@ class RequestControllerTests extends BaseTestSetup {
                 .toInstant();
         Instant end = start.plus(2, HOURS);
 
-        return new RequestUpdate(scribeId, CANDIDATE, start, end, LANGUAGE_ID, ADDRESS_ID, EXAM_ID);
+        return new RequestUpdate(scribeId, CANDIDATE, new Date(start.toEpochMilli()), new Date(end.toEpochMilli()),
+                LANGUAGE_ID, ADDRESS_ID, EXAM_ID);
 
     }
 

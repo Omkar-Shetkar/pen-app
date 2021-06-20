@@ -93,10 +93,10 @@ databaseChangeLog:
             columns:
               - column:
                   name: available_from
-                  type: TIMESTAMP WITHOUT TIME ZONE
+                  type: TIMESTAMP WITH TIME ZONE
               - column:
                   name: available_to
-                  type: TIMESTAMP WITHOUT TIME ZONE
+                  type: TIMESTAMP WITH TIME ZONE
               - column:
                   name: scribe
                   type: INTEGER
@@ -222,13 +222,14 @@ databaseChangeLog:
                     primaryKey: true
                     primaryKeyName: exam_schedule_pkey
                   name: id
-                  type: INTEGER
+                  type: SERIAL
+                  autoIncrement: true
               - column:
                   name: start_time
-                  type: TIMESTAMP WITHOUT TIME ZONE
+                  type: TIMESTAMP WITH TIME ZONE
               - column:
                   name: end_time
-                  type: TIMESTAMP WITHOUT TIME ZONE
+                  type: TIMESTAMP WITH TIME ZONE
               - column:
                   name: exam
                   type: INTEGER
@@ -251,7 +252,8 @@ databaseChangeLog:
                     primaryKey: true
                     primaryKeyName: request_pkey
                   name: id
-                  type: INTEGER
+                  type: SERIAL
+                  autoIncrement: true
               - column:
                   name: candidate
                   type: INTEGER

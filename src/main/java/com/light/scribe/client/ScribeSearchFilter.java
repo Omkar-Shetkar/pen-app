@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Filters to search scribe for scheduled exam based language, location etc.
@@ -18,18 +18,18 @@ public class ScribeSearchFilter {
 
     @NonNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime from;
+    private Date from;
 
     @NonNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime to;
+    private Date to;
 
     @NonNull
     private Long language;
 
     private String location;
 
-    public ScribeSearchFilter(LocalDateTime from, LocalDateTime to, Long language) {
+    public ScribeSearchFilter(Date from, Date to, Long language) {
         this.from = from;
         this.to = to;
         this.language = language;

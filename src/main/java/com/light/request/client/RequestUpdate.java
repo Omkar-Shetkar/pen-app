@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
 
-import java.time.Instant;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -19,10 +19,10 @@ public class RequestUpdate {
     private Long candidateId;
 
     @NonNull
-    private Instant startTime;
+    private Date startTime;
 
     @NonNull
-    private Instant endTime;
+    private Date endTime;
 
     @NonNull
     private Long language;

@@ -13,7 +13,6 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table("EXAM_EVENT")
 public class ExamEvent {
 
     @Id
