@@ -1,5 +1,6 @@
 package com.light.request;
 
+import com.light.request.client.RequestResource;
 import com.light.request.client.RequestSearchFilter;
 import com.light.request.client.RequestUpdate;
 import com.light.request.domain.Request;
@@ -56,8 +57,8 @@ public class RequestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Request>> find(@Validated RequestSearchFilter searchFilter) {
-        List<Request> requests = requestService.search(searchFilter);
+    public ResponseEntity<List<RequestResource>> find(@Validated RequestSearchFilter searchFilter) {
+        List<RequestResource> requests = requestService.searchRequestResources(searchFilter);
         return ResponseEntity.ok(requests);
     }
 

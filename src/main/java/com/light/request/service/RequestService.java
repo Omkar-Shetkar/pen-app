@@ -5,6 +5,7 @@ import com.light.candidate.service.CandidateService;
 import com.light.exam.client.ExamEventUpdate;
 import com.light.exam.domain.ExamSchedule;
 import com.light.exam.service.ExamEventService;
+import com.light.request.client.RequestResource;
 import com.light.request.client.RequestSearchFilter;
 import com.light.request.client.RequestUpdate;
 import com.light.request.domain.Request;
@@ -185,7 +186,13 @@ public class RequestService {
     }
 
     public List<Request> search(RequestSearchFilter searchFilter) {
-        return requestRepository.search(searchFilter.getCandidate(), searchFilter.getScribe(),
+        return requestRepository.searchRequests(searchFilter.getCandidate(), searchFilter.getScribe(),
                 searchFilter.getSchedule(), searchFilter.getRequestStatus());
+    }
+
+    public List<RequestResource> searchRequestResources(RequestSearchFilter searchFilter) {
+        List<RequestResource> requests = requestRepository.searchRequestResources(searchFilter.getCandidate(),
+                searchFilter.getScribe(), searchFilter.getSchedule(), searchFilter.getRequestStatus());
+        return requests;
     }
 }

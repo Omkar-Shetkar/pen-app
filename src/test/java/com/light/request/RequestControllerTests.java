@@ -4,6 +4,7 @@ package com.light.request;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.light.BaseTestSetup;
 import com.light.exam.domain.ExamSchedule;
+import com.light.request.client.RequestSearchFilter;
 import com.light.request.client.RequestUpdate;
 import com.light.request.domain.Request;
 import com.light.request.domain.RequestStatus;
@@ -26,8 +27,7 @@ import java.util.List;
 
 import static com.light.request.RequestController.ALL;
 import static com.light.request.RequestController.SINGLE;
-import static com.light.request.domain.RequestStatus.ACCEPTED;
-import static com.light.request.domain.RequestStatus.REJECTED;
+import static com.light.request.domain.RequestStatus.*;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -58,6 +58,20 @@ class RequestControllerTests extends BaseTestSetup {
         mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isCreated());
+
+        // Get all 'PENDING' requests of candidate
+        RequestSearchFilter requestSearchFilter = new RequestSearchFilter();
+        requestSearchFilter.setRequestStatus(PENDING);
+        requestSearchFilter.setCandidate(CANDIDATE);
+        String response = mockMvc.perform(get(ALL).contentType(APPLICATION_JSON)
+                .content(mapper.writeValueAsString(requestSearchFilter)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        List<LinkedHashMap<String, Object>> pendingRequests = mapper.readValue(response, List.class);
+        assertEquals(1, pendingRequests.size());
+        LinkedHashMap<String, String> candidateResource =
+                (LinkedHashMap<String, String>) pendingRequests.get(0).get("candidateResource");
+        assertEquals("candidate1-fn", candidateResource.get("firstName"));
     }
 
     @Test
