@@ -15,6 +15,11 @@ const createRequest = (requestUpdate) => {
   return apiClient.post(endPoint, requestUpdate);
 };
 
+const findRequests = (requestSearchFilter) => {
+  return apiClient.get(endPoint, requestSearchFilter);
+};
+
 export default {
   createRequest,
+  findRequests,
 };

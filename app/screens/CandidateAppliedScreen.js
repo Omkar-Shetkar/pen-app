@@ -1,47 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import RequestCardComponent from "../components/RequestCardComponent";
+import moment from "moment";
 
+import RequestCardComponent from "../components/RequestCardComponent";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
+import requestsApi from "../api/requests";
+import gender from "../config/gender";
 
 function CandidateAppliedScreen(props) {
-  const listing = [
-    {
-      id: 1,
-      name: "scribe-1",
-      gender: "M",
-      qualification: "SSLC",
-      exam: "SSLC",
-      examDate: "01-06-2021 10:30",
-      duration: "2 Hr 30 Min",
-      language: "English",
-      venue: "Address-1",
-    },
-    {
-      id: 2,
-      name: "scribe-2",
-      gender: "F",
-      qualification: "MCA",
-      exam: "PUC",
-      examDate: "02-06-2021 10:30",
-      duration: "3 Hr 30 Min",
-      language: "Kannada",
-      venue: "Address-2",
-    },
-    {
-      id: 3,
-      name: "scribe-3",
-      gender: "M",
-      qualification: "BCom",
-      exam: "BSc",
-      examDate: "03-06-2021 10:30",
-      duration: "1 Hr 30 Min",
-      language: "English",
-      venue: "Address-1",
-    },
-  ];
+  const {
+    data: listing,
+    error,
+    loading,
+    request: loadListings,
+  } = useApi(requestsApi.findRequests);
+
+  useEffect(() => {
+    loadListings({
+      //TODO: Use actual candidate id
+      candidate: 1,
+      requestStatus: "PENDING",
+    });
+  }, []);
+  console.log("pending requests ", listing);
 
   const icons = {
     subTitle: "pencil-outline",
@@ -51,12 +34,16 @@ function CandidateAppliedScreen(props) {
     venue: "map-marker-outline",
   };
 
-  const examDetails = ({ examDate, duration, language, venue }) => ({
-    examDate,
-    duration,
-    language,
-    venue,
-  });
+  const examDetails = ({ start, end, language, venue }) => {
+    start = moment(start).format("MMMM Do, h:mm A");
+    end = moment(end).format("MMMM Do, h:mm A");
+    return {
+      start,
+      end,
+      language,
+      venue,
+    };
+  };
 
   const actions = [
     {
@@ -72,15 +59,21 @@ function CandidateAppliedScreen(props) {
     <Screen>
       <FlatList
         data={listing}
-        keyExtractor={(listing) => listing.id.toString()}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <RequestCardComponent
             actions={actions}
-            title={item.name + ", " + item.qualification}
-            subTitle={item.exam}
+            title={
+              item.scribeResource.firstName +
+              ", " +
+              item.scribeResource.lastName
+            }
+            subTitle={item.examResource.name}
             icons={icons}
-            details={examDetails(item)}
-            thumbnailIcon={item.gender === "M" ? "face" : "face-woman"}
+            details={examDetails(item.examResource)}
+            thumbnailIcon={
+              item.scribeResource.gender === gender.MALE ? "face" : "face-woman"
+            }
             onPress={() => handleOnPress(item)}
           ></RequestCardComponent>
         )}
