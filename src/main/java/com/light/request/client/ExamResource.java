@@ -14,5 +14,5 @@ public class ExamResource {
     private Date start;
     private Date end;
     private String language;
-    private String address;
+//    private String address;
 }

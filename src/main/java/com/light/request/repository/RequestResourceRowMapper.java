@@ -20,8 +20,8 @@ public class RequestResourceRowMapper implements RowMapper<RequestResource> {
                 resultSet.getString("s_last_name"), Gender.valueOf(resultSet.getString("s_gender")),
                 resultSet.getString("s_phone"), resultSet.getString("s_email"));
         ExamResource examResource = new ExamResource(resultSet.getString("exam"),
-                resultSet.getDate("start_time"), resultSet.getDate("end_time"),
-                resultSet.getString("lang"), resultSet.getString("city"));
+                resultSet.getTimestamp("start_time"), resultSet.getTimestamp("end_time"),
+                resultSet.getString("lang")/*, resultSet.getString("city")*/);
         return new RequestResource(resultSet.getLong("id"), scribeResource, candidateResource, examResource);
     }
 }

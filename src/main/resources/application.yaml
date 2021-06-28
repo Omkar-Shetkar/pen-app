@@ -1,3 +1,6 @@
+logging.level:
+#  org.springframework.jdbc.core.JdbcTemplate: TRACE
+
 spring:
   profiles:
     active: dev
