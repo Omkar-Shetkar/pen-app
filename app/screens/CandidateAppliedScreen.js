@@ -12,19 +12,26 @@ import gender from "../config/gender";
 function CandidateAppliedScreen(props) {
   const {
     data: listing,
-    error,
-    loading,
+    error: listingError,
+    loading: listingLoading,
     request: loadListings,
   } = useApi(requestsApi.findRequests);
+
+  const {
+    data: request,
+    error: deleteError,
+    loading: deleteLoading,
+    request: deleteRequest,
+  } = useApi(requestsApi.deleteRequest);
 
   useEffect(() => {
     loadListings({
       //TODO: Use actual candidate id
       candidate: 1,
       requestStatus: "PENDING",
+      startingFrom: new Date(),
     });
   }, []);
-  console.log("pending requests ", listing);
 
   const icons = {
     subTitle: "pencil-outline",
@@ -45,15 +52,17 @@ function CandidateAppliedScreen(props) {
     };
   };
 
-  const actions = [
-    {
-      color: colors.danger,
-      name: "cancel",
-      action: () => {
-        console.log("Cancel action is called.");
+  const actions = (item) => {
+    return [
+      {
+        color: colors.danger,
+        name: "cancel",
+        action: () => {
+          deleteRequest(item.id);
+        },
       },
-    },
-  ];
+    ];
+  };
 
   return (
     <Screen>
@@ -62,7 +71,7 @@ function CandidateAppliedScreen(props) {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <RequestCardComponent
-            actions={actions}
+            actions={actions(item)}
             title={
               item.scribeResource.firstName +
               ", " +
