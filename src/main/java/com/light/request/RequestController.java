@@ -38,11 +38,27 @@ public class RequestController {
     }
 
     /**
+     * Delete a request, given its id.
+     *
+     * @param id - The request id
+     * @return HttpStatus.noContent - If successfully deleted the request
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") long id) {
+        try {
+            requestService.deleteRequest(id);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    /**
      * Updates request status.
      *
-     * @param id
-     * @param requestStatus
-     * @return
+     * @param id            - The request id
+     * @param requestStatus - The request status
+     * @return - Updated request
      */
     @PatchMapping("/{id}")
     public ResponseEntity<Request> update(@PathVariable("id") long id, @Validated @RequestBody RequestStatus requestStatus) {

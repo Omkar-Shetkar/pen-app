@@ -80,6 +80,10 @@ public class RequestService {
         return updateStatus(request, targetStatus);
     }
 
+    public void deleteRequest(long requestId) {
+        requestRepository.deleteById(requestId);
+    }
+
     public void deleteByExamScheduleAndNotStatus(long examSchedule, RequestStatus status) {
         requestRepository.deleteByExamScheduleAndNotStatus(examSchedule, status);
     }
@@ -153,6 +157,12 @@ public class RequestService {
         }
     }
 
+    /**
+     * A request is rejectable, if its before specified cut-off time (Eg., 12 Hrs before start of exam)
+     *
+     * @param request - the {@link Request}
+     * @return - true if Request can be rejected else false
+     */
     private boolean isRequestRejectable(Request request) {
         if (request.getStatus() == ACCEPTED) {
             var examSchedule = examScheduleRepository.findById(request.getExamSchedule())
@@ -192,7 +202,8 @@ public class RequestService {
 
     public List<RequestResource> searchRequestResources(RequestSearchFilter searchFilter) {
         List<RequestResource> requests = requestRepository.searchRequestResources(searchFilter.getCandidate(),
-                searchFilter.getScribe(), searchFilter.getSchedule(), searchFilter.getRequestStatus());
+                searchFilter.getScribe(), searchFilter.getSchedule(),
+                searchFilter.getRequestStatus(), searchFilter.getStartingFrom());
         return requests;
     }
 }

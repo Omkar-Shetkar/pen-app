@@ -4,7 +4,7 @@ package com.light.request;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.light.BaseTestSetup;
 import com.light.exam.domain.ExamSchedule;
-import com.light.request.client.RequestSearchFilter;
+import com.light.request.client.RequestResource;
 import com.light.request.client.RequestUpdate;
 import com.light.request.domain.Request;
 import com.light.request.domain.RequestStatus;
@@ -17,17 +17,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 import static com.light.request.RequestController.ALL;
 import static com.light.request.RequestController.SINGLE;
 import static com.light.request.domain.RequestStatus.*;
+import static java.time.temporal.ChronoUnit.DAYS;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -60,11 +59,9 @@ class RequestControllerTests extends BaseTestSetup {
                 .andExpect(status().isCreated());
 
         // Get all 'PENDING' requests of candidate
-        RequestSearchFilter requestSearchFilter = new RequestSearchFilter();
-        requestSearchFilter.setRequestStatus(PENDING);
-        requestSearchFilter.setCandidate(CANDIDATE);
         String response = mockMvc.perform(get(ALL).contentType(APPLICATION_JSON)
-                .content(mapper.writeValueAsString(requestSearchFilter)))
+                .param("requestStatus", PENDING.toString())
+                .param("candidate", String.valueOf(CANDIDATE)))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         List<LinkedHashMap<String, Object>> pendingRequests = mapper.readValue(response, List.class);
@@ -72,6 +69,65 @@ class RequestControllerTests extends BaseTestSetup {
         LinkedHashMap<String, String> candidateResource =
                 (LinkedHashMap<String, String>) pendingRequests.get(0).get("candidateResource");
         assertEquals("candidate1-fn", candidateResource.get("firstName"));
+
+    }
+
+    @Test
+    public void candidateCancelsRequest() throws Exception {
+        RequestUpdate requestUpdate = createRequestUpdate(1L);
+        String content = mapper.writeValueAsString(requestUpdate);
+        String response = mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
+                .content(content))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
+        Request request = mapper.readValue(response, Request.class);
+
+        // Candidate cancels the request
+        mockMvc.perform(delete(SINGLE, request.getId()))
+                .andExpect(status().isNoContent());
+
+        // Get all 'PENDING' requests of candidate
+        response = mockMvc.perform(get(ALL).contentType(APPLICATION_JSON)
+                .param("requestStatus", PENDING.toString())
+                .param("candidate", String.valueOf(CANDIDATE)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        List<LinkedHashMap<String, Object>> pendingRequests = mapper.readValue(response, List.class);
+        assertEquals(0, pendingRequests.size());
+
+    }
+
+    @Test
+    void testListRequestsFromGivenStartDate() throws Exception {
+        RequestUpdate requestUpdate = createRequestUpdate(1L);
+        String content = mapper.writeValueAsString(requestUpdate);
+        mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
+                .content(content))
+                .andExpect(status().isCreated());
+
+        // Get all 'PENDING' requests of candidate
+        SimpleDateFormat format = new SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String response = mockMvc.perform(get(ALL).contentType(APPLICATION_JSON)
+                .param("requestStatus", PENDING.toString())
+                .param("candidate", String.valueOf(CANDIDATE))
+                .param("startingFrom", format.format(new Date(Instant.now().toEpochMilli()))))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        List<RequestResource> pendingRequests = mapper.readValue(response, List.class);
+        assertEquals(1, pendingRequests.size());
+
+
+        response = mockMvc.perform(get(ALL).contentType(APPLICATION_JSON)
+                .param("requestStatus", PENDING.toString())
+                .param("candidate", String.valueOf(CANDIDATE))
+                .param("startingFrom", format.format(new Date(Instant.now().plus(3, DAYS).toEpochMilli()))))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        pendingRequests = mapper.readValue(response, List.class);
+        assertEquals(0, pendingRequests.size());
+
     }
 
     @Test

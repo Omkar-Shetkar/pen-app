@@ -1,4 +1,4 @@
-logging.level:
+#logging.level:
 #  org.springframework.jdbc.core.JdbcTemplate: TRACE
 
 spring:
