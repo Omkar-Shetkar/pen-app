@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, FlatList } from "react-native";
 import moment from "moment";
 
 import RequestCardComponent from "../components/RequestCardComponent";
@@ -10,6 +9,9 @@ import requestsApi from "../api/requests";
 import gender from "../config/gender";
 
 function CandidateAppliedScreen(props) {
+
+  const [fetching, setFetching] = useState(false);
+
   const {
     data: listing,
     error: listingError,
@@ -17,20 +19,8 @@ function CandidateAppliedScreen(props) {
     request: loadListings,
   } = useApi(requestsApi.findRequests);
 
-  const {
-    data: request,
-    error: deleteError,
-    loading: deleteLoading,
-    request: deleteRequest,
-  } = useApi(requestsApi.deleteRequest);
-
   useEffect(() => {
-    loadListings({
-      //TODO: Use actual candidate id
-      candidate: 1,
-      requestStatus: "PENDING",
-      startingFrom: new Date(),
-    });
+    callLoadListings();
   }, []);
 
   const icons = {
@@ -57,18 +47,36 @@ function CandidateAppliedScreen(props) {
       {
         color: colors.danger,
         name: "cancel",
-        action: () => {
-          deleteRequest(item.id);
-        },
+        action:  async () => {
+         const result =  await requestsApi.deleteRequest(item.id);
+          if(result.status == 204) {
+            callLoadListings();
+        }
+      }
       },
     ];
   };
 
+  const callLoadListings = () => {
+    setFetching(true);
+    loadListings({
+      //TODO: Use actual candidate id
+      candidate: 1,
+      requestStatus: "PENDING",
+      startingFrom: new Date(),
+    });
+    setFetching(false);
+  };
+
+
   return (
+    // TODO: Handle case when list is empty
     <Screen>
       <FlatList
         data={listing}
         keyExtractor={(item) => item.id.toString()}
+        onRefresh={callLoadListings}
+        refreshing={fetching}
         renderItem={({ item }) => (
           <RequestCardComponent
             actions={actions(item)}

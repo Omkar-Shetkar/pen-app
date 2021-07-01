@@ -27,7 +27,7 @@ const updateRequest = (id, requestUpdate) => {
 };
 
 const deleteRequest = (id) => {
-  console.log("Delete request API called...", id);
+  console.log("Delete Request API called...", id);
   return apiClient.delete(endPoint + "/" + id);
 };
 
