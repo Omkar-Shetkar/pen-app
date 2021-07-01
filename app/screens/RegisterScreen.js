@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { View,ScrollView, StyleSheet } from "react-native";
 import * as Yup from "yup";
 import MultiSelect from "react-native-multiple-select";
 

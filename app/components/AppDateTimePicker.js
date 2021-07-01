@@ -49,8 +49,6 @@ function AppDateTimePicker({ icon, width = "100%" }) {
     setShow(false);
   };
 
-  console.log("show", show);
-
   return (
     <Modal
       visible={show}

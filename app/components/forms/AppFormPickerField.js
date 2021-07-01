@@ -12,8 +12,6 @@ import colors from "../../config/colors";
 function AppFormPickerField({ name, items, placeholder, suffix, icon, width }) {
   const { values, handleChange, errors, touched } = useFormikContext();
 
-  // console.log("formik contex values: ", values);
-
   return (
     <>
       <View style={styles.container}>

@@ -1,6 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { StyleSheet, FlatList } from "react-native";
 import RequestCardComponent from "../components/RequestCardComponent";
 
 import Screen from "../components/Screen";
