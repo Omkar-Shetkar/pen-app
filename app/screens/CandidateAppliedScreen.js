@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, FlatList } from "react-native";
 import moment from "moment";
 
@@ -7,11 +7,9 @@ import Screen from "../components/Screen";
 import colors from "../config/colors";
 import requestsApi from "../api/requests";
 import gender from "../config/gender";
+import requestStatus from "../config/requestStatus";
 
 function CandidateAppliedScreen(props) {
-
-  const [fetching, setFetching] = useState(false);
-
   const {
     data: listing,
     error: listingError,
@@ -47,27 +45,24 @@ function CandidateAppliedScreen(props) {
       {
         color: colors.danger,
         name: "cancel",
-        action:  async () => {
-         const result =  await requestsApi.deleteRequest(item.id);
-          if(result.status == 204) {
+        action: async () => {
+          const result = await requestsApi.deleteRequest(item.id);
+          if (result.status == 204) {
             callLoadListings();
-        }
-      }
+          }
+        },
       },
     ];
   };
 
   const callLoadListings = () => {
-    setFetching(true);
     loadListings({
       //TODO: Use actual candidate id
       candidate: 1,
-      requestStatus: "PENDING",
+      requestStatus: requestStatus.PENDING,
       startingFrom: new Date(),
     });
-    setFetching(false);
   };
-
 
   return (
     // TODO: Handle case when list is empty
@@ -76,7 +71,7 @@ function CandidateAppliedScreen(props) {
         data={listing}
         keyExtractor={(item) => item.id.toString()}
         onRefresh={callLoadListings}
-        refreshing={fetching}
+        refreshing={listingLoading}
         renderItem={({ item }) => (
           <RequestCardComponent
             actions={actions(item)}
