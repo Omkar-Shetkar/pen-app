@@ -161,7 +161,8 @@ databaseChangeLog:
                     primaryKey: true
                     primaryKeyName: exam_event_pkey
                   name: id
-                  type: INTEGER
+                  type: SERIAL
+                  autoIncrement: true
               - column:
                   name: request
                   type: INTEGER

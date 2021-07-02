@@ -1,10 +1,10 @@
 package com.light.request;
 
+import com.light.request.client.RequestCreationModel;
 import com.light.request.client.RequestResource;
 import com.light.request.client.RequestSearchFilter;
-import com.light.request.client.RequestUpdate;
+import com.light.request.client.RequestUpdateModel;
 import com.light.request.domain.Request;
-import com.light.request.domain.RequestStatus;
 import com.light.request.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,10 +27,10 @@ public class RequestController {
     private RequestService requestService;
 
     @PostMapping
-    public ResponseEntity<Request> create(@Validated @RequestBody RequestUpdate requestUpdate) {
+    public ResponseEntity<Request> create(@Validated @RequestBody RequestCreationModel requestCreationModel) {
 
         try {
-            var request = requestService.create(requestUpdate);
+            var request = requestService.create(requestCreationModel);
             return ResponseEntity.status(HttpStatus.CREATED).body(request);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -57,14 +57,15 @@ public class RequestController {
      * Updates request status.
      *
      * @param id            - The request id
-     * @param requestStatus - The request status
+     * @param requestUpdateModel - Request update model
      * @return - Updated request
      */
     @PatchMapping("/{id}")
-    public ResponseEntity<Request> update(@PathVariable("id") long id, @Validated @RequestBody RequestStatus requestStatus) {
+    public ResponseEntity<Request> update(@PathVariable("id") long id,
+                                          @Validated @RequestBody RequestUpdateModel requestUpdateModel) {
 
         try {
-            var request = requestService.update(id, requestStatus);
+            var request = requestService.update(id, requestUpdateModel.getRequestStatus());
             return ResponseEntity.status(HttpStatus.OK).body(request);
         } catch (IllegalArgumentException | IllegalStateException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

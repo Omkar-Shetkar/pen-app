@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestUpdate {
+public class RequestCreationModel {
 
     @NonNull
     private Long scribeId;

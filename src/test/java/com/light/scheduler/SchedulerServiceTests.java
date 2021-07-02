@@ -5,7 +5,8 @@ import com.light.BaseTestSetup;
 import com.light.exam.domain.ExamEvent;
 import com.light.exam.domain.ExamSchedule;
 import com.light.exam.service.ExamEventService;
-import com.light.request.client.RequestUpdate;
+import com.light.request.client.RequestCreationModel;
+import com.light.request.client.RequestUpdateModel;
 import com.light.request.domain.Request;
 import org.awaitility.Awaitility;
 import org.awaitility.Durations;
@@ -107,16 +108,16 @@ class SchedulerServiceTests extends BaseTestSetup {
         return examSchedule;
     }
 
-    private RequestUpdate createRequestUpdate(long scribeId, ExamSchedule examSchedule) {
-        return new RequestUpdate(scribeId, CANDIDATE_ID, examSchedule.getStartTime(), examSchedule.getEndTime(),
+    private RequestCreationModel createRequestUpdate(long scribeId, ExamSchedule examSchedule) {
+        return new RequestCreationModel(scribeId, CANDIDATE_ID, examSchedule.getStartTime(), examSchedule.getEndTime(),
                 examSchedule.getLanguage(), examSchedule.getAddress(), examSchedule.getExam());
     }
 
     private Request candidateCreatesRequestAndScribeAcceptsIt(long scribeId, ExamSchedule examSchedule) {
         try {
             // Candidate requests for exam
-            RequestUpdate requestUpdate = createRequestUpdate(scribeId, examSchedule);
-            String content = mapper.writeValueAsString(requestUpdate);
+            RequestCreationModel requestCreationModel = createRequestUpdate(scribeId, examSchedule);
+            String content = mapper.writeValueAsString(requestCreationModel);
             String response = mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
                     .content(content))
                     .andExpect(status().isCreated())
@@ -124,7 +125,7 @@ class SchedulerServiceTests extends BaseTestSetup {
             Request request = mapper.readValue(response, Request.class);
 
             // Scribe accepts the request
-            content = mapper.writeValueAsString(ACCEPTED);
+            content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
             long requestId = request.getId();
             response = mockMvc.perform(patch(SINGLE, requestId)
                     .contentType(APPLICATION_JSON)

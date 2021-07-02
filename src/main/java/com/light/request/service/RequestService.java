@@ -7,7 +7,7 @@ import com.light.exam.domain.ExamSchedule;
 import com.light.exam.service.ExamEventService;
 import com.light.request.client.RequestResource;
 import com.light.request.client.RequestSearchFilter;
-import com.light.request.client.RequestUpdate;
+import com.light.request.client.RequestCreationModel;
 import com.light.request.domain.Request;
 import com.light.request.domain.RequestStatus;
 import com.light.request.repository.ExamScheduleRepository;
@@ -46,19 +46,19 @@ public class RequestService {
     @Autowired
     private ExamEventService examEventService;
 
-    public Request create(RequestUpdate requestUpdate) {
+    public Request create(RequestCreationModel requestCreationModel) {
 
-        Scribe scribe = scribeService.findById(requestUpdate.getScribeId());
-        Candidate candidate = candidateService.findById(requestUpdate.getCandidateId());
+        Scribe scribe = scribeService.findById(requestCreationModel.getScribeId());
+        Candidate candidate = candidateService.findById(requestCreationModel.getCandidateId());
 
         // Use existing exam schedule, if available
-        ExamSchedule examSchedule = examScheduleRepository.find(requestUpdate.getExam(),
-                requestUpdate.getStartTime(), requestUpdate.getEndTime(), requestUpdate.getLanguage())
+        ExamSchedule examSchedule = examScheduleRepository.find(requestCreationModel.getExam(),
+                requestCreationModel.getStartTime(), requestCreationModel.getEndTime(), requestCreationModel.getLanguage())
                 .orElseGet(() ->
                         {
-                            ExamSchedule newSchedule = new ExamSchedule(requestUpdate.getStartTime(),
-                                    requestUpdate.getEndTime(), requestUpdate.getLanguage(),
-                                    requestUpdate.getAddress(), requestUpdate.getExam());
+                            ExamSchedule newSchedule = new ExamSchedule(requestCreationModel.getStartTime(),
+                                    requestCreationModel.getEndTime(), requestCreationModel.getLanguage(),
+                                    requestCreationModel.getAddress(), requestCreationModel.getExam());
                             return examScheduleRepository.save(newSchedule);
                         }
                 );

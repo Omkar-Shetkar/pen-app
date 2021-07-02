@@ -4,8 +4,9 @@ package com.light.request;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.light.BaseTestSetup;
 import com.light.exam.domain.ExamSchedule;
+import com.light.request.client.RequestCreationModel;
 import com.light.request.client.RequestResource;
-import com.light.request.client.RequestUpdate;
+import com.light.request.client.RequestUpdateModel;
 import com.light.request.domain.Request;
 import com.light.request.domain.RequestStatus;
 import com.light.request.repository.ExamScheduleRepository;
@@ -52,8 +53,8 @@ class RequestControllerTests extends BaseTestSetup {
     @Test
     void testCandidateRequestsForExam() throws Exception {
 
-        RequestUpdate requestUpdate = createRequestUpdate(1L);
-        String content = mapper.writeValueAsString(requestUpdate);
+        RequestCreationModel requestCreationModel = createRequestUpdate(1L);
+        String content = mapper.writeValueAsString(requestCreationModel);
         mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isCreated());
@@ -74,8 +75,8 @@ class RequestControllerTests extends BaseTestSetup {
 
     @Test
     public void candidateCancelsRequest() throws Exception {
-        RequestUpdate requestUpdate = createRequestUpdate(1L);
-        String content = mapper.writeValueAsString(requestUpdate);
+        RequestCreationModel requestCreationModel = createRequestUpdate(1L);
+        String content = mapper.writeValueAsString(requestCreationModel);
         String response = mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isCreated())
@@ -99,8 +100,8 @@ class RequestControllerTests extends BaseTestSetup {
 
     @Test
     void testListRequestsFromGivenStartDate() throws Exception {
-        RequestUpdate requestUpdate = createRequestUpdate(1L);
-        String content = mapper.writeValueAsString(requestUpdate);
+        RequestCreationModel requestCreationModel = createRequestUpdate(1L);
+        String content = mapper.writeValueAsString(requestCreationModel);
         mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isCreated());
@@ -136,7 +137,7 @@ class RequestControllerTests extends BaseTestSetup {
         Request request = createRequest(1L);
 
         // Scribe accepts the request
-        String content = mapper.writeValueAsString(ACCEPTED);
+        String content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
         String response = mockMvc.perform(patch(SINGLE, request.getId())
                 .contentType(APPLICATION_JSON)
                 .content(content))
@@ -150,7 +151,7 @@ class RequestControllerTests extends BaseTestSetup {
         scribeRejectsRequest(request);
 
         // Scribe tries to accept the request again
-        content = mapper.writeValueAsString(ACCEPTED);
+        content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
         mockMvc.perform(patch(SINGLE, request.getId())
                 .contentType(APPLICATION_JSON)
                 .content(content))
@@ -240,7 +241,7 @@ class RequestControllerTests extends BaseTestSetup {
         Request request = candidateCreatesRequestAndScribeAcceptsIt();
 
         // Scribe accepts the request
-        String content = mapper.writeValueAsString(ACCEPTED);
+        String content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
         mockMvc.perform(patch(SINGLE, request.getId())
                 .contentType(APPLICATION_JSON)
                 .content(content))
@@ -268,7 +269,7 @@ class RequestControllerTests extends BaseTestSetup {
         }
 
         // Scribe accepts the request
-        String content = mapper.writeValueAsString(ACCEPTED);
+        String content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
         String response = mockMvc.perform(patch(SINGLE, requests.get(0).getId())
                 .contentType(APPLICATION_JSON)
                 .content(content))
@@ -280,22 +281,22 @@ class RequestControllerTests extends BaseTestSetup {
         return request;
     }
 
-    private RequestUpdate createRequestUpdate(long scribeId) {
+    private RequestCreationModel createRequestUpdate(long scribeId) {
         // Candidate requests for exam
         Instant start = LocalDateTime.now().plusDays(2)
                 .atZone(ZoneId.systemDefault())
                 .toInstant();
         Instant end = start.plus(2, HOURS);
 
-        return new RequestUpdate(scribeId, CANDIDATE, new Date(start.toEpochMilli()), new Date(end.toEpochMilli()),
+        return new RequestCreationModel(scribeId, CANDIDATE, new Date(start.toEpochMilli()), new Date(end.toEpochMilli()),
                 LANGUAGE_ID, ADDRESS_ID, EXAM_ID);
 
     }
 
     private Request createRequest(long scribeId) {
         try {
-            RequestUpdate requestUpdate = createRequestUpdate(scribeId);
-            String content = mapper.writeValueAsString(requestUpdate);
+            RequestCreationModel requestCreationModel = createRequestUpdate(scribeId);
+            String content = mapper.writeValueAsString(requestCreationModel);
             String response = mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
                     .content(content))
                     .andExpect(status().isCreated())
@@ -307,7 +308,7 @@ class RequestControllerTests extends BaseTestSetup {
     }
 
     private void scribeRejectsRequest(Request request) throws Exception {
-        String content = mapper.writeValueAsString(REJECTED);
+        String content = mapper.writeValueAsString(new RequestUpdateModel(REJECTED));
         mockMvc.perform(patch(SINGLE, request.getId())
                 .contentType(APPLICATION_JSON)
                 .content(content))

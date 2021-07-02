@@ -9,7 +9,8 @@ import com.light.exam.service.ExamEventService;
 import com.light.otp.client.OtpRequest;
 import com.light.otp.service.OtpService;
 import com.light.request.client.RequestSearchFilter;
-import com.light.request.client.RequestUpdate;
+import com.light.request.client.RequestCreationModel;
+import com.light.request.client.RequestUpdateModel;
 import com.light.request.domain.Request;
 import com.light.request.service.RequestService;
 import com.light.scheduler.SchedulerService;
@@ -134,7 +135,7 @@ class LightBackendApplicationTests extends BaseTestSetup {
         }
 
         // Scribe accepts the request
-        String content = mapper.writeValueAsString(ACCEPTED);
+        String content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
         String response = mockMvc.perform(patch(SINGLE, requests.get(0).getId())
                 .contentType(APPLICATION_JSON)
                 .content(content))
@@ -159,16 +160,16 @@ class LightBackendApplicationTests extends BaseTestSetup {
         return examSchedule;
     }
 
-    private RequestUpdate createRequestUpdate(long scribeId, ExamSchedule examSchedule) {
-        return new RequestUpdate(scribeId, CANDIDATE_ID, examSchedule.getStartTime(), examSchedule.getEndTime(),
+    private RequestCreationModel createRequestUpdate(long scribeId, ExamSchedule examSchedule) {
+        return new RequestCreationModel(scribeId, CANDIDATE_ID, examSchedule.getStartTime(), examSchedule.getEndTime(),
                 examSchedule.getLanguage(), examSchedule.getAddress(), examSchedule.getExam());
     }
 
     private Request createRequest(long scribeId, ExamSchedule examSchedule) {
         try {
             // Candidate requests for exam
-            RequestUpdate requestUpdate = createRequestUpdate(scribeId, examSchedule);
-            String content = mapper.writeValueAsString(requestUpdate);
+            RequestCreationModel requestCreationModel = createRequestUpdate(scribeId, examSchedule);
+            String content = mapper.writeValueAsString(requestCreationModel);
             String response = mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
                     .content(content))
                     .andExpect(status().isCreated())
