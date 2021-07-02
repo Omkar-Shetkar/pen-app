@@ -47,7 +47,7 @@ function CandidateAppliedScreen(props) {
         name: "cancel",
         action: async () => {
           const result = await requestsApi.deleteRequest(item.id);
-          if (result.status == 204) {
+          if (result.ok) {
             callLoadListings();
           }
         },

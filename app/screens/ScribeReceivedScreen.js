@@ -51,23 +51,31 @@ function ScribeReceivedScreen(props) {
     };
   };
 
-  const actions = [
-    {
-      name: "accept",
-      action: () => {
-        console.log("Accept action is called.");
+  const actions = (item) => {
+    return [
+      {
+        name: "accept",
+        action: async () => {
+          const result = await requestsApi.updateRequest(item.id, {
+            requestStatus: requestStatus.ACCEPTED,
+          });
+          if (result.ok) {
+            callLoadListings();
+          }
+        },
       },
-    },
-    {
-      name: "reject",
-      action: () => {
-        console.log("Reject action is called.");
+      {
+        name: "reject",
+        action: () => {
+          console.log("Reject action is called.");
+        },
+        color: colors.secondary,
       },
-      color: colors.secondary,
-    },
-  ];
+    ];
+  };
 
   return (
+    // TODO: Handle case when list is empty
     <Screen>
       <FlatList
         data={listing}
@@ -76,7 +84,7 @@ function ScribeReceivedScreen(props) {
         refreshing={listingLoading}
         renderItem={({ item }) => (
           <RequestCardComponent
-            actions={actions}
+            actions={actions(item)}
             title={
               item.candidateResource.firstName +
               ", " +
