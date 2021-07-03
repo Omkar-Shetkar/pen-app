@@ -66,8 +66,11 @@ function ScribeReceivedScreen(props) {
       },
       {
         name: "reject",
-        action: () => {
-          console.log("Reject action is called.");
+        action: async () => {
+          const result = await requestsApi.deleteRequest(item.id);
+          if (result.ok) {
+            callLoadListings();
+          }
         },
         color: colors.secondary,
       },
