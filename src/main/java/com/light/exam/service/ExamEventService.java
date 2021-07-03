@@ -8,6 +8,7 @@ import com.light.exam.domain.CandidateFeedback;
 import com.light.exam.domain.ExamEvent;
 import com.light.exam.domain.ScribeFeedback;
 import com.light.exam.repository.ExamEventRepository;
+import com.light.request.client.ExamEventResource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,13 @@ public class ExamEventService {
     }
 
     public List<ExamEvent> search(ExamEventSearchFilter filter) {
-        return examEventRepository.search(filter.getCandidate(), filter.getScribe(), filter.getScheduledInNextHours());
+        return examEventRepository.searchExamEvents(filter.getCandidate(), filter.getScribe(), filter.getScheduledInNextHours());
+    }
+
+    //TODO: Consider combining search for ExamEvent and ExamEventResource
+    public List<ExamEventResource> searchExamEventResources(ExamEventSearchFilter filter) {
+        return examEventRepository.searchExamEventResources(filter.getCandidate(), filter.getScribe(),
+                filter.getScheduledInNextHours(), filter.getExamStatus());
     }
 
     public Optional<ExamEvent> getByRequestId(long requestId) {

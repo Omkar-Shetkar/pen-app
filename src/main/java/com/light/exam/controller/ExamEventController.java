@@ -5,6 +5,7 @@ import com.light.exam.client.FeedbackDetails;
 import com.light.exam.domain.ExamEvent;
 import com.light.exam.domain.ExamStatus;
 import com.light.exam.service.ExamEventService;
+import com.light.request.client.ExamEventResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,8 +49,8 @@ public class ExamEventController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExamEvent>> search(@Validated ExamEventSearchFilter searchFilter) {
-        List<ExamEvent> examEvents = examEventService.search(searchFilter);
+    public ResponseEntity<List<ExamEventResource>> search(@Validated ExamEventSearchFilter searchFilter) {
+        List<ExamEventResource> examEvents = examEventService.searchExamEventResources(searchFilter);
         return ResponseEntity.ok(examEvents);
     }
 

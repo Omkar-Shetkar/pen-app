@@ -200,6 +200,7 @@ public class RequestService {
                 searchFilter.getSchedule(), searchFilter.getRequestStatus());
     }
 
+    //TODO: Consider combining search for Request and RequestResource
     public List<RequestResource> searchRequestResources(RequestSearchFilter searchFilter) {
         List<RequestResource> requests = requestRepository.searchRequestResources(searchFilter.getCandidate(),
                 searchFilter.getScribe(), searchFilter.getSchedule(),

@@ -8,8 +8,8 @@ import com.light.exam.domain.ExamStatus;
 import com.light.exam.service.ExamEventService;
 import com.light.otp.client.OtpRequest;
 import com.light.otp.service.OtpService;
-import com.light.request.client.RequestSearchFilter;
 import com.light.request.client.RequestCreationModel;
+import com.light.request.client.RequestSearchFilter;
 import com.light.request.client.RequestUpdateModel;
 import com.light.request.domain.Request;
 import com.light.request.service.RequestService;
@@ -18,6 +18,7 @@ import com.light.scribe.domain.Scribe;
 import com.light.scribe.service.ScribeService;
 import org.awaitility.Awaitility;
 import org.awaitility.Durations;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import static com.light.request.RequestController.ALL;
@@ -84,7 +86,7 @@ class LightBackendApplicationTests extends BaseTestSetup {
         assertEquals(ExamStatus.NOT_STARTED, examEvent.getExamStatus());
 
         // On the day of exam, OTP is generated for the exam event
-        Awaitility.waitAtMost(Durations.TEN_SECONDS).untilAsserted(() -> {
+        Awaitility.waitAtMost(Durations.ONE_MINUTE).untilAsserted(() -> {
             Mockito.verify(schedulerService, Mockito.atLeast(1)).scheduleOtpGeneration();
             ExamEvent updatedExamEvent = examEventService.getById(examEventId)
                     .orElseThrow(() -> new IllegalArgumentException(String.format("Exam event with id {%d} not found!",
@@ -122,6 +124,19 @@ class LightBackendApplicationTests extends BaseTestSetup {
             assertEquals(1, search.size());
             assertEquals(ACCEPTED, search.get(0).getStatus());
         });
+
+        /**
+         * Get archived exam events for the candidate
+         */
+        String response = mockMvc.perform(get((ExamEventController.ALL))
+                .param("candidate", String.valueOf(CANDIDATE_ID))
+                .param("examStatus", ExamStatus.COMPLETED.toString()))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        List<LinkedHashMap<String, String>> archiveExamEvents = mapper.readValue(response, List.class);
+        Assertions.assertEquals(1, archiveExamEvents.size());
+        assertEquals(ExamStatus.COMPLETED.toString(), archiveExamEvents.get(0).get("examStatus"));
+
     }
 
     private Request candidateCreatesRequestAndScribeAcceptsIt(ExamSchedule schedule) throws Exception {
