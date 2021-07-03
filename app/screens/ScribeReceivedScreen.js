@@ -30,8 +30,6 @@ function ScribeReceivedScreen(props) {
     });
   };
 
-  console.log("listing", listing);
-
   const icons = {
     subTitle: "pencil-outline",
     examDate: "calendar",
@@ -62,6 +60,7 @@ function ScribeReceivedScreen(props) {
           if (result.ok) {
             callLoadListings();
           }
+          //TODO: Request may fail with BAD REQUEST if scribe accepts multiple requests for the same time slot
         },
       },
       {

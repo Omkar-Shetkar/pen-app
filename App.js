@@ -9,6 +9,8 @@ import Toast from "react-native-toast-message";
 export default function App() {
   const [isScribe, setIsScribe] = useState(false);
 
+  // TODO: After backend is up,
+  //  application should fetch latest data or prompt user to reload the application.
   return (
     <>
       <AuthContext.Provider value={{ isScribe, setIsScribe }}>

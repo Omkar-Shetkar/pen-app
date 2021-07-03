@@ -54,6 +54,8 @@ function CandidateAcceptedScreen(props) {
       <FlatList
         data={listing}
         keyExtractor={(listing) => listing.id.toString()}
+        onRefresh={callLoadListings}
+        refreshing={listingLoading}
         renderItem={({ item }) => (
           <RequestCardComponent
             title={
