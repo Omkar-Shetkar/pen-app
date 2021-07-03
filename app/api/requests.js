@@ -17,7 +17,7 @@ const createRequest = (requestUpdate) => {
 };
 
 const findRequests = (requestSearchFilter) => {
-  console.log("Find Request API called...", requestSearchFilter);
+  console.log("Find Requests API called...", requestSearchFilter);
   return apiClient.get(endPoint, requestSearchFilter);
 };
 

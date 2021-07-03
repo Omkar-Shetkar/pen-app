@@ -4,8 +4,8 @@ import moment from "moment";
 
 import RequestCardComponent from "../components/RequestCardComponent";
 import Screen from "../components/Screen";
-import requestsApi from "../api/requests";
-import requestStatus from "../config/requestStatus";
+import examEventsApi from "../api/examEvents";
+import examStatus from "../config/examStatus";
 import gender from "../config/gender";
 
 function CandidateArchiveScreen(props) {
@@ -14,7 +14,7 @@ function CandidateArchiveScreen(props) {
     error: listingError,
     loading: listingLoading,
     request: loadListings,
-  } = useApi(requestsApi.findRequests);
+  } = useApi(examEventsApi.findExamEvents);
 
   useEffect(() => {
     callLoadListings();
@@ -43,8 +43,7 @@ function CandidateArchiveScreen(props) {
     loadListings({
       //TODO: Use actual candidate id
       candidate: 1,
-      requestStatus: requestStatus.ACCEPTED,
-      startingFrom: new Date(),
+      examStatus: examStatus.COMPLETED,
     });
   };
 
@@ -53,7 +52,7 @@ function CandidateArchiveScreen(props) {
     <Screen>
       <FlatList
         data={listing}
-        keyExtractor={(listing) => listing.id.toString()}
+        keyExtractor={(item) => item.id.toString()}
         onRefresh={callLoadListings}
         refreshing={listingLoading}
         renderItem={({ item }) => (
@@ -65,7 +64,7 @@ function CandidateArchiveScreen(props) {
             }
             subTitle={item.examResource.name}
             icons={icons}
-            details={examDetails(item)}
+            details={examDetails(item.examResource)}
             thumbnailIcon={
               item.scribeResource.gender === gender.MALE ? "face" : "face-woman"
             }
