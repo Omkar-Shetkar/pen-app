@@ -48,6 +48,7 @@ function ScribeArchiveScreen(props) {
   };
 
   return (
+    // TODO: Handle case when list is empty
     <Screen>
       <FlatList
         data={listing}

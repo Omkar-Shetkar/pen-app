@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { View,ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import * as Yup from "yup";
-import MultiSelect from "react-native-multiple-select";
 
 import AppErrorMessage from "../components/forms/AppErrorMessage";
 import AppForm from "../components/forms/AppForm";
@@ -9,8 +8,6 @@ import AppFormField from "../components/forms/AppFormField";
 import AppFormPickerField from "../components/forms/AppFormPickerField";
 import SubmitButton from "../components/forms/SubmitButton";
 import Screen from "../components/Screen";
-import colors from "../config/colors";
-import defaultStyles from "../config/styles";
 
 import AppFormMultiSelectField from "../components/forms/AppFormMultiSelectField";
 
