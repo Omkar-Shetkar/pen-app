@@ -41,7 +41,6 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -153,7 +152,7 @@ class LightBackendApplicationTests extends BaseTestSetup {
         // Scribe accepts the request
         String content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
         String response = mockMvc.perform(patch(SINGLE, requests.get(0).getId())
-                .with(csrf()).contentType(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -186,7 +185,7 @@ class LightBackendApplicationTests extends BaseTestSetup {
             // Candidate requests for exam
             RequestCreationModel requestCreationModel = createRequestUpdate(scribeId, examSchedule);
             String content = mapper.writeValueAsString(requestCreationModel);
-            String response = mockMvc.perform(post(ALL).with(csrf()).contentType(APPLICATION_JSON)
+            String response = mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
                     .content(content))
                     .andExpect(status().isCreated())
                     .andReturn().getResponse().getContentAsString();

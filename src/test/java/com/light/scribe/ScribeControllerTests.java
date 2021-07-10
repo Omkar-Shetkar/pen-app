@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -29,7 +28,6 @@ import java.util.Set;
 import static com.light.scribe.controller.ScribeController.ALL;
 import static com.light.scribe.controller.ScribeController.UPDATE;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -65,7 +63,7 @@ class ScribeControllerTests extends BaseTestSetup {
         ScribeUpdate scribeUpdate = new ScribeUpdate(availabilities);
 
         mockMvc.perform((put(UPDATE, "1")
-                .with(csrf()).contentType(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
                 .content(mapper.writeValueAsString(scribeUpdate))))
                 .andExpect(status().isCreated());
     }
@@ -81,7 +79,7 @@ class ScribeControllerTests extends BaseTestSetup {
         ScribeUpdate scribeUpdate = new ScribeUpdate(availabilities);
 
         mockMvc.perform((put(UPDATE, "100")
-                .with(csrf()).contentType(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
                 .content(mapper.writeValueAsString(scribeUpdate))))
                 .andExpect(status().isNotFound());
     }
@@ -93,7 +91,7 @@ class ScribeControllerTests extends BaseTestSetup {
         LocalDateTime to = LocalDateTime.of(2020, 12, 26, 10, 00);
 
         String response = mockMvc.perform(get(ALL)
-                .with(csrf()).contentType(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
                 .param("from", from.format(DateTimeFormatter.ISO_DATE_TIME))
                 .param("to", to.format(DateTimeFormatter.ISO_DATE_TIME))
                 .param("language", String.valueOf(1L)))

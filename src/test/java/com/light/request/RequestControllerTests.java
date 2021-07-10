@@ -31,7 +31,6 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -56,12 +55,12 @@ class RequestControllerTests extends BaseTestSetup {
 
         RequestCreationModel requestCreationModel = createRequestUpdate(1L);
         String content = mapper.writeValueAsString(requestCreationModel);
-        mockMvc.perform(post(ALL).with(csrf()).contentType(APPLICATION_JSON)
+        mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isCreated());
 
         // Get all 'PENDING' requests of candidate
-        String response = mockMvc.perform(get(ALL).with(csrf()).contentType(APPLICATION_JSON)
+        String response = mockMvc.perform(get(ALL).contentType(APPLICATION_JSON)
                 .param("requestStatus", PENDING.toString())
                 .param("candidate", String.valueOf(CANDIDATE)))
                 .andExpect(status().isOk())
@@ -79,18 +78,18 @@ class RequestControllerTests extends BaseTestSetup {
         RequestCreationModel requestCreationModel = createRequestUpdate(1L);
         String content = mapper.writeValueAsString(requestCreationModel);
         String response = mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
-                .with(csrf())
+                
                 .content(content))
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
         Request request = mapper.readValue(response, Request.class);
 
         // Candidate cancels the request
-        mockMvc.perform(delete(SINGLE, request.getId()).with(csrf()))
+        mockMvc.perform(delete(SINGLE, request.getId()))
                 .andExpect(status().isNoContent());
 
         // Get all 'PENDING' requests of candidate
-        response = mockMvc.perform(get(ALL).with(csrf()).contentType(APPLICATION_JSON)
+        response = mockMvc.perform(get(ALL).contentType(APPLICATION_JSON)
                 .param("requestStatus", PENDING.toString())
                 .param("candidate", String.valueOf(CANDIDATE)))
                 .andExpect(status().isOk())
@@ -104,7 +103,7 @@ class RequestControllerTests extends BaseTestSetup {
     void testListRequestsFromGivenStartDate() throws Exception {
         RequestCreationModel requestCreationModel = createRequestUpdate(1L);
         String content = mapper.writeValueAsString(requestCreationModel);
-        mockMvc.perform(post(ALL).with(csrf()).contentType(APPLICATION_JSON)
+        mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isCreated());
 
@@ -112,7 +111,7 @@ class RequestControllerTests extends BaseTestSetup {
         SimpleDateFormat format = new SimpleDateFormat(
                 "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
-        String response = mockMvc.perform(get(ALL).with(csrf()).contentType(APPLICATION_JSON)
+        String response = mockMvc.perform(get(ALL).contentType(APPLICATION_JSON)
                 .param("requestStatus", PENDING.toString())
                 .param("candidate", String.valueOf(CANDIDATE))
                 .param("startingFrom", format.format(new Date(Instant.now().toEpochMilli()))))
@@ -122,7 +121,7 @@ class RequestControllerTests extends BaseTestSetup {
         assertEquals(1, pendingRequests.size());
 
 
-        response = mockMvc.perform(get(ALL).with(csrf()).contentType(APPLICATION_JSON)
+        response = mockMvc.perform(get(ALL).contentType(APPLICATION_JSON)
                 .param("requestStatus", PENDING.toString())
                 .param("candidate", String.valueOf(CANDIDATE))
                 .param("startingFrom", format.format(new Date(Instant.now().plus(3, DAYS).toEpochMilli()))))
@@ -141,7 +140,7 @@ class RequestControllerTests extends BaseTestSetup {
         // Scribe accepts the request
         String content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
         String response = mockMvc.perform(patch(SINGLE, request.getId())
-                .with(csrf()).contentType(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -155,7 +154,7 @@ class RequestControllerTests extends BaseTestSetup {
         // Scribe tries to accept the request again
         content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
         mockMvc.perform(patch(SINGLE, request.getId())
-                .with(csrf()).contentType(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isBadRequest());
 
@@ -245,7 +244,7 @@ class RequestControllerTests extends BaseTestSetup {
         // Scribe accepts the request
         String content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
         mockMvc.perform(patch(SINGLE, request.getId())
-                .with(csrf()).contentType(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isBadRequest());
 
@@ -273,7 +272,7 @@ class RequestControllerTests extends BaseTestSetup {
         // Scribe accepts the request
         String content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
         String response = mockMvc.perform(patch(SINGLE, requests.get(0).getId())
-                .with(csrf()).contentType(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -299,7 +298,7 @@ class RequestControllerTests extends BaseTestSetup {
         try {
             RequestCreationModel requestCreationModel = createRequestUpdate(scribeId);
             String content = mapper.writeValueAsString(requestCreationModel);
-            String response = mockMvc.perform(post(ALL).with(csrf()).contentType(APPLICATION_JSON)
+            String response = mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
                     .content(content))
                     .andExpect(status().isCreated())
                     .andReturn().getResponse().getContentAsString();
@@ -312,7 +311,7 @@ class RequestControllerTests extends BaseTestSetup {
     private void scribeRejectsRequest(Request request) throws Exception {
         String content = mapper.writeValueAsString(new RequestUpdateModel(REJECTED));
         mockMvc.perform(patch(SINGLE, request.getId())
-                .with(csrf()).contentType(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
