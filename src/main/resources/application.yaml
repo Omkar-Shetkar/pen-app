@@ -7,6 +7,9 @@ spring:
     banner:
       location: classpath:banner.txt
 ---
+
+server.port: 8900
+
 spring:
   profiles: dev, prod
   liquibase:
