@@ -1,5 +1,8 @@
-#logging.level:
-#  org.springframework.jdbc.core.JdbcTemplate: TRACE
+logging.level:
+  org:
+    springframework:
+#      security: DEBUG
+#      jdbc.core.JdbcTemplate: DEBUG
 
 spring:
   profiles:
@@ -14,12 +17,11 @@ spring:
   profiles: dev, prod
   liquibase:
     enabled: true
-  jpa:
-    show-sql: true
-    database: postgresql
-    generate-ddl: true
-    hibernate:
-      ddl-auto: update
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/auth/realms/light/protocol/openid-connect/certs
   datasource:
     url: jdbc:postgresql://localhost:5432/light
     username: postgres

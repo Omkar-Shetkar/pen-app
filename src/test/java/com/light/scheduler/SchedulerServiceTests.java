@@ -29,6 +29,7 @@ import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -118,7 +119,7 @@ class SchedulerServiceTests extends BaseTestSetup {
             // Candidate requests for exam
             RequestCreationModel requestCreationModel = createRequestUpdate(scribeId, examSchedule);
             String content = mapper.writeValueAsString(requestCreationModel);
-            String response = mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
+            String response = mockMvc.perform(post(ALL).with(csrf()).contentType(APPLICATION_JSON)
                     .content(content))
                     .andExpect(status().isCreated())
                     .andReturn().getResponse().getContentAsString();
@@ -128,7 +129,7 @@ class SchedulerServiceTests extends BaseTestSetup {
             content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
             long requestId = request.getId();
             response = mockMvc.perform(patch(SINGLE, requestId)
-                    .contentType(APPLICATION_JSON)
+                    .with(csrf()).contentType(APPLICATION_JSON)
                     .content(content))
                     .andExpect(status().isOk())
                     .andReturn().getResponse().getContentAsString();

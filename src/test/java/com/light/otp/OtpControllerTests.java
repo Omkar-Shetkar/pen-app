@@ -7,10 +7,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.light.otp.controller.OtpController.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,7 +31,7 @@ class OtpControllerTests extends BaseTestSetup {
         mockMvc.perform(
                 post(SINGLE)
                         .header(HttpHeaders.ACCEPT_LANGUAGE, "en-US")
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(csrf()).contentType(APPLICATION_JSON)
                         .content(content))
                 .andExpect(status().isCreated());
     }
@@ -43,7 +44,7 @@ class OtpControllerTests extends BaseTestSetup {
         String response = mockMvc.perform(
                 post(SINGLE)
                         .header(HttpHeaders.ACCEPT_LANGUAGE, "kn-IN")
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(csrf()).contentType(APPLICATION_JSON)
                         .content(content))
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
@@ -51,7 +52,7 @@ class OtpControllerTests extends BaseTestSetup {
 
         // Verify OTP for success
         response = mockMvc.perform(get(VERIFY)
-                .contentType(MediaType.APPLICATION_JSON)
+                .with(csrf()).contentType(APPLICATION_JSON)
                 .param("candidateId", "1")
                 .param("scribeId", "1")
                 .param("otp", String.valueOf(otp)))
@@ -61,7 +62,7 @@ class OtpControllerTests extends BaseTestSetup {
 
         // Verify OTP for failure
         response = mockMvc.perform(get(VERIFY)
-                .contentType(MediaType.APPLICATION_JSON)
+                .with(csrf()).contentType(APPLICATION_JSON)
                 .param("candidateId", "1")
                 .param("scribeId", "1")
                 .param("otp", String.valueOf("123456")))

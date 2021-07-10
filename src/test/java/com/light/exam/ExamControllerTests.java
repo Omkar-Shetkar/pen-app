@@ -17,6 +17,7 @@ import static com.light.exam.controller.ExamController.ALL;
 import static com.light.exam.controller.ExamController.SINGLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,7 +35,7 @@ class ExamControllerTests extends BaseTestSetup {
         ExamUpdate examUpdate = new ExamUpdate("SSLC");
         String content = mapper.writeValueAsString(examUpdate);
         String response = mockMvc.perform(post(ALL)
-                .contentType(APPLICATION_JSON)
+                .with(csrf()).contentType(APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
@@ -56,7 +57,7 @@ class ExamControllerTests extends BaseTestSetup {
         assertEquals(3, exams.size());
 
         // Delete an exam
-        mockMvc.perform(delete(SINGLE, 101))
+        mockMvc.perform(delete(SINGLE, 101).with(csrf()))
                 .andExpect(status().isAccepted());
 
         // Assert count of exams
