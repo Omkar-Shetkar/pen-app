@@ -13,7 +13,7 @@ export default function WelcomeScreen({ navigation }) {
     >
       <View style={styles.logoContainer}>
         <Image source={require("../assets/logo-red.png")} style={styles.logo} />
-        <Text style={styles.text}>Sell What You Don't Need</Text>
+        <Text style={styles.text}>Platform for Scribe and Candidate</Text>
       </View>
 
       <AppButton
