@@ -7,8 +7,10 @@ import Screen from "../components/Screen";
 import examEventsApi from "../api/examEvents";
 import examStatus from "../config/examStatus";
 import gender from "../config/gender";
+import useAuth from "../auth/useAuth";
 
 function ScribeArchiveScreen(props) {
+  const { user } = useAuth();
   const {
     data: listing,
     error: listingError,
@@ -41,8 +43,7 @@ function ScribeArchiveScreen(props) {
 
   const callLoadListings = () => {
     loadListings({
-      //TODO: Use actual scribe id
-      scribe: 1,
+      scribe: user.sub,
       examStatus: examStatus.COMPLETED,
     });
   };

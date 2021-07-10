@@ -8,8 +8,11 @@ import colors from "../config/colors";
 import requestStatus from "../config/requestStatus";
 import requestsApi from "../api/requests";
 import gender from "../config/gender";
+import useAuth from "../auth/useAuth";
 
 function ScribeAcceptedScreen(props) {
+  const { user } = useAuth();
+
   const {
     data: listing,
     error: listingError,
@@ -23,8 +26,7 @@ function ScribeAcceptedScreen(props) {
 
   const callLoadListings = () => {
     loadListings({
-      //TODO: Use actual scribe id
-      scribe: 1,
+      scribe: user.sub,
       requestStatus: requestStatus.ACCEPTED,
       startingFrom: new Date(),
     });

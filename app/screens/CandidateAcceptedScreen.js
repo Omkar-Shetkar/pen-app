@@ -7,8 +7,11 @@ import Screen from "../components/Screen";
 import requestsApi from "../api/requests";
 import requestStatus from "../config/requestStatus";
 import gender from "../config/gender";
+import useAuth from "../auth/useAuth";
 
 function CandidateAcceptedScreen(props) {
+  const { user } = useAuth();
+
   const {
     data: listing,
     error: listingError,
@@ -41,8 +44,7 @@ function CandidateAcceptedScreen(props) {
 
   const callLoadListings = () => {
     loadListings({
-      //TODO: Use actual candidate id
-      candidate: 1,
+      candidate: user.sub,
       requestStatus: requestStatus.ACCEPTED,
       startingFrom: new Date(),
     });

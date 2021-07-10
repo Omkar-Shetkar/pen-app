@@ -17,7 +17,7 @@ export default function App() {
   //  application should fetch latest data or prompt user to reload the application.
   return (
     <>
-      <AuthContext.Provider value={{ isScribe, setIsScribe }}>
+      <AuthContext.Provider value={{ user, setUser }}>
         <NavigationContainer ref={navigationRef} theme={navigationTheme}>
           {user ? <AppNavigator /> : <AuthNavigator />}
         </NavigationContainer>

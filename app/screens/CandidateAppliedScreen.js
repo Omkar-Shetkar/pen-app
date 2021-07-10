@@ -8,8 +8,11 @@ import colors from "../config/colors";
 import requestsApi from "../api/requests";
 import gender from "../config/gender";
 import requestStatus from "../config/requestStatus";
+import useAuth from "../auth/useAuth";
 
 function CandidateAppliedScreen(props) {
+  const { user } = useAuth();
+
   const {
     data: listing,
     error: listingError,
@@ -57,8 +60,7 @@ function CandidateAppliedScreen(props) {
 
   const callLoadListings = () => {
     loadListings({
-      //TODO: Use actual candidate id
-      candidate: 1,
+      candidate: user.sub,
       requestStatus: requestStatus.PENDING,
       startingFrom: new Date(),
     });

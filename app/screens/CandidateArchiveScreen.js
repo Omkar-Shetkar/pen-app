@@ -7,8 +7,10 @@ import Screen from "../components/Screen";
 import examEventsApi from "../api/examEvents";
 import examStatus from "../config/examStatus";
 import gender from "../config/gender";
+import useAuth from "../auth/useAuth";
 
 function CandidateArchiveScreen(props) {
+  const { user } = useAuth();
   const {
     data: listing,
     error: listingError,
@@ -41,8 +43,7 @@ function CandidateArchiveScreen(props) {
 
   const callLoadListings = () => {
     loadListings({
-      //TODO: Use actual candidate id
-      candidate: 1,
+      candidate: user.sub,
       examStatus: examStatus.COMPLETED,
     });
   };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Image, TextInput, Text } from "react-native";
 import * as Yup from "yup";
 import AppForm from "../components/forms/AppForm";
@@ -6,26 +6,31 @@ import AppFormField from "../components/forms/AppFormField";
 import SubmitButton from "../components/forms/SubmitButton";
 import Screen from "../components/Screen";
 import authApi from "../api/auth";
+import useAuth from "../auth/useAuth";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
 });
 
-const handleSubmit = async ({ email, password }) => {
-  const result = await authApi.login({ username: email, password: password });
-  console.log("login", result);
-  // if (!result.ok) return setLoginFailed(true);
-  // setLoginFailed(false);
-  // login(result.data);
-};
-
 function LoginScreen(props) {
+  const [loginFailed, setLoginFailed] = useState(false);
+
+  const { login } = useAuth();
+
+  const handleSubmit = async ({ email, password }) => {
+    const result = await authApi.login({ username: email, password: password });
+    if (!result.ok) return setLoginFailed(true);
+    setLoginFailed(false);
+    login(result.data.access_token);
+  };
+
   return (
     <Screen style={styles.container}>
       <Image source={require("../assets/logo.png")} style={styles.logo}></Image>
+      {/* TODO: To be removed */}
       <AppForm
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ email: "omkarshetkar@gmail.com", password: "1234" }}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
