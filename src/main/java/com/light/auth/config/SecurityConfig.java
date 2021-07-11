@@ -23,13 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .antMatchers(HttpMethod.GET, "/rest/**")
-                                .hasAuthority("SCOPE_light:read")
-                                .antMatchers(HttpMethod.POST, "/rest/auth/**").permitAll()
-                                .antMatchers(HttpMethod.POST, "/rest/requests/**")
-                                .hasAuthority("SCOPE_light:write")
-                                .antMatchers(HttpMethod.PUT, "/rest/requests/**")
-                                .hasAuthority("SCOPE_light:write")
+                                .antMatchers( "/rest/auth/**","/rest/languages").permitAll()
+                                .antMatchers("/rest/**")
+                                .hasAuthority("SCOPE_light:read-write")
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
