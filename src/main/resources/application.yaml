@@ -32,6 +32,15 @@ light.exam:
   schedule.delay-in-ms: 2700000 # 45 Mins - OTP is generated at the most given delay before start of the exam
   otp.expire-in-ms: 3600000 # 60 Mins - OTP Expires after 1 Hr of generation
   initial-delay-in-ms: 180000 # 3 Min
+
+# Keycloak Configuration
+keycloak:
+  server: http://localhost:8080/auth
+  admin:
+    realm: master
+    client-id: admin-cli
+    client-secret: f399089c-1aea-4673-b93b-05a6e3b21fbd
+
 ---
 spring:
   profiles: test

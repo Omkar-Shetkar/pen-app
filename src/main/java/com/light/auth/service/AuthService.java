@@ -23,10 +23,13 @@ public class AuthService {
 
     private final ScribeService scribeService;
     private final CandidateService candidateService;
+    private final KeyCloakConfig keyCloakConfig;
 
-    public AuthService(ScribeService scribeService, CandidateService candidateService) {
+    public AuthService(ScribeService scribeService, CandidateService candidateService,
+                       KeyCloakConfig keyCloakConfig) {
         this.scribeService = scribeService;
         this.candidateService = candidateService;
+        this.keyCloakConfig = keyCloakConfig;
     }
 
     public AccessTokenResponse login(UserCredentials credentials) {
@@ -37,7 +40,7 @@ public class AuthService {
     }
 
     public UserRepresentation addUser(UserResource userResource) {
-        Keycloak keycloak = KeyCloakConfig.getInstance();
+        Keycloak keycloak = keyCloakConfig.getKeycloak();
         UsersResource usersResource = keycloak.realm("light").users();
         CredentialRepresentation credentialRepresentation =
                 createPasswordCredentials(userResource.getCredentials().password());
