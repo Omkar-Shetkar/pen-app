@@ -1,5 +1,6 @@
 package com.light.client.request;
 
+import com.light.client.register.UserResource;
 import com.light.exam.domain.ExamStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class ExamEventResource {
     private Long id;
     private ExamStatus examStatus;
-    private ScribeResource scribeResource;
-    private CandidateResource candidateResource;
+    private UserResource scribeResource;
+    private UserResource candidateResource;
     private ExamResource examResource;
 }
