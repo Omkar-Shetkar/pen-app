@@ -1,7 +1,8 @@
 package com.light.scribe.service;
 
-import com.light.scribe.client.ScribeSearchFilter;
-import com.light.scribe.client.ScribeUpdate;
+import com.light.client.register.UserResource;
+import com.light.client.scribe.ScribeSearchFilter;
+import com.light.client.scribe.ScribeUpdate;
 import com.light.scribe.domain.Scribe;
 import com.light.scribe.repository.ScribeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class ScribeService {
     @Autowired
     private ScribeRepository scribeRepository;
 
-    public final Scribe updateScribeAvailability(long scribeId, ScribeUpdate scribeUpdate) {
+    public final Scribe updateScribeAvailability(String scribeId, ScribeUpdate scribeUpdate) {
 
         Scribe scribe = findById(scribeId);
         scribe.setAvailabilities(scribeUpdate.getAvailabilities());
@@ -28,7 +29,7 @@ public class ScribeService {
      * @return
      * @throws IllegalArgumentException - For invalid scribe id
      */
-    public Scribe findById(long scribeId) {
+    public Scribe findById(String scribeId) {
         return scribeRepository.findById(scribeId)
                 .orElseThrow(() -> new IllegalArgumentException("Couldn't find scribe id: " + scribeId));
     }
@@ -42,4 +43,9 @@ public class ScribeService {
         return scribeRepository.findAll();
     }
 
+    public void create(String userId, UserResource user) {
+        Scribe scribe = new Scribe(userId, user.getFirstName(), user.getLastName(), user.getGender(),
+                user.getLocation(), user.getPhone(), user.getEmail());
+        scribeRepository.insert(scribe);
+    }
 }

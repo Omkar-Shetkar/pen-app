@@ -1,4 +1,4 @@
-package com.light.exam.client;
+package com.light.client.exam;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FeedbackDetails {
 
-    private long userId;
+    private String userId;
 
     private UserType userType;
 

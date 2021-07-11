@@ -1,4 +1,4 @@
-package com.light.request.client;
+package com.light.client.request;
 
 import com.light.exam.domain.ExamStatus;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.light.exam.client;
+package com.light.client.exam;
 
 import com.light.exam.domain.ExamStatus;
 import lombok.AllArgsConstructor;
@@ -12,9 +12,9 @@ public class ExamEventSearchFilter {
 
     public static final long UNASSIGNED_ID = 0;
 
-    private Long candidate;
+    private String candidate;
 
-    private Long scribe;
+    private String scribe;
 
     private Integer scheduledInNextHours;
 

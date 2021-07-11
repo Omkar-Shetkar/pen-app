@@ -9,7 +9,7 @@ import org.springframework.data.annotation.Id;
 @AllArgsConstructor
 public class Candidate {
     @Id
-    private Long id;
+    private String id;
 
     private String firstName;
 

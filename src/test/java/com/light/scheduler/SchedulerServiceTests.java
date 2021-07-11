@@ -5,8 +5,8 @@ import com.light.BaseTestSetup;
 import com.light.exam.domain.ExamEvent;
 import com.light.exam.domain.ExamSchedule;
 import com.light.exam.service.ExamEventService;
-import com.light.request.client.RequestCreationModel;
-import com.light.request.client.RequestUpdateModel;
+import com.light.client.request.RequestCreationModel;
+import com.light.client.request.RequestUpdateModel;
 import com.light.request.domain.Request;
 import org.awaitility.Awaitility;
 import org.awaitility.Durations;
@@ -35,8 +35,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class SchedulerServiceTests extends BaseTestSetup {
 
-    public static final long CANDIDATE_ID = 1L;
-    public static final long SCRIBE_ID = 1L;
+    public static final String CANDIDATE_ID = "1";
+    public static final String SCRIBE_ID = "1";
     public static final long EXAM_ID = 101;
     public static final long LANGUAGE_ID = 1L;
     public static final long ADDRESS_ID = 1L;
@@ -108,12 +108,12 @@ class SchedulerServiceTests extends BaseTestSetup {
         return examSchedule;
     }
 
-    private RequestCreationModel createRequestUpdate(long scribeId, ExamSchedule examSchedule) {
+    private RequestCreationModel createRequestUpdate(String scribeId, ExamSchedule examSchedule) {
         return new RequestCreationModel(scribeId, CANDIDATE_ID, examSchedule.getStartTime(), examSchedule.getEndTime(),
                 examSchedule.getLanguage(), examSchedule.getAddress(), examSchedule.getExam());
     }
 
-    private Request candidateCreatesRequestAndScribeAcceptsIt(long scribeId, ExamSchedule examSchedule) {
+    private Request candidateCreatesRequestAndScribeAcceptsIt(String scribeId, ExamSchedule examSchedule) {
         try {
             // Candidate requests for exam
             RequestCreationModel requestCreationModel = createRequestUpdate(scribeId, examSchedule);

@@ -2,7 +2,7 @@ package com.light.exam.repository;
 
 import com.light.exam.domain.ExamEvent;
 import com.light.exam.domain.ExamStatus;
-import com.light.request.client.ExamEventResource;
+import com.light.client.request.ExamEventResource;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -25,7 +25,7 @@ public interface ExamEventRepository extends CrudRepository<ExamEvent, Long> {
                 extract(epoch from es.start_time - CURRENT_TIMESTAMP)/3600 <= :scheduledInNextHours 
             )
             """)
-    List<ExamEvent> searchExamEvents(Long candidate, Long scribe, Integer scheduledInNextHours);
+    List<ExamEvent> searchExamEvents(String candidate, String scribe, Integer scheduledInNextHours);
 
     @Query(value = """
                         SELECT ev.id id, ev.exam_status exam_status, 
@@ -55,7 +55,7 @@ public interface ExamEventRepository extends CrudRepository<ExamEvent, Long> {
                         )
                         """,
             rowMapperClass = ExamEventResourceRowMapper.class)
-    List<ExamEventResource> searchExamEventResources(Long candidate, Long scribe, Integer scheduledInNextHours,
+    List<ExamEventResource> searchExamEventResources(String candidate, String scribe, Integer scheduledInNextHours,
                                                      ExamStatus examStatus);
 
     @Query("""

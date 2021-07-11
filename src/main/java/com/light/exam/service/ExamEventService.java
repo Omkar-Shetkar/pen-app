@@ -1,14 +1,14 @@
 package com.light.exam.service;
 
-import com.light.exam.client.ExamEventSearchFilter;
-import com.light.exam.client.ExamEventUpdate;
-import com.light.exam.client.FeedbackDetails;
-import com.light.exam.client.UserType;
+import com.light.client.exam.ExamEventSearchFilter;
+import com.light.client.exam.ExamEventUpdate;
+import com.light.client.exam.FeedbackDetails;
+import com.light.client.exam.UserType;
 import com.light.exam.domain.CandidateFeedback;
 import com.light.exam.domain.ExamEvent;
 import com.light.exam.domain.ScribeFeedback;
 import com.light.exam.repository.ExamEventRepository;
-import com.light.request.client.ExamEventResource;
+import com.light.client.request.ExamEventResource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

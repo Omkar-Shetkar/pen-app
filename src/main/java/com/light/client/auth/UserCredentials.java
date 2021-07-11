@@ -1,4 +1,4 @@
-package com.light.auth.domain;
+package com.light.client.auth;
 
 public record UserCredentials(String username, String password) {
 }

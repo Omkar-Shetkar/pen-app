@@ -1,9 +1,9 @@
 package com.light.request;
 
-import com.light.request.client.RequestCreationModel;
-import com.light.request.client.RequestResource;
-import com.light.request.client.RequestSearchFilter;
-import com.light.request.client.RequestUpdateModel;
+import com.light.client.request.RequestCreationModel;
+import com.light.client.request.RequestResource;
+import com.light.client.request.RequestSearchFilter;
+import com.light.client.request.RequestUpdateModel;
 import com.light.request.domain.Request;
 import com.light.request.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;

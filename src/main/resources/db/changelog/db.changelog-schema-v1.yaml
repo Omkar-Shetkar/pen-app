@@ -99,7 +99,7 @@ databaseChangeLog:
                   type: TIMESTAMP WITH TIME ZONE
               - column:
                   name: scribe
-                  type: INTEGER
+                  type: VARCHAR(50)
             tableName: availability
   - changeSet:
       id: 1623723127531-6
@@ -113,7 +113,7 @@ databaseChangeLog:
                     primaryKey: true
                     primaryKeyName: scribe_pkey
                   name: id
-                  type: INTEGER
+                  type: VARCHAR(50)
               - column:
                   name: first_name
                   type: VARCHAR(200)
@@ -168,10 +168,10 @@ databaseChangeLog:
                   type: INTEGER
               - column:
                   name: scribe
-                  type: INTEGER
+                  type: VARCHAR(50)
               - column:
                   name: candidate
-                  type: INTEGER
+                  type: VARCHAR(50)
               - column:
                   name: otp_generated
                   type: BOOLEAN
@@ -197,7 +197,7 @@ databaseChangeLog:
                     primaryKey: true
                     primaryKeyName: candidate_pkey
                   name: id
-                  type: INTEGER
+                  type: VARCHAR(50)
               - column:
                   name: first_name
                   type: VARCHAR(200)
@@ -257,10 +257,10 @@ databaseChangeLog:
                   autoIncrement: true
               - column:
                   name: candidate
-                  type: INTEGER
+                  type: VARCHAR(50)
               - column:
                   name: scribe
-                  type: INTEGER
+                  type: VARCHAR(50)
               - column:
                   name: exam_schedule
                   type: INTEGER
@@ -326,7 +326,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: scribe
-                  type: INTEGER
+                  type: VARCHAR(50)
               - column:
                   name: language
                   type: INTEGER

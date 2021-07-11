@@ -1,11 +1,12 @@
 package com.light.exam.controller;
 
-import com.light.exam.client.ExamEventSearchFilter;
-import com.light.exam.client.FeedbackDetails;
+import com.light.client.exam.ExamEventSearchFilter;
+import com.light.client.exam.FeedbackDetails;
+import com.light.client.otp.OtpRequest;
 import com.light.exam.domain.ExamEvent;
 import com.light.exam.domain.ExamStatus;
 import com.light.exam.service.ExamEventService;
-import com.light.request.client.ExamEventResource;
+import com.light.client.request.ExamEventResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +70,7 @@ public class ExamEventController {
     }
 
     @GetMapping("/{id}/otp/verify")
-    public ResponseEntity<String> verifyOtp(@PathVariable long id, @Validated com.light.otp.client.OtpRequest otpRequest) {
+    public ResponseEntity<String> verifyOtp(@PathVariable long id, @Validated OtpRequest otpRequest) {
         try {
             ExamEvent examEvent = examEventService.getById(id)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,

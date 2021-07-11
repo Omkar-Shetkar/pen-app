@@ -2,7 +2,7 @@ package com.light.otp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.light.BaseTestSetup;
-import com.light.otp.client.OtpRequest;
+import com.light.client.otp.OtpRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ class OtpControllerTests extends BaseTestSetup {
 
     @Test
     void testCreate() throws Exception {
-        OtpRequest otpRequest = new OtpRequest(1L, 1L);
+        OtpRequest otpRequest = new OtpRequest("1", "1");
         String content = mapper.writeValueAsString(otpRequest);
         mockMvc.perform(
                 post(SINGLE)
@@ -38,7 +38,7 @@ class OtpControllerTests extends BaseTestSetup {
     @Test
     void testVerify() throws Exception {
         // Create OTP
-        OtpRequest otpRequest = new OtpRequest(1L, 1L);
+        OtpRequest otpRequest = new OtpRequest("1", "1");
         String content = mapper.writeValueAsString(otpRequest);
         String response = mockMvc.perform(
                 post(SINGLE)

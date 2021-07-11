@@ -1,4 +1,4 @@
-package com.light.scribe.client;
+package com.light.client.scribe;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

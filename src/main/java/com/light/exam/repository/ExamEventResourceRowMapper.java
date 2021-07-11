@@ -2,10 +2,10 @@ package com.light.exam.repository;
 
 import com.light.domain.Gender;
 import com.light.exam.domain.ExamStatus;
-import com.light.request.client.CandidateResource;
-import com.light.request.client.ExamEventResource;
-import com.light.request.client.ExamResource;
-import com.light.request.client.ScribeResource;
+import com.light.client.request.CandidateResource;
+import com.light.client.request.ExamEventResource;
+import com.light.client.request.ExamResource;
+import com.light.client.request.ScribeResource;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

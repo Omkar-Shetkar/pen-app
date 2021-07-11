@@ -1,6 +1,6 @@
 package com.light.otp.controller;
 
-import com.light.otp.client.OtpRequest;
+import com.light.client.otp.OtpRequest;
 import com.light.otp.service.OtpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

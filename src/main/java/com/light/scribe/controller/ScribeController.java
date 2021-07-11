@@ -1,7 +1,7 @@
 package com.light.scribe.controller;
 
-import com.light.scribe.client.ScribeSearchFilter;
-import com.light.scribe.client.ScribeUpdate;
+import com.light.client.scribe.ScribeSearchFilter;
+import com.light.client.scribe.ScribeUpdate;
 import com.light.scribe.domain.Scribe;
 import com.light.scribe.service.ScribeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class ScribeController {
      * @return
      */
     @PutMapping("{id}/")
-    public ResponseEntity<Scribe> updateScribe(@PathVariable long id, @Validated @RequestBody ScribeUpdate scribeUpdate) {
+    public ResponseEntity<Scribe> updateScribe(@PathVariable String id, @Validated @RequestBody ScribeUpdate scribeUpdate) {
         try {
             Scribe scribe = scribeService.updateScribeAvailability(id, scribeUpdate);
             return ResponseEntity.status(CREATED).body(scribe);

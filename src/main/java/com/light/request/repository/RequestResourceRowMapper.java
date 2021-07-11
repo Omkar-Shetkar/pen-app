@@ -1,10 +1,10 @@
 package com.light.request.repository;
 
 import com.light.domain.Gender;
-import com.light.request.client.CandidateResource;
-import com.light.request.client.ExamResource;
-import com.light.request.client.RequestResource;
-import com.light.request.client.ScribeResource;
+import com.light.client.request.CandidateResource;
+import com.light.client.request.ExamResource;
+import com.light.client.request.RequestResource;
+import com.light.client.request.ScribeResource;
 import com.light.request.domain.RequestStatus;
 import org.springframework.jdbc.core.RowMapper;
 

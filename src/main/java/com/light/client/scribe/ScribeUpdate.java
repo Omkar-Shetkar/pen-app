@@ -1,4 +1,4 @@
-package com.light.scribe.client;
+package com.light.client.scribe;
 
 import com.light.scribe.domain.Availability;
 import lombok.AllArgsConstructor;

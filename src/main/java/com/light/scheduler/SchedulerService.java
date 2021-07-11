@@ -2,13 +2,13 @@ package com.light.scheduler;
 
 import com.light.candidate.domain.Candidate;
 import com.light.candidate.service.CandidateService;
-import com.light.exam.client.ExamEventSearchFilter;
+import com.light.client.exam.ExamEventSearchFilter;
 import com.light.exam.domain.ExamEvent;
 import com.light.exam.domain.ExamSchedule;
 import com.light.exam.domain.ExamStatus;
 import com.light.exam.service.ExamEventService;
 import com.light.exam.service.ExamScheduleService;
-import com.light.otp.client.OtpRequest;
+import com.light.client.otp.OtpRequest;
 import com.light.otp.service.EmailService;
 import com.light.otp.service.OtpService;
 import com.light.request.service.RequestService;

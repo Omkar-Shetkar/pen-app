@@ -4,9 +4,9 @@ package com.light.request;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.light.BaseTestSetup;
 import com.light.exam.domain.ExamSchedule;
-import com.light.request.client.RequestCreationModel;
-import com.light.request.client.RequestResource;
-import com.light.request.client.RequestUpdateModel;
+import com.light.client.request.RequestCreationModel;
+import com.light.client.request.RequestResource;
+import com.light.client.request.RequestUpdateModel;
 import com.light.request.domain.Request;
 import com.light.request.domain.RequestStatus;
 import com.light.request.repository.ExamScheduleRepository;
@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class RequestControllerTests extends BaseTestSetup {
 
-    public static final long CANDIDATE = 1L;
+    public static final String CANDIDATE = "1";
     public static final long EXAM_ID = 101;
     public static final long LANGUAGE_ID = 1;
     public static final long ADDRESS_ID = 1;
@@ -53,7 +53,7 @@ class RequestControllerTests extends BaseTestSetup {
     @Test
     void testCandidateRequestsForExam() throws Exception {
 
-        RequestCreationModel requestCreationModel = createRequestUpdate(1L);
+        RequestCreationModel requestCreationModel = createRequestUpdate("1");
         String content = mapper.writeValueAsString(requestCreationModel);
         mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
                 .content(content))
@@ -75,7 +75,7 @@ class RequestControllerTests extends BaseTestSetup {
 
     @Test
     public void candidateCancelsRequest() throws Exception {
-        RequestCreationModel requestCreationModel = createRequestUpdate(1L);
+        RequestCreationModel requestCreationModel = createRequestUpdate("1");
         String content = mapper.writeValueAsString(requestCreationModel);
         String response = mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
                 
@@ -101,7 +101,7 @@ class RequestControllerTests extends BaseTestSetup {
 
     @Test
     void testListRequestsFromGivenStartDate() throws Exception {
-        RequestCreationModel requestCreationModel = createRequestUpdate(1L);
+        RequestCreationModel requestCreationModel = createRequestUpdate("1");
         String content = mapper.writeValueAsString(requestCreationModel);
         mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
                 .content(content))
@@ -135,7 +135,7 @@ class RequestControllerTests extends BaseTestSetup {
     @Test
     void testScribeAcceptsRequest() throws Exception {
 
-        Request request = createRequest(1L);
+        Request request = createRequest("1");
 
         // Scribe accepts the request
         String content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
@@ -214,10 +214,10 @@ class RequestControllerTests extends BaseTestSetup {
     @Test
     void testRequestSomeMoreScribes() throws Exception {
         // Candidate requests a Scribe
-        Request request = createRequest(1L);
+        Request request = createRequest("1");
 
         // Since no response from Scribe, Candidate requests some more Scribes for the same schedule
-        request = createRequest(2l);
+        request = createRequest("2");
 
         Long examSchedule = request.getExamSchedule();
 
@@ -282,7 +282,7 @@ class RequestControllerTests extends BaseTestSetup {
         return request;
     }
 
-    private RequestCreationModel createRequestUpdate(long scribeId) {
+    private RequestCreationModel createRequestUpdate(String scribeId) {
         // Candidate requests for exam
         Instant start = LocalDateTime.now().plusDays(2)
                 .atZone(ZoneId.systemDefault())
@@ -294,7 +294,7 @@ class RequestControllerTests extends BaseTestSetup {
 
     }
 
-    private Request createRequest(long scribeId) {
+    private Request createRequest(String scribeId) {
         try {
             RequestCreationModel requestCreationModel = createRequestUpdate(scribeId);
             String content = mapper.writeValueAsString(requestCreationModel);

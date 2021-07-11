@@ -2,7 +2,7 @@ package com.light.exam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.light.BaseTestSetup;
-import com.light.exam.client.ExamUpdate;
+import com.light.client.exam.ExamUpdate;
 import com.light.exam.domain.Exam;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

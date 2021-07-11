@@ -1,4 +1,4 @@
-package com.light.request.client;
+package com.light.client.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

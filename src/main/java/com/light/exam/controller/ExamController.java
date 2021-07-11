@@ -1,6 +1,6 @@
 package com.light.exam.controller;
 
-import com.light.exam.client.ExamUpdate;
+import com.light.client.exam.ExamUpdate;
 import com.light.exam.domain.Exam;
 import com.light.exam.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.light.request.client;
+package com.light.client.request;
 
 import com.light.domain.Gender;
 import lombok.AllArgsConstructor;
@@ -8,10 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ScribeResource {
+public class CandidateResource {
     private String firstName;
     private String lastName;
     private Gender gender;
     private String phone;
-    private String email;
 }

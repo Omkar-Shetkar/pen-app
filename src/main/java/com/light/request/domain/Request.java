@@ -16,15 +16,15 @@ public class Request {
     @Id
     private Long id;
 
-    private Long scribe;
+    private String scribe;
 
-    private Long candidate;
+    private String candidate;
 
     private Long examSchedule;
 
     private RequestStatus status;
 
-    public Request(Long scribe, Long candidate, Long examSchedule) {
+    public Request(String scribe, String candidate, Long examSchedule) {
         this.scribe = scribe;
         this.candidate = candidate;
         this.examSchedule = examSchedule;

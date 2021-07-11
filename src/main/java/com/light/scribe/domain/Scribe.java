@@ -17,7 +17,7 @@ import java.util.Set;
 public class Scribe {
 
     @Id
-    private Long id;
+    private String id;
 
     private String firstName;
 
@@ -35,8 +35,8 @@ public class Scribe {
 
     private String email;
 
-    public Scribe(String firstName, String lastName, Gender gender, String location, String phone, String email) {
-        this.id = null;
+    public Scribe(String id, String firstName, String lastName, Gender gender, String location, String phone, String email) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;

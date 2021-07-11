@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.Set;
 
-public interface ScribeRepository extends CrudRepository<Scribe, Long> {
+public interface ScribeRepository extends CrudRepository<Scribe, String>, CustomScribeRepository {
 
     @Transactional(readOnly = true)
     @Query("""

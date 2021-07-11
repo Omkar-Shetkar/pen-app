@@ -6,11 +6,11 @@ import com.light.exam.domain.ExamEvent;
 import com.light.exam.domain.ExamSchedule;
 import com.light.exam.domain.ExamStatus;
 import com.light.exam.service.ExamEventService;
-import com.light.otp.client.OtpRequest;
+import com.light.client.otp.OtpRequest;
 import com.light.otp.service.OtpService;
-import com.light.request.client.RequestCreationModel;
-import com.light.request.client.RequestSearchFilter;
-import com.light.request.client.RequestUpdateModel;
+import com.light.client.request.RequestCreationModel;
+import com.light.client.request.RequestSearchFilter;
+import com.light.client.request.RequestUpdateModel;
 import com.light.request.domain.Request;
 import com.light.request.service.RequestService;
 import com.light.scheduler.SchedulerService;
@@ -67,7 +67,7 @@ class LightBackendApplicationTests extends BaseTestSetup {
     @SpyBean
     private SchedulerService schedulerService;
 
-    public static final long CANDIDATE_ID = 1L;
+    public static final String CANDIDATE_ID = "1";
     public static final long SCRIBE_ID = 1L;
     public static final long EXAM_ID = 101L;
     public static final long LANGUAGE_ID = 1L;
@@ -175,12 +175,12 @@ class LightBackendApplicationTests extends BaseTestSetup {
         return examSchedule;
     }
 
-    private RequestCreationModel createRequestUpdate(long scribeId, ExamSchedule examSchedule) {
+    private RequestCreationModel createRequestUpdate(String scribeId, ExamSchedule examSchedule) {
         return new RequestCreationModel(scribeId, CANDIDATE_ID, examSchedule.getStartTime(), examSchedule.getEndTime(),
                 examSchedule.getLanguage(), examSchedule.getAddress(), examSchedule.getExam());
     }
 
-    private Request createRequest(long scribeId, ExamSchedule examSchedule) {
+    private Request createRequest(String scribeId, ExamSchedule examSchedule) {
         try {
             // Candidate requests for exam
             RequestCreationModel requestCreationModel = createRequestUpdate(scribeId, examSchedule);

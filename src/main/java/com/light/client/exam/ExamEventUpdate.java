@@ -1,4 +1,4 @@
-package com.light.exam.client;
+package com.light.client.exam;
 
 import com.light.request.domain.Request;
 import lombok.AllArgsConstructor;
@@ -12,9 +12,9 @@ public class ExamEventUpdate {
 
     private long requestId;
 
-    private long scribe;
+    private String scribe;
 
-    private long candidate;
+    private String candidate;
 
     private long examSchedule;
 

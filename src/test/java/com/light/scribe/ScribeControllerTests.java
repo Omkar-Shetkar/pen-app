@@ -3,7 +3,7 @@ package com.light.scribe;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.light.BaseTestSetup;
 import com.light.domain.Gender;
-import com.light.scribe.client.ScribeUpdate;
+import com.light.client.scribe.ScribeUpdate;
 import com.light.scribe.domain.Availability;
 import com.light.scribe.domain.Scribe;
 import org.junit.jupiter.api.Assertions;

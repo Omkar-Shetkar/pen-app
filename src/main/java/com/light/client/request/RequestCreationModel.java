@@ -1,4 +1,4 @@
-package com.light.request.client;
+package com.light.client.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,10 +13,10 @@ import java.util.Date;
 public class RequestCreationModel {
 
     @NonNull
-    private Long scribeId;
+    private String scribeId;
 
     @NonNull
-    private Long candidateId;
+    private String candidateId;
 
     @NonNull
     private Date startTime;

@@ -1,4 +1,4 @@
-package com.light.request.client;
+package com.light.client.request;
 
 import com.light.request.domain.RequestStatus;
 import lombok.AllArgsConstructor;
@@ -15,9 +15,9 @@ import java.util.Date;
 @Builder(toBuilder = true)
 public class RequestSearchFilter {
 
-    private Long candidate;
+    private String candidate;
 
-    private Long scribe;
+    private String scribe;
 
     private Long schedule;
 

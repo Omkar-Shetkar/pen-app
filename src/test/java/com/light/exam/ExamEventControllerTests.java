@@ -2,14 +2,14 @@ package com.light.exam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.light.BaseTestSetup;
-import com.light.exam.client.FeedbackDetails;
-import com.light.exam.client.UserType;
+import com.light.client.exam.FeedbackDetails;
+import com.light.client.exam.UserType;
 import com.light.exam.controller.ExamEventController;
 import com.light.exam.domain.ExamEvent;
 import com.light.exam.domain.ExamSchedule;
 import com.light.exam.service.ExamEventService;
-import com.light.request.client.RequestCreationModel;
-import com.light.request.client.RequestUpdateModel;
+import com.light.client.request.RequestCreationModel;
+import com.light.client.request.RequestUpdateModel;
 import com.light.request.domain.Request;
 import com.light.request.repository.ExamScheduleRepository;
 import com.light.scribe.domain.Scribe;
@@ -41,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class ExamEventControllerTests extends BaseTestSetup {
 
-    public static final long CANDIDATE_ID = 1L;
+    public static final String CANDIDATE_ID = "1";
     public static final long EXAM_ID = 101L;
     public static final long LANGUAGE_ID = 1L;
     public static final long ADDRESS_ID = 1L;
@@ -231,12 +231,12 @@ class ExamEventControllerTests extends BaseTestSetup {
     }
 
 
-    private RequestCreationModel createRequestUpdate(long scribeId, ExamSchedule examSchedule) {
+    private RequestCreationModel createRequestUpdate(String scribeId, ExamSchedule examSchedule) {
         return new RequestCreationModel(scribeId, CANDIDATE_ID, examSchedule.getStartTime(), examSchedule.getEndTime(),
                 examSchedule.getLanguage(), examSchedule.getAddress(), examSchedule.getExam());
     }
 
-    private Request createRequest(long scribeId, ExamSchedule examSchedule) {
+    private Request createRequest(String scribeId, ExamSchedule examSchedule) {
         try {
             // Candidate requests for exam
             RequestCreationModel requestCreationModel = createRequestUpdate(scribeId, examSchedule);

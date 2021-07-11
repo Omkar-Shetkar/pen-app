@@ -1,5 +1,5 @@
 create TABLE IF NOT EXISTS candidate (
-    id INTEGER  PRIMARY KEY,
+    id VARCHAR(50)  PRIMARY KEY,
     first_name VARCHAR(200),
     last_name VARCHAR(200),
     gender VARCHAR(200),
@@ -20,7 +20,7 @@ create TABLE IF NOT EXISTS exam (
 -------------------------------------------------------------
 
 create TABLE IF NOT EXISTS scribe (
-    id INTEGER  PRIMARY KEY,
+    id VARCHAR(50)  PRIMARY KEY,
     first_name VARCHAR(200),
     last_name VARCHAR(200),
     gender VARCHAR(200),
@@ -32,13 +32,13 @@ create TABLE IF NOT EXISTS scribe (
 create TABLE IF NOT EXISTS availability (
     available_from TIMESTAMP,
     available_to TIMESTAMP,
-    scribe INTEGER REFERENCES scribe(id)
+    scribe VARCHAR(50) REFERENCES scribe(id)
 );
 
 -------------------------------------------------------------
 
 create TABLE IF NOT EXISTS scribe_language (
-    scribe INTEGER,
+    scribe VARCHAR(50),
     language INTEGER,
     FOREIGN KEY (scribe) REFERENCES scribe(id),
     FOREIGN KEY (language) REFERENCES language(id),
@@ -95,8 +95,8 @@ create TABLE IF NOT EXISTS exam_schedule (
 
 create TABLE IF NOT EXISTS request (
     id INTEGER  PRIMARY KEY AUTO_INCREMENT,
-    candidate INTEGER,
-    scribe INTEGER,
+    candidate VARCHAR(50),
+    scribe VARCHAR(50),
     exam_schedule INTEGER,
     status VARCHAR(200),
     FOREIGN KEY (candidate) REFERENCES candidate(id),
@@ -107,8 +107,8 @@ create TABLE IF NOT EXISTS request (
 create TABLE IF NOT EXISTS exam_event (
     id INTEGER  PRIMARY KEY AUTO_INCREMENT,
     request INTEGER,
-    scribe INTEGER,
-    candidate INTEGER,
+    scribe VARCHAR(50),
+    candidate VARCHAR(50),
     otp_generated BOOLEAN,
     otp_verified BOOLEAN,
     exam_status VARCHAR(30),

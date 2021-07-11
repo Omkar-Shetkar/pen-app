@@ -1,6 +1,6 @@
 package com.light.request.repository;
 
-import com.light.request.client.RequestResource;
+import com.light.client.request.RequestResource;
 import com.light.request.domain.Request;
 import com.light.request.domain.RequestStatus;
 import org.springframework.data.jdbc.repository.query.Modifying;
@@ -29,7 +29,7 @@ public interface RequestRepository extends CrudRepository<Request, Long> {
             (:examSchedule IS NULL OR r.exam_schedule = :examSchedule) AND  
             (:status IS NULL OR r.status = :status)
             """)
-    List<Request> searchRequests(Long candidate, Long scribe, Long examSchedule, RequestStatus status);
+    List<Request> searchRequests(String candidate, String scribe, Long examSchedule, RequestStatus status);
 
     @Query(value = """
                           SELECT r.id id, r.status status, 
@@ -53,6 +53,6 @@ public interface RequestRepository extends CrudRepository<Request, Long> {
                                  (cast(:startingFrom as date) IS NULL OR es.start_time >= :startingFrom)
                         """,
             rowMapperClass = RequestResourceRowMapper.class)
-    List<RequestResource> searchRequestResources(Long candidate, Long scribe, Long examSchedule,
+    List<RequestResource> searchRequestResources(String candidate, String scribe, Long examSchedule,
                                                  RequestStatus status, Date startingFrom);
 }

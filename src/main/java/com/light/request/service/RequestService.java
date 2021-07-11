@@ -2,12 +2,12 @@ package com.light.request.service;
 
 import com.light.candidate.domain.Candidate;
 import com.light.candidate.service.CandidateService;
-import com.light.exam.client.ExamEventUpdate;
+import com.light.client.exam.ExamEventUpdate;
 import com.light.exam.domain.ExamSchedule;
 import com.light.exam.service.ExamEventService;
-import com.light.request.client.RequestCreationModel;
-import com.light.request.client.RequestResource;
-import com.light.request.client.RequestSearchFilter;
+import com.light.client.request.RequestCreationModel;
+import com.light.client.request.RequestResource;
+import com.light.client.request.RequestSearchFilter;
 import com.light.request.domain.Request;
 import com.light.request.domain.RequestStatus;
 import com.light.request.repository.ExamScheduleRepository;
