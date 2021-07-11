@@ -8,9 +8,15 @@ const apiClient = create({
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {
-  const authToken = await authStorage.getToken();
-  if (!authToken) return;
-  request.headers["Authorization"] = "Bearer " + authToken;
+  if (
+    request.url !== "/auth/login" &&
+    request.url !== "/auth/user" &&
+    request.url !== "/languages"
+  ) {
+    const authToken = await authStorage.getToken();
+    if (!authToken) return;
+    request.headers["Authorization"] = "Bearer " + authToken;
+  }
 });
 
 // const get = apiClient.get;

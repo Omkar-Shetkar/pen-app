@@ -5,6 +5,10 @@ const login = (credentials) => {
   return client.post("/auth/login", credentials);
 };
 
+const register = (user) => {
+  console.log("Registering ", user.name);
+};
+
 export default {
   login,
 };

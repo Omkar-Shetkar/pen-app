@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import * as Yup from "yup";
 
 import Screen from "../components/Screen";
+import AppButton from "../components/AppButton";
 import AppForm from "../components/forms/AppForm";
 import AppFormField from "../components/forms/AppFormField";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
@@ -107,6 +108,12 @@ function AccountScreen(props) {
           />
           <SubmitButton title="Update" />
         </AppForm>
+        {/* TODO: Logout to be implemented */}
+        <AppButton
+          title="Logout"
+          color="secondary"
+          onPress={() => console.log("Logout pressed!")}
+        />
       </ScrollView>
     </Screen>
   );

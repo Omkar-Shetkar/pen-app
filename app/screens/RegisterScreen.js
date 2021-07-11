@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 
 import AppErrorMessage from "../components/forms/AppErrorMessage";
@@ -8,11 +8,15 @@ import AppFormField from "../components/forms/AppFormField";
 import AppFormPickerField from "../components/forms/AppFormPickerField";
 import SubmitButton from "../components/forms/SubmitButton";
 import Screen from "../components/Screen";
-
 import AppFormMultiSelectField from "../components/forms/AppFormMultiSelectField";
+import authApi from "../api/auth";
+import useAuth from "../auth/useAuth";
+import useApi from "../hooks/useApi";
+import languagesApi from "../api/languages";
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required().label("Name"),
+  firstName: Yup.string().required().label("First Name"),
+  lastName: Yup.string().required().label("Last Name"),
   mobile: Yup.number().required().label("Mobile"),
   email: Yup.string().optional().email().label("Email"),
   password: Yup.string().required().min(8).label("Password"),
@@ -33,30 +37,20 @@ function RegisterScreen({ isScribe }) {
     { label: "Intermediate", value: "intermediate" },
   ];
 
-  const languages = [
-    {
-      id: 1,
-      name: "Kannada",
-    },
-    {
-      id: 2,
-      name: "English",
-    },
-    {
-      id: 3,
-      name: "Hindi",
-    },
-    {
-      id: 4,
-      name: "Telugu",
-    },
-  ];
-
   const genders = [
     { label: "Male", value: "M" },
     { label: "Female", value: "F" },
     { label: "Others", value: "others" },
   ];
+
+  useEffect(() => {
+    console.log("useeffect called...");
+    loadLanguages();
+  }, []);
+
+  const { data: languages, request: loadLanguages } = useApi(
+    languagesApi.getLanguages
+  );
 
   const availabilities = [
     { label: "Weekends", value: "weekends" },
@@ -65,10 +59,28 @@ function RegisterScreen({ isScribe }) {
     { label: "Not Available", value: "not available" },
   ];
 
-  isScribe = false;
+  isScribe = true;
 
   const onSelectedItemsChange = (selectedItems) => {
     setSelectedItems(selectedItems);
+  };
+
+  const handleSubmit = async ({
+    firstName,
+    lastName,
+    mobile,
+    email,
+    password,
+    gender,
+    languages,
+    availability,
+    location,
+  }) => {
+    const result = await authApi.login({ username: email, password: password });
+    console.log("result ", result);
+    if (!result.ok) return setLoginFailed(true);
+    setLoginFailed(false);
+    login(result.data.access_token);
   };
 
   return (
@@ -76,7 +88,8 @@ function RegisterScreen({ isScribe }) {
       <ScrollView>
         <AppForm
           initialValues={{
-            name: "",
+            firstName: "",
+            lastName: "",
             mobile: "",
             email: "",
             password: "",
@@ -86,7 +99,7 @@ function RegisterScreen({ isScribe }) {
             availability: "",
             location: "",
           }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
           <AppErrorMessage error={error} visible={error} />
@@ -94,9 +107,16 @@ function RegisterScreen({ isScribe }) {
           <AppFormField
             autoCorrect={false}
             icon="account-outline"
-            name="name"
-            placeholder="Name"
+            name="firstName"
+            placeholder="First Name"
           />
+          <AppFormField
+            autoCorrect={false}
+            icon="account-outline"
+            name="lastName"
+            placeholder="Last Name"
+          />
+
           <AppFormField
             autoCorrect={false}
             icon="cellphone"
