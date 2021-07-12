@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import * as Yup from "yup";
+import RadioButtonRN from "radio-buttons-react-native";
+import Toast from "react-native-toast-message";
 
 import AppErrorMessage from "../components/forms/AppErrorMessage";
 import AppForm from "../components/forms/AppForm";
@@ -90,29 +92,58 @@ function RegisterScreen({ isScribe }) {
       availability,
       location,
     });
+    console.log("result ", result);
+  };
+
+  const userTypeData = [
+    {
+      label: "Scribe",
+    },
+    {
+      label: "Candidate",
+    },
+  ];
+
+  const handleUserSelection = (e) => {
+    console.log(e);
+    let message =
+      e.label.toString().toUpperCase() === userType.SCRIBE.toUpperCase()
+        ? "Scribe writes exams for others"
+        : "Candidate gets assistance for his/her exams";
+    Toast.show({
+      type: "info",
+      text1: message,
+      visibilityTime: 4000,
+    });
   };
 
   return (
     <Screen style={styles.container}>
       <ScrollView>
+        {/* TODO: To be removed */}
         <AppForm
           initialValues={{
-            firstName: "",
-            lastName: "",
-            mobile: "",
-            email: "",
-            password: "",
-            gender: "",
+            firstName: "Vedant",
+            lastName: "Shetkar",
+            mobile: "1122334455",
+            email: "vedant.shetkar@gmail.com",
+            password: "1234",
+            gender: "MALE",
             // qualification: "",
-            languages: [],
-            availability: "",
-            location: "",
+            languages: [1],
+            availability: "weekends",
+            location: "loc-1",
           }}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
           <AppErrorMessage error={error} visible={error} />
 
+          <RadioButtonRN
+            data={userTypeData}
+            animationTypes={["pulse"]}
+            selectedBtn={handleUserSelection}
+          />
           <AppFormField
             autoCorrect={false}
             icon="account-outline"
