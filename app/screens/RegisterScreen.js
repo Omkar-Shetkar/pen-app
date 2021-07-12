@@ -13,15 +13,17 @@ import authApi from "../api/auth";
 import useAuth from "../auth/useAuth";
 import useApi from "../hooks/useApi";
 import languagesApi from "../api/languages";
+import gender from "../config/gender";
+import userType from "../config/userType";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required().label("First Name"),
   lastName: Yup.string().required().label("Last Name"),
   mobile: Yup.number().required().label("Mobile"),
   email: Yup.string().optional().email().label("Email"),
-  password: Yup.string().required().min(8).label("Password"),
+  password: Yup.string().required().min(4).label("Password"),
   gender: Yup.string().required().label("Gender"),
-  qualification: Yup.string().required().label("Qualification"),
+  // qualification: Yup.string().required().label("Qualification"),
   languages: Yup.array().required().min(1).label("Languages"),
   availability: Yup.string().required().label("Availability"),
   location: Yup.string().required().label("Location"),
@@ -31,20 +33,19 @@ function RegisterScreen({ isScribe }) {
   const [error, setError] = useState();
   const [selectedItems, setSelectedItems] = useState();
 
-  const qualifications = [
-    { label: "Postgraduate", value: "postgraduate" },
-    { label: "Graduate", value: "graduate" },
-    { label: "Intermediate", value: "intermediate" },
-  ];
+  // const qualifications = [
+  //   { label: "Postgraduate", value: "postgraduate" },
+  //   { label: "Graduate", value: "graduate" },
+  //   { label: "Intermediate", value: "intermediate" },
+  // ];
 
   const genders = [
-    { label: "Male", value: "M" },
-    { label: "Female", value: "F" },
-    { label: "Others", value: "others" },
+    { label: "Male", value: gender.MALE },
+    { label: "Female", value: gender.FEMALE },
+    { label: "Others", value: gender.OTHER },
   ];
 
   useEffect(() => {
-    console.log("useeffect called...");
     loadLanguages();
   }, []);
 
@@ -60,6 +61,7 @@ function RegisterScreen({ isScribe }) {
   ];
 
   isScribe = true;
+  const selectedUserType = isScribe ? userType.SCRIBE : userType.CANDIDATE;
 
   const onSelectedItemsChange = (selectedItems) => {
     setSelectedItems(selectedItems);
@@ -68,19 +70,26 @@ function RegisterScreen({ isScribe }) {
   const handleSubmit = async ({
     firstName,
     lastName,
-    mobile,
     email,
+    mobile,
     password,
     gender,
     languages,
     availability,
     location,
   }) => {
-    const result = await authApi.login({ username: email, password: password });
-    console.log("result ", result);
-    if (!result.ok) return setLoginFailed(true);
-    setLoginFailed(false);
-    login(result.data.access_token);
+    const result = await authApi.register({
+      userType: selectedUserType,
+      firstName,
+      lastName,
+      email,
+      credentials: { username: mobile, password },
+      mobile,
+      gender,
+      languages,
+      availability,
+      location,
+    });
   };
 
   return (
@@ -94,7 +103,7 @@ function RegisterScreen({ isScribe }) {
             email: "",
             password: "",
             gender: "",
-            qualification: "",
+            // qualification: "",
             languages: [],
             availability: "",
             location: "",
@@ -155,7 +164,7 @@ function RegisterScreen({ isScribe }) {
           />
           {isScribe && (
             <>
-              <AppFormPickerField
+              {/* <AppFormPickerField
                 icon="school-outline"
                 name="qualification"
                 items={qualifications}
@@ -163,7 +172,7 @@ function RegisterScreen({ isScribe }) {
                   label: "Qualification",
                   value: "",
                 }}
-              />
+              /> */}
               <AppFormMultiSelectField
                 uniqueKey="id"
                 name="languages"

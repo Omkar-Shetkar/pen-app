@@ -7,8 +7,10 @@ const login = (credentials) => {
 
 const register = (user) => {
   console.log("Registering ", user.name);
+  return client.post("/auth/register", user);
 };
 
 export default {
   login,
+  register,
 };

@@ -4,12 +4,13 @@ import * as Yup from "yup";
 import AppForm from "../components/forms/AppForm";
 import AppFormField from "../components/forms/AppFormField";
 import SubmitButton from "../components/forms/SubmitButton";
+import AppErrorMessage from "../components/forms/AppErrorMessage";
 import Screen from "../components/Screen";
 import authApi from "../api/auth";
 import useAuth from "../auth/useAuth";
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().required().email().label("Email"),
+  mobile: Yup.number().required().label("Mobile"),
   password: Yup.string().required().min(4).label("Password"),
 });
 
@@ -18,8 +19,11 @@ function LoginScreen(props) {
 
   const { login } = useAuth();
 
-  const handleSubmit = async ({ email, password }) => {
-    const result = await authApi.login({ username: email, password: password });
+  const handleSubmit = async ({ mobile, password }) => {
+    const result = await authApi.login({
+      username: mobile,
+      password: password,
+    });
     if (!result.ok) return setLoginFailed(true);
     setLoginFailed(false);
     login(result.data.access_token);
@@ -30,18 +34,22 @@ function LoginScreen(props) {
       <Image source={require("../assets/logo.png")} style={styles.logo}></Image>
       {/* TODO: To be removed */}
       <AppForm
-        initialValues={{ email: "omkarshetkar@gmail.com", password: "1234" }}
+        initialValues={{ mobile: "9844491285", password: "1234" }}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
+        <AppErrorMessage
+          error="Invalid mobile or password."
+          visible={loginFailed}
+        />
         <AppFormField
           autoCapitalize="none"
           autoCorrect={false}
-          icon="email"
-          keyboardType="email-address"
-          name="email"
-          placeholder="Email"
-          textContentType="emailAddress"
+          icon="cellphone"
+          keyboardType="numeric"
+          name="mobile"
+          placeholder="Mobile"
+          textContentType="telephoneNumber"
         ></AppFormField>
         <AppFormField
           autoCapitalize="none"
