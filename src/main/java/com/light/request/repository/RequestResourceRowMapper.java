@@ -18,12 +18,12 @@ public class RequestResourceRowMapper implements RowMapper<RequestResource> {
 
         UserResource candidateResource = new UserResource(UserType.CANDIDATE, resultSet.getString("c_first_name"),
                 resultSet.getString("c_last_name"), Gender.valueOf(resultSet.getString("c_gender")),
-                resultSet.getString("c_phone"), null, null,
+                resultSet.getString("c_mobile"), null, null,
                 null, null, null);
 
         UserResource scribeResource = new UserResource(UserType.SCRIBE, resultSet.getString("s_first_name"),
                 resultSet.getString("s_last_name"), Gender.valueOf(resultSet.getString("s_gender")),
-                resultSet.getString("s_phone"), resultSet.getString("s_email"), null,
+                resultSet.getString("s_mobile"), resultSet.getString("s_email"), null,
                 null, null, null);
 
         ExamResource examResource = new ExamResource(resultSet.getString("exam"),

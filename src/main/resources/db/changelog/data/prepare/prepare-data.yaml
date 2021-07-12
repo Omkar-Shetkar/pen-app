@@ -144,8 +144,8 @@ databaseChangeLog:
                   name: last_name
                   type: STRING
               - column:
-                  header: phone
-                  name: phone
+                  header: mobile
+                  name: mobile
                   type: STRING
               - column:
                   header: location
@@ -239,8 +239,8 @@ databaseChangeLog:
                             name: gender
                             type: STRING
                       - column:
-                            header: phone
-                            name: phone
+                            header: mobile
+                            name: mobile
                             type: STRING
                   commentLineStartsWith: //
                   encoding: UTF-8

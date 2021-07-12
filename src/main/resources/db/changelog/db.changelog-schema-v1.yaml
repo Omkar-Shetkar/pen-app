@@ -124,7 +124,7 @@ databaseChangeLog:
                   name: gender
                   type: VARCHAR(200)
               - column:
-                  name: phone
+                  name: mobile
                   type: VARCHAR(200)
               - column:
                   name: email
@@ -208,7 +208,7 @@ databaseChangeLog:
                   name: gender
                   type: VARCHAR(200)
               - column:
-                  name: phone
+                  name: mobile
                   type: VARCHAR(200)
             tableName: candidate
   - changeSet:

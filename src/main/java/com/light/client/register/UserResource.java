@@ -16,7 +16,7 @@ public class UserResource {
     private String firstName;
     private String lastName;
     private Gender gender;
-    private String phone;
+    private String mobile;
     private String email;
     private String location;
     private String[] languages;

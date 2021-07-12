@@ -17,6 +17,6 @@ public class Candidate {
 
     private Gender gender;
 
-    private String phone;
+    private String mobile;
 
 }

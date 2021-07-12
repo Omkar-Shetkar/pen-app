@@ -45,7 +45,7 @@ public class ScribeService {
 
     public void create(String userId, UserResource user) {
         Scribe scribe = new Scribe(userId, user.getFirstName(), user.getLastName(), user.getGender(),
-                user.getLocation(), user.getPhone(), user.getEmail());
+                user.getLocation(), user.getMobile(), user.getEmail());
         scribeRepository.insert(scribe);
     }
 }

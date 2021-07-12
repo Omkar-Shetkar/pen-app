@@ -3,7 +3,7 @@ create TABLE IF NOT EXISTS candidate (
     first_name VARCHAR(200),
     last_name VARCHAR(200),
     gender VARCHAR(200),
-    phone VARCHAR(200)
+    mobile VARCHAR(200)
 );
 
 -------------------------------------------------------------
@@ -24,7 +24,7 @@ create TABLE IF NOT EXISTS scribe (
     first_name VARCHAR(200),
     last_name VARCHAR(200),
     gender VARCHAR(200),
-    phone VARCHAR(200),
+    mobile VARCHAR(200),
     email VARCHAR(200),
     location VARCHAR(200)
 );

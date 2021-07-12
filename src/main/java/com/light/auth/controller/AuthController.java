@@ -24,8 +24,8 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(credentials));
     }
 
-    @PostMapping("/user")
-    public ResponseEntity<UserRepresentation> createUser(@RequestBody UserResource userResource) {
+    @PostMapping("/register")
+    public ResponseEntity<UserRepresentation> register(@RequestBody UserResource userResource) {
         return ResponseEntity.ok(authService.addUser(userResource));
     }
 }

@@ -1,4 +1,4 @@
-id	first_name	last_name	gender	phone
+id	first_name	last_name	gender	mobile
 1	candidate1-fn	candidate1-ln	MALE	123-111
 2	candidate2-fn	candidate2-ln	FEMALE	456-222
 3	candidate3-fn	candidate3-ln	MALE	789-333

@@ -9,20 +9,20 @@ INSERT INTO exam (id, name) VALUES (102, 'PUC');
 INSERT INTO exam (id, name) VALUES (103, 'BSc');
 
 -------------------------------------------------------------
-INSERT INTO candidate (id, first_name, last_name, gender, phone)
+INSERT INTO candidate (id, first_name, last_name, gender, mobile)
                VALUES (1, 'candidate1-fn','candidate1-ln', 'MALE', '123-111');
-INSERT INTO candidate (id, first_name, last_name, gender, phone)
+INSERT INTO candidate (id, first_name, last_name, gender, mobile)
                VALUES (2, 'candidate2-fn','candidate2-ln', 'FEMALE', '456-222');
-INSERT INTO candidate (id, first_name, last_name, gender, phone)
+INSERT INTO candidate (id, first_name, last_name, gender, mobile)
                VALUES (3, 'candidate3-fn','candidate3-ln', 'MALE', '789-333');
 
 -------------------------------------------------------------
 
-INSERT INTO scribe (id, first_name, last_name, gender, phone, email, location)
+INSERT INTO scribe (id, first_name, last_name, gender, mobile, email, location)
             VALUES (1, 'scribe1-fn','scribe1-ln', 'MALE', '111-111', 'scribe01@gmail.com', 100);
-INSERT INTO scribe (id, first_name, last_name, gender, phone, email, location)
+INSERT INTO scribe (id, first_name, last_name, gender, mobile, email, location)
             VALUES (2, 'scribe2-fn','scribe2-ln', 'FEMALE', '222-222', 'scribe02@gmail.com', 200);
-INSERT INTO scribe (id, first_name, last_name, gender, phone, email, location)
+INSERT INTO scribe (id, first_name, last_name, gender, mobile, email, location)
             VALUES (3, 'scribe3-fn','scribe3-ln', 'MALE', '333-333', 'scribe03@gmail.com', 300);
 
 INSERT INTO scribe_language(scribe, language) VALUES (1, 1);

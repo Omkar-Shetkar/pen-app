@@ -31,17 +31,17 @@ public class Scribe {
 
     private Set<Availability> availabilities = new HashSet<>();
 
-    private String phone;
+    private String mobile;
 
     private String email;
 
-    public Scribe(String id, String firstName, String lastName, Gender gender, String location, String phone, String email) {
+    public Scribe(String id, String firstName, String lastName, Gender gender, String location, String mobile, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.location = location;
-        this.phone = phone;
+        this.mobile = mobile;
         this.email = email;
     }
 
