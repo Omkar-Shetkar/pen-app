@@ -1,7 +1,7 @@
 # Reference -- 1. https://snyk.io/blog/best-practices-to-build-java-containers-with-docker/
 
 # Start with a base image containing Java runtime
-FROM openjdk:16-jre-slim
+FROM tomcat:8.5-jdk15-openjdk-oracle
 
 # Add Maintainer Info
 LABEL maintainer="light@gmail.com"
