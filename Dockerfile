@@ -1,15 +1,15 @@
+# Reference -- 1. https://snyk.io/blog/best-practices-to-build-java-containers-with-docker/
+
 # Start with a base image containing Java runtime
-FROM openjdk:8-jdk-alpine
+FROM openjdk:16-jre-slim
 
 # Add Maintainer Info
 LABEL maintainer="light@gmail.com"
 
-
 # Running applications with user privileges helps to mitigate some risks
 #So, an important improvement to the Dockerfile is to run the application as a non-root user:
-
-RUN addgroup -S spring && adduser -S spring -G spring
-USER spring:spring
+RUN addgroup --system javauser && adduser -S -s /bin/false -G javauser javauser
+USER javauser:javauser
 
 # Add a volume pointing to /tmp
 VOLUME /tmp
