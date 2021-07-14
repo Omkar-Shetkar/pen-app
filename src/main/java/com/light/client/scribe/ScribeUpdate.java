@@ -13,5 +13,5 @@ import java.util.Set;
 @AllArgsConstructor
 public class ScribeUpdate {
 
-    private Set<Availability> availabilities = new HashSet<>();
+    private Availability availability;
 }

@@ -68,4 +68,4 @@ light.exam:
   otp.expire-in-ms: 5000 # 5 Secs - OTP Expires after 1 Hr of generation
   initial-delay-in-ms: 5000 # 5 Secs
 
-server.port: 8800
+server.port: 8900

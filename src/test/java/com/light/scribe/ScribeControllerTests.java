@@ -2,8 +2,8 @@ package com.light.scribe;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.light.BaseTestSetup;
-import com.light.domain.Gender;
 import com.light.client.scribe.ScribeUpdate;
+import com.light.domain.Gender;
 import com.light.scribe.domain.Availability;
 import com.light.scribe.domain.Scribe;
 import org.junit.jupiter.api.Assertions;
@@ -16,13 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import static com.light.scribe.controller.ScribeController.ALL;
@@ -55,12 +50,7 @@ class ScribeControllerTests extends BaseTestSetup {
 
     @Test
     void updateScribeAvailability() throws Exception {
-        Instant from = LocalDateTime.now().plusDays(1).atZone(ZoneId.systemDefault()).toInstant();
-        Instant to = from.plus(2, ChronoUnit.DAYS);
-        Availability availability = new Availability(new Date(from.toEpochMilli()), new Date(to.toEpochMilli()));
-        Set<Availability> availabilities = new HashSet<>();
-        availabilities.add(availability);
-        ScribeUpdate scribeUpdate = new ScribeUpdate(availabilities);
+        ScribeUpdate scribeUpdate = new ScribeUpdate(Availability.WEEKDAYS);
 
         mockMvc.perform((put(UPDATE, "1")
                 .contentType(APPLICATION_JSON)
@@ -71,12 +61,7 @@ class ScribeControllerTests extends BaseTestSetup {
     @Test
     @DisplayName("Updating scribe details with wrong scribe - expect HTTP 404")
     void updateScribeAvailabilityWithWrongScribe() throws Exception {
-        Instant from = Instant.now().plus(1, ChronoUnit.DAYS);
-        Instant to = from.plus(2, ChronoUnit.DAYS);
-        Availability availability = new Availability(new Date(from.toEpochMilli()), new Date(to.toEpochMilli()));
-        Set<Availability> availabilities = new HashSet<>();
-        availabilities.add(availability);
-        ScribeUpdate scribeUpdate = new ScribeUpdate(availabilities);
+        ScribeUpdate scribeUpdate = new ScribeUpdate(Availability.ANY_DAY);
 
         mockMvc.perform((put(UPDATE, "100")
                 .contentType(APPLICATION_JSON)

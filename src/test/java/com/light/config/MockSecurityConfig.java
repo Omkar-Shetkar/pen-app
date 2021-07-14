@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class MockSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().anyRequest().permitAll();
+        http.csrf().disable()
+                .headers().frameOptions().disable();
+        http.authorizeRequests().anyRequest().permitAll();
     }
 }

@@ -86,22 +86,6 @@ databaseChangeLog:
                   type: INTEGER
             tableName: state
   - changeSet:
-      id: 1623723127531-5
-      author: omkars (generated)
-      changes:
-        - createTable:
-            columns:
-              - column:
-                  name: available_from
-                  type: TIMESTAMP WITH TIME ZONE
-              - column:
-                  name: available_to
-                  type: TIMESTAMP WITH TIME ZONE
-              - column:
-                  name: scribe
-                  type: VARCHAR(50)
-            tableName: availability
-  - changeSet:
       id: 1623723127531-6
       author: omkars (generated)
       changes:
@@ -122,16 +106,19 @@ databaseChangeLog:
                   type: VARCHAR(200)
               - column:
                   name: gender
-                  type: VARCHAR(200)
+                  type: VARCHAR(25)
               - column:
                   name: mobile
-                  type: VARCHAR(200)
+                  type: VARCHAR(25)
               - column:
                   name: email
                   type: VARCHAR(200)
               - column:
                   name: location
                   type: VARCHAR(200)
+              - column:
+                  name: availability
+                  type: VARCHAR(50)
             tableName: scribe
   - changeSet:
       id: 1623723127531-7
@@ -206,10 +193,10 @@ databaseChangeLog:
                   type: VARCHAR(200)
               - column:
                   name: gender
-                  type: VARCHAR(200)
+                  type: VARCHAR(25)
               - column:
                   name: mobile
-                  type: VARCHAR(200)
+                  type: VARCHAR(25)
             tableName: candidate
   - changeSet:
       id: 1623723127531-10
@@ -571,21 +558,6 @@ databaseChangeLog:
             onUpdate: NO ACTION
             referencedColumnNames: id
             referencedTableName: state
-            validate: true
-  - changeSet:
-      id: 1623723127531-33
-      author: omkars (generated)
-      changes:
-        - addForeignKeyConstraint:
-            baseColumnNames: scribe
-            baseTableName: availability
-            constraintName: availability_scribe_fkey
-            deferrable: false
-            initiallyDeferred: false
-            onDelete: NO ACTION
-            onUpdate: NO ACTION
-            referencedColumnNames: id
-            referencedTableName: scribe
             validate: true
   - changeSet:
       id: 1623723127531-34

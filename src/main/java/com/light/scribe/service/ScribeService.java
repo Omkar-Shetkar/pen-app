@@ -19,7 +19,7 @@ public class ScribeService {
     public final Scribe updateScribeAvailability(String scribeId, ScribeUpdate scribeUpdate) {
 
         Scribe scribe = findById(scribeId);
-        scribe.setAvailabilities(scribeUpdate.getAvailabilities());
+        scribe.setAvailability(scribeUpdate.getAvailability());
 
         return scribeRepository.save(scribe);
     }

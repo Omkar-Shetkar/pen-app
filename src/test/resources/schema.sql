@@ -2,8 +2,8 @@ create TABLE IF NOT EXISTS candidate (
     id VARCHAR(50)  PRIMARY KEY,
     first_name VARCHAR(200),
     last_name VARCHAR(200),
-    gender VARCHAR(200),
-    mobile VARCHAR(200)
+    gender VARCHAR(25),
+    mobile VARCHAR(25)
 );
 
 -------------------------------------------------------------
@@ -23,16 +23,11 @@ create TABLE IF NOT EXISTS scribe (
     id VARCHAR(50)  PRIMARY KEY,
     first_name VARCHAR(200),
     last_name VARCHAR(200),
-    gender VARCHAR(200),
-    mobile VARCHAR(200),
+    gender VARCHAR(25),
+    mobile VARCHAR(25),
     email VARCHAR(200),
-    location VARCHAR(200)
-);
-
-create TABLE IF NOT EXISTS availability (
-    available_from TIMESTAMP,
-    available_to TIMESTAMP,
-    scribe VARCHAR(50) REFERENCES scribe(id)
+    location VARCHAR(200),
+    availability VARCHAR(50)
 );
 
 -------------------------------------------------------------

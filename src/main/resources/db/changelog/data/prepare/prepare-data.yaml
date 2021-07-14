@@ -160,36 +160,6 @@ databaseChangeLog:
             separator: '\t'
             tableName: scribe
             usePreparedStatements: false
-
-  - changeSet:
-        id: loadData-availability
-        author: omkars
-        changes:
-            - loadData:
-                  catalogName: availability
-                  columns:
-                      - column:
-                            header: scribe
-                            name: scribe
-                            type: NUMERIC
-                      - column:
-                            header: available_from
-                            name: available_from
-                            type: DATE
-                      - column:
-                            header: available_to
-                            name: available_to
-                            type: DATE
-                  commentLineStartsWith: //
-                  encoding: UTF-8
-                  file: availabilities.csv
-                  quotchar: ''''
-                  relativeToChangelogFile: true
-                  schemaName: public
-                  separator: '\t'
-                  tableName: availability
-                  usePreparedStatements: false
-
   - changeSet:
         id: loadData-scribe-languages
         author: omkars

@@ -29,13 +29,14 @@ public class Scribe {
 
     private String location;
 
-    private Set<Availability> availabilities = new HashSet<>();
+    private Availability availability = Availability.ANY_DAY;
 
     private String mobile;
 
     private String email;
 
-    public Scribe(String id, String firstName, String lastName, Gender gender, String location, String mobile, String email) {
+    public Scribe(String id, String firstName, String lastName, Gender gender, String location,
+                  String mobile, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,10 +44,6 @@ public class Scribe {
         this.location = location;
         this.mobile = mobile;
         this.email = email;
-    }
-
-    public Set<Availability> getAvailabilities() {
-        return Collections.unmodifiableSet(availabilities);
     }
 
     public Set<ScribeLanguage> getLanguages() {

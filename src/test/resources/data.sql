@@ -18,27 +18,19 @@ INSERT INTO candidate (id, first_name, last_name, gender, mobile)
 
 -------------------------------------------------------------
 
-INSERT INTO scribe (id, first_name, last_name, gender, mobile, email, location)
-            VALUES (1, 'scribe1-fn','scribe1-ln', 'MALE', '111-111', 'scribe01@gmail.com', 100);
-INSERT INTO scribe (id, first_name, last_name, gender, mobile, email, location)
-            VALUES (2, 'scribe2-fn','scribe2-ln', 'FEMALE', '222-222', 'scribe02@gmail.com', 200);
-INSERT INTO scribe (id, first_name, last_name, gender, mobile, email, location)
-            VALUES (3, 'scribe3-fn','scribe3-ln', 'MALE', '333-333', 'scribe03@gmail.com', 300);
+INSERT INTO scribe (id, first_name, last_name, gender, mobile, email, location, availability)
+            VALUES (1, 'scribe1-fn','scribe1-ln', 'MALE', '111-111', 'scribe01@gmail.com', 100, 'WEEKENDS');
+INSERT INTO scribe (id, first_name, last_name, gender, mobile, email, location, availability)
+            VALUES (2, 'scribe2-fn','scribe2-ln', 'FEMALE', '222-222', 'scribe02@gmail.com', 200, 'WEEKDAYS');
+INSERT INTO scribe (id, first_name, last_name, gender, mobile, email, location, availability)
+            VALUES (3, 'scribe3-fn','scribe3-ln', 'MALE', '333-333', 'scribe03@gmail.com', 300, 'ANY_DAY');
+--INSERT INTO scribe (id, first_name, last_name, gender, mobile, email, location, availability)
+--            VALUES (4, 'scribe4-fn','scribe4-ln', 'MALE', '444-444', 'scribe04@gmail.com', 300, 'NOT_AVAILABLE');
 
 INSERT INTO scribe_language(scribe, language) VALUES (1, 1);
 INSERT INTO scribe_language(scribe, language) VALUES (1, 2);
 INSERT INTO scribe_language(scribe, language) VALUES (2, 1);
 INSERT INTO scribe_language(scribe, language) VALUES (3, 3);
-
--------------------------------------------------------------
-
-INSERT INTO availability(scribe, available_from, available_to) VALUES (1, '2020-12-24 06:00:00', '2020-12-24 10:00:00');
-INSERT INTO availability(scribe, available_from, available_to) VALUES (2, '2020-12-24 06:00:00', '2020-12-24 10:00:00');
-INSERT INTO availability(scribe, available_from, available_to) VALUES (2, '2020-12-25 06:00:00', '2020-12-25 10:00:00');
-INSERT INTO availability(scribe, available_from, available_to) VALUES (1, '2020-12-26 06:00:00', '2020-12-26 10:00:00');
-INSERT INTO availability(scribe, available_from, available_to) VALUES (2, '2020-12-26 06:00:00', '2020-12-26 10:00:00');
-INSERT INTO availability(scribe, available_from, available_to) VALUES (3, '2020-12-27 06:00:00', '2020-12-27 10:00:00');
-INSERT INTO availability(scribe, available_from, available_to) VALUES (3, '2020-12-28 06:00:00', '2020-12-28 10:00:00');
 
 -------------------------------------------------------------
 
