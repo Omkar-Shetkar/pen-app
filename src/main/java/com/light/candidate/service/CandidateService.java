@@ -22,10 +22,10 @@ public class CandidateService {
                 .orElseThrow(() -> new IllegalArgumentException("Couldn't find candidate id: " + candidateId));
     }
 
-    public void create(String userId, UserResource user) {
+    public Candidate create(String userId, UserResource user) {
         Candidate candidate = new Candidate(userId, user.getFirstName(), user.getLastName(),
                 user.getGender(), user.getMobile());
-        candidateRepository.insert(candidate);
+        return candidateRepository.insert(candidate);
     }
 
 }

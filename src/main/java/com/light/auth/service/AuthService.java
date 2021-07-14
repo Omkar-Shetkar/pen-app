@@ -6,6 +6,7 @@ import com.light.client.auth.UserCredentials;
 import com.light.client.exam.UserType;
 import com.light.client.register.UserResource;
 import com.light.scribe.service.ScribeService;
+import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.authorization.client.AuthzClient;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.ws.rs.core.Response;
 import java.util.Collections;
 
+@Slf4j
 @Service
 public class AuthService {
 
@@ -34,19 +36,19 @@ public class AuthService {
 
     public AccessTokenResponse login(UserCredentials credentials) {
         AuthzClient authzClient = AuthzClient.create();
-        AccessTokenResponse response = authzClient.obtainAccessToken(credentials.username(),
-                credentials.password());
+        AccessTokenResponse response = authzClient.obtainAccessToken(credentials.getUsername(),
+                credentials.getPassword());
         return response;
     }
 
-    public UserRepresentation addUser(UserResource userResource) {
+    public String addUser(UserResource userResource) {
         Keycloak keycloak = keyCloakConfig.getKeycloak();
         UsersResource usersResource = keycloak.realm("light").users();
         CredentialRepresentation credentialRepresentation =
-                createPasswordCredentials(userResource.getCredentials().password());
+                createPasswordCredentials(userResource.getCredentials().getPassword());
 
         UserRepresentation kcUser = new UserRepresentation();
-        kcUser.setUsername(userResource.getCredentials().username());
+        kcUser.setUsername(userResource.getCredentials().getUsername());
         kcUser.setCredentials(Collections.singletonList(credentialRepresentation));
         kcUser.setFirstName(userResource.getFirstName());
         kcUser.setLastName(userResource.getLastName());
@@ -54,6 +56,7 @@ public class AuthService {
         kcUser.setEnabled(true);
         kcUser.setEmailVerified(false);
         Response response = usersResource.create(kcUser);
+
         if (response.getStatus() == HttpStatus.CREATED.value()) {
             String location = response.getHeaderString("location");
             String userId = location.substring(location.lastIndexOf('/') + 1);
@@ -62,8 +65,14 @@ public class AuthService {
             } else {
                 candidateService.create(userId, userResource);
             }
+            return userId;
+        } else if (response.getStatus() == HttpStatus.CONFLICT.value()) {
+            throw new IllegalArgumentException(String.format("Account already exists for mobile %s",
+                    userResource.getMobile()));
+        } else {
+            throw new RuntimeException(String.format("An error occurred during registration of %s",
+                    userResource.getFirstName()));
         }
-        return kcUser;
     }
 
     private static CredentialRepresentation createPasswordCredentials(String password) {

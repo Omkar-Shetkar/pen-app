@@ -43,9 +43,9 @@ public class ScribeService {
         return scribeRepository.findAll();
     }
 
-    public void create(String userId, UserResource user) {
+    public Scribe create(String userId, UserResource user) {
         Scribe scribe = new Scribe(userId, user.getFirstName(), user.getLastName(), user.getGender(),
                 user.getLocation(), user.getMobile(), user.getEmail());
-        scribeRepository.insert(scribe);
+        return scribeRepository.insert(scribe);
     }
 }
