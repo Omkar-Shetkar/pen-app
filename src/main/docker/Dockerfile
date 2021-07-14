@@ -3,10 +3,10 @@
 #               3. https://www.callicoder.com/spring-boot-mysql-react-docker-compose-example/ - it contains details for 3 services
 
 # Start with a base image containing Java runtime
-FROM tomcat:8.5-jdk15-openjdk-oracle
+FROM openjdk:16.0.1-jdk
 
 # Add Maintainer Info
-LABEL maintainer="light@gmail.com"
+LABEL maintainer="tantragnyana@gmail.com"
 
 # SspringBoot  default active profile
 ENV ENV_NAME dev
