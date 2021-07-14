@@ -6,7 +6,7 @@ const login = (credentials) => {
 };
 
 const register = (user) => {
-  console.log("Registering ", user.name);
+  console.log("Registering ", user.firstName);
   return client.post("/auth/register", user);
 };
 

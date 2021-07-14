@@ -1,0 +1,34 @@
+import React from "react";
+import { useFormikContext } from "formik";
+import RadioButtonRN from "radio-buttons-react-native";
+import { StyleSheet } from "react-native";
+
+import AppErrorMessage from "./AppErrorMessage";
+
+function AppFormSelectionField({ name, data, onSelection, ...otherProps }) {
+  const { setFieldTouched, handleChange, errors, touched, values } =
+    useFormikContext();
+
+  const handleUserSelection = (e) => {
+    onSelection(e);
+    values[name] = e.value;
+  };
+
+  return (
+    <>
+      <RadioButtonRN
+        name="userTypeData"
+        data={data}
+        animationTypes={["pulse"]}
+        selectedBtn={handleUserSelection}
+      />
+      <AppErrorMessage error={errors[name]} visible={touched[name]} />
+    </>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {},
+});
+
+export default AppFormSelectionField;

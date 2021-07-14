@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import * as Yup from "yup";
-import RadioButtonRN from "radio-buttons-react-native";
 import Toast from "react-native-toast-message";
 
 import AppErrorMessage from "../components/forms/AppErrorMessage";
@@ -12,44 +11,43 @@ import SubmitButton from "../components/forms/SubmitButton";
 import Screen from "../components/Screen";
 import AppFormMultiSelectField from "../components/forms/AppFormMultiSelectField";
 import authApi from "../api/auth";
-import useAuth from "../auth/useAuth";
 import useApi from "../hooks/useApi";
 import languagesApi from "../api/languages";
 import gender from "../config/gender";
 import userType from "../config/userType";
+import useAuth from "../auth/useAuth";
+import strings from "../config/strings";
+import AppFormSelectionField from "../components/forms/AppFormSelectionField";
 
 const validationSchema = Yup.object().shape({
+  selectedUserType: Yup.string().required().label("User Type"),
   firstName: Yup.string().required().label("First Name"),
   lastName: Yup.string().required().label("Last Name"),
   mobile: Yup.number().required().label("Mobile"),
   email: Yup.string().optional().email().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
   gender: Yup.string().required().label("Gender"),
-  // qualification: Yup.string().required().label("Qualification"),
   languages: Yup.array().required().min(1).label("Languages"),
   availability: Yup.string().required().label("Availability"),
   location: Yup.string().required().label("Location"),
 });
 
 function RegisterScreen({ isScribe }) {
-  const [error, setError] = useState();
   const [selectedItems, setSelectedItems] = useState();
+  const [failed, setFailed] = useState(false);
 
-  // const qualifications = [
-  //   { label: "Postgraduate", value: "postgraduate" },
-  //   { label: "Graduate", value: "graduate" },
-  //   { label: "Intermediate", value: "intermediate" },
-  // ];
+  const { login } = useAuth();
+
+  const userTypes = [
+    { id: "1", label: "Scribe", value: userType.SCRIBE },
+    { id: "2", label: "Candidate", value: userType.CANDIDATE },
+  ];
 
   const genders = [
     { label: "Male", value: gender.MALE },
     { label: "Female", value: gender.FEMALE },
     { label: "Others", value: gender.OTHER },
   ];
-
-  useEffect(() => {
-    loadLanguages();
-  }, []);
 
   const { data: languages, request: loadLanguages } = useApi(
     languagesApi.getLanguages
@@ -69,7 +67,24 @@ function RegisterScreen({ isScribe }) {
     setSelectedItems(selectedItems);
   };
 
+  useEffect(() => {
+    loadLanguages();
+  }, []);
+
+  const onUserSelection = (e) => {
+    let message =
+      e.value === userType.SCRIBE
+        ? strings.register.scribe
+        : strings.register.candidate;
+    Toast.show({
+      type: "info",
+      text2: message,
+      visibilityTime: 4000,
+    });
+  };
+
   const handleSubmit = async ({
+    selectedUserType,
     firstName,
     lastName,
     email,
@@ -92,29 +107,23 @@ function RegisterScreen({ isScribe }) {
       availability,
       location,
     });
-    console.log("result ", result);
+    if (result.ok) {
+      loginFun({ mobile, password });
+    }
+    if (!result.ok) return setFailed(true);
   };
 
-  const userTypeData = [
-    {
-      label: "Scribe",
-    },
-    {
-      label: "Candidate",
-    },
-  ];
-
-  const handleUserSelection = (e) => {
-    console.log(e);
-    let message =
-      e.label.toString().toUpperCase() === userType.SCRIBE.toUpperCase()
-        ? "Scribe writes exams for others"
-        : "Candidate gets assistance for his/her exams";
-    Toast.show({
-      type: "info",
-      text1: message,
-      visibilityTime: 4000,
+  const loginFun = async ({ mobile, password }) => {
+    console.log("mobile ", mobile);
+    console.log("password ", password);
+    const result = await authApi.login({
+      username: mobile,
+      password: password,
     });
+    console.log("login ", result);
+    if (!result.ok) return setFailed(true);
+    setFailed(false);
+    login(result.data.access_token);
   };
 
   return (
@@ -123,13 +132,13 @@ function RegisterScreen({ isScribe }) {
         {/* TODO: To be removed */}
         <AppForm
           initialValues={{
+            selectedUserType: "",
             firstName: "Vedant",
             lastName: "Shetkar",
             mobile: "1122334455",
             email: "vedant.shetkar@gmail.com",
             password: "1234",
             gender: "MALE",
-            // qualification: "",
             languages: [1],
             availability: "weekends",
             location: "loc-1",
@@ -137,13 +146,14 @@ function RegisterScreen({ isScribe }) {
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
-          <AppErrorMessage error={error} visible={error} />
+          <AppErrorMessage error="Registration failed!" visible={failed} />
 
-          <RadioButtonRN
-            data={userTypeData}
-            animationTypes={["pulse"]}
-            selectedBtn={handleUserSelection}
+          <AppFormSelectionField
+            name="selectedUserType"
+            data={userTypes}
+            onSelection={onUserSelection}
           />
+
           <AppFormField
             autoCorrect={false}
             icon="account-outline"
@@ -195,15 +205,6 @@ function RegisterScreen({ isScribe }) {
           />
           {isScribe && (
             <>
-              {/* <AppFormPickerField
-                icon="school-outline"
-                name="qualification"
-                items={qualifications}
-                placeholder={{
-                  label: "Qualification",
-                  value: "",
-                }}
-              /> */}
               <AppFormMultiSelectField
                 uniqueKey="id"
                 name="languages"

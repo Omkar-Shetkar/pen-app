@@ -1,4 +1,8 @@
 const strings = {
+  register: {
+    scribe: "Scribe writes exams for others",
+    candidate: "Candidate gets assistance for his/her exams",
+  },
   common: {
     serverError: "Snap, error with server!\n Please try after sometime.",
   },
