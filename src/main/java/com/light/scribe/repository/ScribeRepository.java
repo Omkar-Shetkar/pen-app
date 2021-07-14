@@ -14,13 +14,11 @@ public interface ScribeRepository extends CrudRepository<Scribe, String>, Custom
     @Transactional(readOnly = true)
     @Query("""
             SELECT * FROM scribe s 
-            INNER JOIN availability a ON a.scribe = s.id 
             INNER JOIN scribe_language l ON l.scribe = s.id 
             WHERE 
-            a.available_from <= :from 
-            AND a.available_to >= :to 
-            AND l.language = :language 
+            l.language = :language 
             """)
+    //TODO: Availability need to be considered
     Set<Scribe> findByAvailabilityAndLanguage(@Param("from") Date from, @Param("to") Date to,
                                               @Param("language") Long language);
 }
