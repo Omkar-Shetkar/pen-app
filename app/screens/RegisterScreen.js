@@ -28,7 +28,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required().min(4).label("Password"),
   gender: Yup.string().required().label("Gender"),
   languages: Yup.array().required().min(1).label("Languages"),
-  availability: Yup.string().required().label("Availability"),
+  // availability: Yup.string().required().label("Availability"),
   location: Yup.string().required().label("Location"),
 });
 
@@ -53,12 +53,12 @@ function RegisterScreen({ isScribe }) {
     languagesApi.getLanguages
   );
 
-  const availabilities = [
-    { label: "Weekends", value: "weekends" },
-    { label: "Weekdays", value: "weekdays" },
-    { label: "Any Day", value: "any day" },
-    { label: "Not Available", value: "not available" },
-  ];
+  // const availabilities = [
+  //   { label: "Weekends", value: "weekends" },
+  //   { label: "Weekdays", value: "weekdays" },
+  //   { label: "Any Day", value: "any day" },
+  //   { label: "Not Available", value: "not available" },
+  // ];
 
   isScribe = true;
   const selectedUserType = isScribe ? userType.SCRIBE : userType.CANDIDATE;
@@ -92,7 +92,7 @@ function RegisterScreen({ isScribe }) {
     password,
     gender,
     languages,
-    availability,
+    // availability,
     location,
   }) => {
     const result = await authApi.register({
@@ -104,7 +104,7 @@ function RegisterScreen({ isScribe }) {
       mobile,
       gender,
       languages,
-      availability,
+      // availability,
       location,
     });
     if (result.ok) {
@@ -140,7 +140,7 @@ function RegisterScreen({ isScribe }) {
             password: "1234",
             gender: "MALE",
             languages: [1],
-            availability: "weekends",
+            // availability: "weekends",
             location: "loc-1",
           }}
           onSubmit={handleSubmit}
@@ -212,7 +212,7 @@ function RegisterScreen({ isScribe }) {
                 selectText="Pick Languages"
                 searchInputPlaceholderText="Search Languages..."
               />
-              <AppFormPickerField
+              {/* <AppFormPickerField
                 icon="calendar-check-outline"
                 name="availability"
                 items={availabilities}
@@ -220,7 +220,7 @@ function RegisterScreen({ isScribe }) {
                   label: "Availability",
                   value: "",
                 }}
-              />
+              /> */}
             </>
           )}
 
