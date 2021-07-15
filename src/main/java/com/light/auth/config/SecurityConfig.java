@@ -3,7 +3,6 @@ package com.light.auth.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -18,12 +17,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
     private String jwkSetUri;
 
+    private static final String[] PERMIT_ALL = {"/rest/auth/**", "/rest/languages", "/rest/location/cities"};
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .antMatchers( "/rest/auth/**","/rest/languages").permitAll()
+                                .antMatchers(PERMIT_ALL).permitAll()
                                 .antMatchers("/rest/**")
                                 .hasAuthority("SCOPE_light:read-write")
                                 .anyRequest().authenticated()

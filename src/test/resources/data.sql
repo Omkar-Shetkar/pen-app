@@ -41,7 +41,9 @@ INSERT INTO state(id, name, country) VALUES (1, 'Karnataka', 1);
 INSERT INTO state(id, name, country) VALUES (2, 'NYC', 2);
 
 INSERT INTO city(id, name, state) VALUES (1, 'Bangalore', 1);
-INSERT INTO city(id, name, state) VALUES (2, 'NY', 2);
+INSERT INTO city(id, name, state) VALUES (2, 'Mysore', 1);
+INSERT INTO city(id, name, state) VALUES (3, 'Bidar', 1);
+INSERT INTO city(id, name, state) VALUES (4, 'NY', 2);
 
 INSERT INTO address(id, city, state, country, pincode, gps_location) VALUES (1, 1, 1,1,'560102','location-01');
 INSERT INTO address(id, city, state, country, pincode, gps_location) VALUES (2, 2, 2,2,'110882','location-02');

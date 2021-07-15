@@ -1,4 +1,4 @@
-package com.light.domain;
+package com.light.location.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
