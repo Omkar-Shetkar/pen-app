@@ -33,7 +33,6 @@ const validationSchema = Yup.object().shape({
 });
 
 function RegisterScreen() {
-  const [selectedItems, setSelectedItems] = useState();
   const [failed, setFailed] = useState(false);
   const [isScribe, setIsScribe] = useState(false);
 
@@ -50,6 +49,17 @@ function RegisterScreen() {
     { label: "Others", value: gender.OTHER },
   ];
 
+  const cities = [
+    {
+      id: "1",
+      name: "Bangalore",
+    },
+    { id: "2", name: "Mysore" },
+    { id: "3", name: "Bidar" },
+    { id: "4", name: "Kalburgi" },
+    { id: "5", name: "Hyderabad" },
+  ];
+
   const { data: languages, request: loadLanguages } = useApi(
     languagesApi.getLanguages
   );
@@ -60,10 +70,6 @@ function RegisterScreen() {
   //   { label: "Any Day", value: "any day" },
   //   { label: "Not Available", value: "not available" },
   // ];
-
-  const onSelectedItemsChange = (selectedItems) => {
-    setSelectedItems(selectedItems);
-  };
 
   useEffect(() => {
     loadLanguages();
@@ -143,7 +149,7 @@ function RegisterScreen() {
             gender: "MALE",
             languages: [1],
             // availability: "weekends",
-            location: "loc-1",
+            location: [1],
           }}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
@@ -226,11 +232,13 @@ function RegisterScreen() {
             </>
           )}
 
-          <AppFormField
-            autoCorrect={false}
-            icon="map-marker-outline"
+          <AppFormMultiSelectField
+            uniqueKey="id"
             name="location"
-            placeholder="Location"
+            items={cities}
+            selectText="Location"
+            searchInputPlaceholderText="Search City..."
+            isSingle={true}
           />
           <SubmitButton title="Register" />
         </AppForm>

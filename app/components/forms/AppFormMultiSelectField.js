@@ -11,16 +11,9 @@ function AppFormMultiSelectField({
   items,
   selectText,
   searchInputPlaceholderText,
-  placeholder,
-  width,
+  isSingle = false,
 }) {
-  const {
-    setFieldValue,
-    values,
-    handleChange,
-    errors,
-    touched,
-  } = useFormikContext();
+  const { setFieldValue, values, errors, touched } = useFormikContext();
   return (
     <>
       <View style={styles.container}>
@@ -34,6 +27,8 @@ function AppFormMultiSelectField({
           selectText={selectText}
           searchInputPlaceholderText={searchInputPlaceholderText}
           submitButtonColor={colors.primary}
+          single={isSingle}
+          fixedHeight={true}
         />
       </View>
 
