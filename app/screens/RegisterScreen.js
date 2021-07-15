@@ -32,9 +32,10 @@ const validationSchema = Yup.object().shape({
   location: Yup.string().required().label("Location"),
 });
 
-function RegisterScreen({ isScribe }) {
+function RegisterScreen() {
   const [selectedItems, setSelectedItems] = useState();
   const [failed, setFailed] = useState(false);
+  const [isScribe, setIsScribe] = useState(false);
 
   const { login } = useAuth();
 
@@ -60,9 +61,6 @@ function RegisterScreen({ isScribe }) {
   //   { label: "Not Available", value: "not available" },
   // ];
 
-  isScribe = true;
-  const selectedUserType = isScribe ? userType.SCRIBE : userType.CANDIDATE;
-
   const onSelectedItemsChange = (selectedItems) => {
     setSelectedItems(selectedItems);
   };
@@ -72,10 +70,14 @@ function RegisterScreen({ isScribe }) {
   }, []);
 
   const onUserSelection = (e) => {
-    let message =
-      e.value === userType.SCRIBE
-        ? strings.register.scribe
-        : strings.register.candidate;
+    setIsScribe(false);
+    let message = strings.register.candidate;
+
+    if (e.value === userType.SCRIBE) {
+      setIsScribe(true);
+      message = strings.register.scribe;
+    }
+
     Toast.show({
       type: "info",
       text2: message,
