@@ -13,6 +13,7 @@ import AppFormMultiSelectField from "../components/forms/AppFormMultiSelectField
 import authApi from "../api/auth";
 import useApi from "../hooks/useApi";
 import languagesApi from "../api/languages";
+import locationApi from "../api/location";
 import gender from "../config/gender";
 import userType from "../config/userType";
 import useAuth from "../auth/useAuth";
@@ -49,21 +50,6 @@ function RegisterScreen() {
     { label: "Others", value: gender.OTHER },
   ];
 
-  const cities = [
-    {
-      id: "1",
-      name: "Bangalore",
-    },
-    { id: "2", name: "Mysore" },
-    { id: "3", name: "Bidar" },
-    { id: "4", name: "Kalburgi" },
-    { id: "5", name: "Hyderabad" },
-  ];
-
-  const { data: languages, request: loadLanguages } = useApi(
-    languagesApi.getLanguages
-  );
-
   // const availabilities = [
   //   { label: "Weekends", value: "weekends" },
   //   { label: "Weekdays", value: "weekdays" },
@@ -71,8 +57,15 @@ function RegisterScreen() {
   //   { label: "Not Available", value: "not available" },
   // ];
 
+  const { data: languages, request: loadLanguages } = useApi(
+    languagesApi.getLanguages
+  );
+
+  const { data: cities, request: loadCities } = useApi(locationApi.getCities);
+
   useEffect(() => {
     loadLanguages();
+    loadCities();
   }, []);
 
   const onUserSelection = (e) => {
@@ -220,6 +213,14 @@ function RegisterScreen() {
                 selectText="Pick Languages"
                 searchInputPlaceholderText="Search Languages..."
               />
+              <AppFormMultiSelectField
+                uniqueKey="id"
+                name="location"
+                items={cities}
+                selectText="Location"
+                searchInputPlaceholderText="Search City..."
+                isSingle={true}
+              />
               {/* <AppFormPickerField
                 icon="calendar-check-outline"
                 name="availability"
@@ -232,14 +233,6 @@ function RegisterScreen() {
             </>
           )}
 
-          <AppFormMultiSelectField
-            uniqueKey="id"
-            name="location"
-            items={cities}
-            selectText="Location"
-            searchInputPlaceholderText="Search City..."
-            isSingle={true}
-          />
           <SubmitButton title="Register" />
         </AppForm>
       </ScrollView>

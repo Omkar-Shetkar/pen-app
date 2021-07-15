@@ -8,10 +8,12 @@ const apiClient = create({
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {
+  //TODO: Extract this into a constant
   if (
     request.url !== "/auth/login" &&
     request.url !== "/auth/register" &&
-    request.url !== "/languages"
+    request.url !== "/languages" &&
+    request.url !== "/location/cities"
   ) {
     const authToken = await authStorage.getToken();
     if (!authToken) return;
