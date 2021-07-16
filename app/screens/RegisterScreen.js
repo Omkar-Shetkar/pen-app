@@ -18,7 +18,7 @@ import gender from "../config/gender";
 import userType from "../config/userType";
 import useAuth from "../auth/useAuth";
 import strings from "../config/strings";
-import AppFormSelectionField from "../components/forms/AppFormSelectionField";
+import AppFormOptionField from "../components/forms/AppFormOptionField";
 
 const validationSchema = Yup.object().shape({
   selectedUserType: Yup.string().required().label("User Type"),
@@ -28,9 +28,19 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().optional().email().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
   gender: Yup.string().required().label("Gender"),
-  languages: Yup.array().required().min(1).label("Languages"),
+  languages: Yup.array()
+    .label("Languages")
+    .when("selectedUserType", {
+      is: "SCRIBE",
+      then: Yup.array().min(1).required().label("Languages"),
+    }),
   // availability: Yup.string().required().label("Availability"),
-  location: Yup.string().required().label("Location"),
+  city: Yup.string()
+    .label("City")
+    .when("selectedUserType", {
+      is: "SCRIBE",
+      then: Yup.string().required().label("City"),
+    }),
 });
 
 function RegisterScreen() {
@@ -61,7 +71,14 @@ function RegisterScreen() {
     languagesApi.getLanguages
   );
 
-  const { data: cities, request: loadCities } = useApi(locationApi.getCities);
+  const { data: cityData, request: loadCities } = useApi(locationApi.getCities);
+
+  const cities = cityData
+    ? cityData.map(({ id, name }) => ({
+        label: name,
+        value: id.toString(),
+      }))
+    : [];
 
   useEffect(() => {
     loadLanguages();
@@ -94,7 +111,7 @@ function RegisterScreen() {
     gender,
     languages,
     // availability,
-    location,
+    city,
   }) => {
     const result = await authApi.register({
       userType: selectedUserType,
@@ -106,7 +123,7 @@ function RegisterScreen() {
       gender,
       languages,
       // availability,
-      location,
+      city,
     });
     if (result.ok) {
       loginFun({ mobile, password });
@@ -115,13 +132,10 @@ function RegisterScreen() {
   };
 
   const loginFun = async ({ mobile, password }) => {
-    console.log("mobile ", mobile);
-    console.log("password ", password);
     const result = await authApi.login({
       username: mobile,
       password: password,
     });
-    console.log("login ", result);
     if (!result.ok) return setFailed(true);
     setFailed(false);
     login(result.data.access_token);
@@ -140,16 +154,16 @@ function RegisterScreen() {
             email: "vedant.shetkar@gmail.com",
             password: "1234",
             gender: "MALE",
-            languages: [1],
+            languages: languages[1],
             // availability: "weekends",
-            location: [1],
+            city: cities[1],
           }}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
           <AppErrorMessage error="Registration failed!" visible={failed} />
 
-          <AppFormSelectionField
+          <AppFormOptionField
             name="selectedUserType"
             data={userTypes}
             onSelection={onUserSelection}
@@ -213,13 +227,15 @@ function RegisterScreen() {
                 selectText="Pick Languages"
                 searchInputPlaceholderText="Search Languages..."
               />
-              <AppFormMultiSelectField
-                uniqueKey="id"
-                name="location"
+
+              <AppFormPickerField
+                icon="map-marker-outline"
+                name="city"
                 items={cities}
-                selectText="Location"
-                searchInputPlaceholderText="Search City..."
-                isSingle={true}
+                placeholder={{
+                  label: "City",
+                  value: "",
+                }}
               />
               {/* <AppFormPickerField
                 icon="calendar-check-outline"

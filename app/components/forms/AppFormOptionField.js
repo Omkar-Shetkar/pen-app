@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 
 import AppErrorMessage from "./AppErrorMessage";
 
-function AppFormSelectionField({ name, data, onSelection, ...otherProps }) {
+function AppFormOptionField({ name, data, onSelection, ...otherProps }) {
   const { setFieldTouched, handleChange, errors, touched, values } =
     useFormikContext();
 
@@ -31,4 +31,4 @@ const styles = StyleSheet.create({
   container: {},
 });
 
-export default AppFormSelectionField;
+export default AppFormOptionField;

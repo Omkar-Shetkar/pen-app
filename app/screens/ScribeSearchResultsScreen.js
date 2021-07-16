@@ -17,7 +17,6 @@ function ScribeSearchResultsScreen({ route }) {
       scribeId: scribe.id,
       ...route.params.requestUpdate,
     };
-    console.log("requestUpdate ", requestUpdate);
     const result = await requestsApi.createRequest(requestUpdate);
     if (result.ok) {
       scribeList.splice(scribeList.indexOf(scribe), 1);
