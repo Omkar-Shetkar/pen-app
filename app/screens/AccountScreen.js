@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import * as Yup from "yup";
 
@@ -9,6 +9,8 @@ import AppFormField from "../components/forms/AppFormField";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
 import SubmitButton from "../components/forms/SubmitButton";
 import AppFormPickerField from "../components/forms/AppFormPickerField";
+import AuthContext from "../auth/context";
+import gender from "../config/gender";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
@@ -21,33 +23,12 @@ const validationSchema = Yup.object().shape({
 
 function AccountScreen(props) {
   const [error, setError] = useState();
-
-  const user = {
-    name: "user-1",
-    gender: "M",
-    qualification: "postgraduate",
-    mobile: "9911223344",
-    email: "abc@example.com",
-    availability: "weekends",
-  };
+  const { user, setUser } = useContext(AuthContext);
 
   const genders = [
-    { label: "Male", value: "M" },
-    { label: "Female", value: "F" },
-    { label: "Others", value: "others" },
-  ];
-
-  const qualifications = [
-    { label: "Postgraduate", value: "postgraduate" },
-    { label: "Graduate", value: "graduate" },
-    { label: "Intermediate", value: "intermediate" },
-  ];
-
-  const availabilities = [
-    { label: "Weekends", value: "weekends" },
-    { label: "Weekdays", value: "weekdays" },
-    { label: "Any Day", value: "any day" },
-    { label: "Not Available", value: "not available" },
+    { label: "Male", value: gender.MALE },
+    { label: "Female", value: gender.FEMALE },
+    { label: "Others", value: gender.OTHER },
   ];
 
   return (
@@ -62,7 +43,7 @@ function AccountScreen(props) {
           <AppFormField
             autoCorrect={false}
             icon="account-outline"
-            name="name"
+            name="firstName"
             placeholder="Name"
           />
           <AppFormPickerField
@@ -74,15 +55,7 @@ function AccountScreen(props) {
               value: "",
             }}
           />
-          <AppFormPickerField
-            icon="school-outline"
-            name="qualification"
-            items={qualifications}
-            placeholder={{
-              label: "Qualification",
-              value: "",
-            }}
-          />
+
           <AppFormField
             autoCorrect={false}
             icon="cellphone"
@@ -97,22 +70,14 @@ function AccountScreen(props) {
             name="email"
             placeholder="Email"
           />
-          <AppFormPickerField
-            icon="calendar-check-outline"
-            name="availability"
-            items={availabilities}
-            placeholder={{
-              label: "Availability",
-              value: "",
-            }}
-          />
+
           <SubmitButton title="Update" />
         </AppForm>
         {/* TODO: Logout to be implemented */}
         <AppButton
           title="Logout"
           color="secondary"
-          onPress={() => console.log("Logout pressed!")}
+          onPress={() => setUser(null)}
         />
       </ScrollView>
     </Screen>
