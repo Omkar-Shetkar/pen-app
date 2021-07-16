@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,8 +21,9 @@ public class UserResource {
     private Gender gender;
     private String mobile;
     private String email;
+    private Long city;
     private String location;
-    private String[] languages;
+    private Set<Long> languages;
     private Availability availability;
     private UserCredentials credentials;
 

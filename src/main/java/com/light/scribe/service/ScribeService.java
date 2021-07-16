@@ -4,11 +4,13 @@ import com.light.client.register.UserResource;
 import com.light.client.scribe.ScribeSearchFilter;
 import com.light.client.scribe.ScribeUpdate;
 import com.light.scribe.domain.Scribe;
+import com.light.scribe.domain.ScribeLanguage;
 import com.light.scribe.repository.ScribeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ScribeService {
@@ -44,8 +46,12 @@ public class ScribeService {
     }
 
     public Scribe create(String userId, UserResource user) {
-        Scribe scribe = new Scribe(userId, user.getFirstName(), user.getLastName(), user.getGender(),
+        Scribe scribe = new Scribe(userId, user.getFirstName(), user.getLastName(), user.getGender(), user.getCity(),
                 user.getLocation(), user.getMobile(), user.getEmail());
+        Set<ScribeLanguage> scribeLanguages = user.getLanguages().stream()
+                .map(l -> new ScribeLanguage(l))
+                .collect(Collectors.toSet());
+        scribe.setLanguages(scribeLanguages);
         return scribeRepository.insert(scribe);
     }
 }

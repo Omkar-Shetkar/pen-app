@@ -1,46 +1,3 @@
-create TABLE IF NOT EXISTS candidate (
-    id VARCHAR(50)  PRIMARY KEY,
-    first_name VARCHAR(200),
-    last_name VARCHAR(200),
-    gender VARCHAR(25),
-    mobile VARCHAR(25)
-);
-
--------------------------------------------------------------
-
-create TABLE IF NOT EXISTS language (
-    id INTEGER  PRIMARY KEY,
-    name VARCHAR(200)
-);
-
-create TABLE IF NOT EXISTS exam (
-    id INTEGER  PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(200)
-);
--------------------------------------------------------------
-
-create TABLE IF NOT EXISTS scribe (
-    id VARCHAR(50)  PRIMARY KEY,
-    first_name VARCHAR(200),
-    last_name VARCHAR(200),
-    gender VARCHAR(25),
-    mobile VARCHAR(25),
-    email VARCHAR(200),
-    location VARCHAR(200),
-    availability VARCHAR(50)
-);
-
--------------------------------------------------------------
-
-create TABLE IF NOT EXISTS scribe_language (
-    scribe VARCHAR(50),
-    language INTEGER,
-    FOREIGN KEY (scribe) REFERENCES scribe(id),
-    FOREIGN KEY (language) REFERENCES language(id),
-    UNIQUE (scribe,language)
-);
-
--------------------------------------------------------------
 
 create TABLE IF NOT EXISTS country (
     id INTEGER  PRIMARY KEY,
@@ -74,6 +31,54 @@ create TABLE IF NOT EXISTS address (
     FOREIGN KEY (state) REFERENCES state(id),
     FOREIGN KEY (country) REFERENCES country(id)
 );
+
+-------------------------------------------------------------
+
+create TABLE IF NOT EXISTS candidate (
+    id VARCHAR(50)  PRIMARY KEY,
+    first_name VARCHAR(200),
+    last_name VARCHAR(200),
+    gender VARCHAR(25),
+    mobile VARCHAR(25)
+);
+
+-------------------------------------------------------------
+
+create TABLE IF NOT EXISTS language (
+    id INTEGER  PRIMARY KEY,
+    name VARCHAR(200)
+);
+
+create TABLE IF NOT EXISTS exam (
+    id INTEGER  PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(200)
+);
+-------------------------------------------------------------
+
+create TABLE IF NOT EXISTS scribe (
+    id VARCHAR(50)  PRIMARY KEY,
+    first_name VARCHAR(200),
+    last_name VARCHAR(200),
+    gender VARCHAR(25),
+    mobile VARCHAR(25),
+    email VARCHAR(200),
+    location VARCHAR(200),
+    city INTEGER,
+    availability VARCHAR(50),
+    FOREIGN KEY (city) REFERENCES city(id)
+);
+
+-------------------------------------------------------------
+
+create TABLE IF NOT EXISTS scribe_language (
+    scribe VARCHAR(50),
+    language INTEGER,
+    FOREIGN KEY (scribe) REFERENCES scribe(id),
+    FOREIGN KEY (language) REFERENCES language(id),
+    UNIQUE (scribe,language)
+);
+
+-------------------------------------------------------------
 
 create TABLE IF NOT EXISTS exam_schedule (
     id INTEGER  PRIMARY KEY AUTO_INCREMENT,

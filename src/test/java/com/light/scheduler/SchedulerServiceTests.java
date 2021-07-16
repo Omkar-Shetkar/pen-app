@@ -63,7 +63,7 @@ class SchedulerServiceTests extends BaseTestSetup {
 
         long requestId = request.getId();
         // On the day of exam, OTP is generated for the exam event
-        Awaitility.waitAtMost(Durations.ONE_MINUTE).untilAsserted(() -> {
+        Awaitility.waitAtMost(Durations.TEN_SECONDS).untilAsserted(() -> {
             Mockito.verify(schedulerService, Mockito.atLeast(2)).scheduleOtpGeneration();
             ExamEvent examEvent = examEventService.getByRequestId(requestId)
                     .orElseThrow(() -> new IllegalArgumentException(String.format("Exam event with request id {%d} not found!",
@@ -83,7 +83,7 @@ class SchedulerServiceTests extends BaseTestSetup {
 
         long requestId = request.getId();
         // On the day of exam, OTP is generated for the exam event
-        Awaitility.waitAtMost(Duration.of(30, SECONDS)).untilAsserted(() -> {
+        Awaitility.waitAtMost(Duration.of(15, SECONDS)).untilAsserted(() -> {
             Mockito.verify(schedulerService, Mockito.atLeast(1)).scheduleOtpGeneration();
             ExamEvent examEvent = examEventService.getByRequestId(requestId)
                     .orElseThrow(() -> new IllegalArgumentException(String.format("Exam event with request id {%d} not found!",
