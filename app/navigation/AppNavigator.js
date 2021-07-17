@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import ScribeSearchScreen from "../screens/ScribeSearchScreen";
 import AccountScreen from "../screens/AccountScreen";
 import NotificationsScreen from "../screens/NotificationsScreen";
 import RequestsNavigator from "./RequestsNavigator";
@@ -20,6 +19,7 @@ const Tab = createBottomTabNavigator();
 function AppNavigator(props) {
   return (
     <AuthContext.Consumer>
+      {/* TODO: Use auth context to determine user type */}
       {({ isScribe }) => (
         <Tab.Navigator>
           <Tab.Screen
