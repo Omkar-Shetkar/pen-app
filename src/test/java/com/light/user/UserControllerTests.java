@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -52,9 +55,11 @@ public class UserControllerTests extends BaseTestSetup {
                 .andReturn().getResponse().getContentAsString();
 
         UserResource userResource = mapper.readValue(response, UserResource.class);
-        Assertions.assertEquals("scribe1-fn", userResource.getFirstName());
+        Assertions.assertEquals(2, userResource.getLanguages().size());
 
-        userResource.setFirstName("Omkar");
+        Set<Long> languages = new HashSet<>();
+        languages.add(1L);
+        userResource.setLanguages(languages);
 
         response = mockMvc.perform(post(UserController.SINGLE, "1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -64,7 +69,8 @@ public class UserControllerTests extends BaseTestSetup {
                 .andReturn().getResponse().getContentAsString();
 
         userResource = mapper.readValue(response, UserResource.class);
-        Assertions.assertEquals("Omkar", userResource.getFirstName());
+        Assertions.assertEquals(1, userResource.getLanguages().size());
+
     }
 
     @Test
