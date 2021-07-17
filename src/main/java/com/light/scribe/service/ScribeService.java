@@ -3,6 +3,7 @@ package com.light.scribe.service;
 import com.light.client.register.UserResource;
 import com.light.client.scribe.ScribeSearchFilter;
 import com.light.client.scribe.ScribeUpdate;
+import com.light.scribe.domain.Availability;
 import com.light.scribe.domain.Scribe;
 import com.light.scribe.domain.ScribeLanguage;
 import com.light.scribe.repository.ScribeRepository;
@@ -46,12 +47,12 @@ public class ScribeService {
     }
 
     public Scribe create(String userId, UserResource user) {
-        Scribe scribe = new Scribe(userId, user.getFirstName(), user.getLastName(), user.getGender(), user.getCity(),
-                user.getLocation(), user.getMobile(), user.getEmail());
         Set<ScribeLanguage> scribeLanguages = user.getLanguages().stream()
                 .map(l -> new ScribeLanguage(l))
                 .collect(Collectors.toSet());
-        scribe.setLanguages(scribeLanguages);
+        Scribe scribe = new Scribe(userId, user.getFirstName(), user.getLastName(), user.getGender(), scribeLanguages, user.getCity(),
+                user.getLocation(), Availability.ANY_DAY, user.getMobile(), user.getEmail());
+
         return scribeRepository.insert(scribe);
     }
 }

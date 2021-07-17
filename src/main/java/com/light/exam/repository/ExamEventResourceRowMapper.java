@@ -17,19 +17,31 @@ public class ExamEventResourceRowMapper implements RowMapper<ExamEventResource> 
     public ExamEventResource mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
         ExamStatus examStatus = ExamStatus.valueOf(resultSet.getString("exam_status"));
 
-        UserResource candidateResource = new UserResource(UserType.CANDIDATE, resultSet.getString("c_first_name"),
-                resultSet.getString("c_last_name"), Gender.valueOf(resultSet.getString("c_gender")),
-                resultSet.getString("c_mobile"), null, null, null,
-                null, null, null);
+        UserResource candidateResource = UserResource.builder()
+                .id(resultSet.getString("c_id"))
+                .userType(UserType.CANDIDATE)
+                .firstName(resultSet.getString("c_first_name"))
+                .lastName(resultSet.getString("c_last_name"))
+                .gender(Gender.valueOf(resultSet.getString("c_gender")))
+                .mobile(resultSet.getString("c_mobile"))
+                .build();
 
-        UserResource scribeResource = new UserResource(UserType.SCRIBE, resultSet.getString("s_first_name"),
-                resultSet.getString("s_last_name"), Gender.valueOf(resultSet.getString("s_gender")),
-                resultSet.getString("s_mobile"), resultSet.getString("s_email"), null, null,
-                null, null, null);
+        UserResource scribeResource = UserResource.builder()
+                .id(resultSet.getString("s_id"))
+                .userType(UserType.SCRIBE)
+                .firstName(resultSet.getString("s_first_name"))
+                .lastName(resultSet.getString("s_last_name"))
+                .gender(Gender.valueOf(resultSet.getString("s_gender")))
+                .mobile(resultSet.getString("s_mobile"))
+                .email(resultSet.getString("s_email"))
+                .build();
 
-        ExamResource examResource = new ExamResource(resultSet.getString("exam"),
-                resultSet.getTimestamp("start_time"), resultSet.getTimestamp("end_time"),
-                resultSet.getString("lang")/*, resultSet.getString("city")*/);
+        ExamResource examResource = ExamResource.builder()
+                .name(resultSet.getString("exam"))
+                .start(resultSet.getTimestamp("start_time"))
+                .end(resultSet.getTimestamp("end_time"))
+                .language(resultSet.getString("lang"))
+                .build();
 
         return new ExamEventResource(resultSet.getLong("id"), examStatus, scribeResource,
                 candidateResource, examResource);
