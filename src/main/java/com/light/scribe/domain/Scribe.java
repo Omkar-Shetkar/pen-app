@@ -1,5 +1,7 @@
 package com.light.scribe.domain;
 
+import com.light.client.exam.UserType;
+import com.light.client.register.UserResource;
 import com.light.domain.Gender;
 import com.light.domain.Language;
 import lombok.Data;
@@ -9,6 +11,7 @@ import org.springframework.util.Assert;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Represents person who will be writing exam for a candidate.
@@ -62,6 +65,12 @@ public class Scribe {
         Assert.notNull(language.getId(), "Language id, must not be null");
 
         return new ScribeLanguage(language.getId());
+    }
+
+    public UserResource asUserResource() {
+        Set<Long> languageIds = languages.stream().map(ScribeLanguage::getLanguage).collect(Collectors.toSet());
+        return new UserResource(UserType.SCRIBE, firstName, lastName, gender, mobile, email, city,
+                location, languageIds, availability, null);
     }
 
 }

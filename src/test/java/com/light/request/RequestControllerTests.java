@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class RequestControllerTests extends BaseTestSetup {
 
-    public static final String CANDIDATE = "1";
+    public static final String CANDIDATE = "100";
     public static final long EXAM_ID = 101;
     public static final long LANGUAGE_ID = 1;
     public static final long ADDRESS_ID = 1;
@@ -179,7 +179,7 @@ class RequestControllerTests extends BaseTestSetup {
         ExamSchedule examSchedule = examScheduleRepository.findById(examScheduleId)
                 .orElseThrow(() -> new IllegalStateException("Exam schedule not found " + examScheduleId));
         String response = mockMvc.perform(get((ALL))
-                .param("candidate", "1")
+                .param("candidate", "100")
                 .param("schedule", String.valueOf(examSchedule.getId()))
                 .param("requestStatus", RequestStatus.DISABLED.toString()))
                 .andExpect(status().isOk())

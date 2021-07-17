@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
-import static com.light.controller.LanguageController.ALL;
+import static com.light.language.controller.LanguageController.ALL;
 
 class LanguageControllerTests extends BaseTestSetup {
 

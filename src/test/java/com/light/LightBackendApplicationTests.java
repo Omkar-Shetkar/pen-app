@@ -67,7 +67,7 @@ class LightBackendApplicationTests extends BaseTestSetup {
     @SpyBean
     private SchedulerService schedulerService;
 
-    public static final String CANDIDATE_ID = "1";
+    public static final String CANDIDATE_ID = "100";
     public static final long SCRIBE_ID = 1L;
     public static final long EXAM_ID = 101L;
     public static final long LANGUAGE_ID = 1L;

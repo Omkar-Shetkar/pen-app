@@ -1,7 +1,7 @@
-package com.light.controller;
+package com.light.language.controller;
 
 import com.light.domain.Language;
-import com.light.repository.LanguageRepository;
+import com.light.language.repository.LanguageRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

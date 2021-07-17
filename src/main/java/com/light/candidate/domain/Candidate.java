@@ -1,5 +1,7 @@
 package com.light.candidate.domain;
 
+import com.light.client.exam.UserType;
+import com.light.client.register.UserResource;
 import com.light.domain.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,4 +21,8 @@ public class Candidate {
 
     private String mobile;
 
+    public UserResource asUserResource() {
+        return new UserResource(UserType.CANDIDATE, firstName, lastName, gender, mobile, null, null,
+                null, null, null, null);
+    }
 }

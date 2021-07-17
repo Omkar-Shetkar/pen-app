@@ -2,7 +2,7 @@ package com.light;
 
 import com.light.candidate.repository.CandidateRepository;
 import com.light.exam.repository.ExamEventRepository;
-import com.light.repository.LanguageRepository;
+import com.light.language.repository.LanguageRepository;
 import com.light.request.repository.ExamScheduleRepository;
 import com.light.request.repository.RequestRepository;
 import com.light.scribe.repository.ScribeRepository;

@@ -1,4 +1,4 @@
-package com.light.repository;
+package com.light.language.repository;
 
 import com.light.domain.Language;
 import org.springframework.data.repository.CrudRepository;
