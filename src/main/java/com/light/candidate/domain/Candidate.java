@@ -23,6 +23,8 @@ public class Candidate {
 
     private String mobile;
 
+    private String email;
+
     public UserResource asUserResource() {
         return UserResource.builder()
                 .userType(UserType.CANDIDATE)
@@ -31,6 +33,7 @@ public class Candidate {
                 .lastName(lastName)
                 .gender(gender)
                 .mobile(mobile)
+                .email(email)
                 .build();
     }
 }

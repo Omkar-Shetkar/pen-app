@@ -26,12 +26,12 @@ INSERT INTO address(id, city, state, country, pincode, gps_location) VALUES (2, 
 
 -------------------------------------------------------------
 
-INSERT INTO candidate (id, first_name, last_name, gender, mobile)
-               VALUES (100, 'candidate1-fn','candidate1-ln', 'MALE', '123-111');
-INSERT INTO candidate (id, first_name, last_name, gender, mobile)
-               VALUES (200, 'candidate2-fn','candidate2-ln', 'FEMALE', '456-222');
-INSERT INTO candidate (id, first_name, last_name, gender, mobile)
-               VALUES (300, 'candidate3-fn','candidate3-ln', 'MALE', '789-333');
+INSERT INTO candidate (id, first_name, last_name, gender, mobile, email)
+               VALUES (100, 'candidate1-fn','candidate1-ln', 'MALE', '123-111', 'c1@gmail.com');
+INSERT INTO candidate (id, first_name, last_name, gender, mobile, email)
+               VALUES (200, 'candidate2-fn','candidate2-ln', 'FEMALE', '456-222', 'c2@gmail.com');
+INSERT INTO candidate (id, first_name, last_name, gender, mobile, email)
+               VALUES (300, 'candidate3-fn','candidate3-ln', 'MALE', '789-333', 'c3@gmail.com');
 
 -------------------------------------------------------------
 

@@ -29,7 +29,7 @@ public interface ExamEventRepository extends CrudRepository<ExamEvent, Long> {
 
     @Query(value = """
                         SELECT ev.id id, ev.exam_status exam_status, 
-                              c.id c_id, c.first_name c_first_name, c.last_name c_last_name, c.gender c_gender, c.mobile c_mobile,
+                              c.id c_id, c.first_name c_first_name, c.last_name c_last_name, c.gender c_gender, c.mobile c_mobile, c.email c_email,
                               s.id s_id, s.first_name s_first_name, s.last_name s_last_name, s.gender s_gender, s.email s_email, s.mobile s_mobile,
                               es.start_time start_time, es.end_time end_time, e.name exam,
                               l.name lang

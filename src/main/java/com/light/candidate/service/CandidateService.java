@@ -24,7 +24,7 @@ public class CandidateService {
 
     public Candidate create(String userId, UserResource user) {
         Candidate candidate = new Candidate(userId, user.getFirstName(), user.getLastName(),
-                user.getGender(), user.getMobile());
+                user.getGender(), user.getMobile(), user.getEmail());
         return candidateRepository.insert(candidate);
     }
 

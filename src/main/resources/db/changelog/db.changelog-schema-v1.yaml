@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1626398042572-1
+      id: 1626571907243-1
       author: omkars (generated)
       changes:
         - createTable:
@@ -22,6 +22,8 @@ databaseChangeLog:
                   name: country
                   type: INTEGER
               - column:
+                  constraints:
+                    nullable: false
                   name: pincode
                   type: VARCHAR(25)
               - column:
@@ -29,7 +31,7 @@ databaseChangeLog:
                   type: VARCHAR(200)
             tableName: address
   - changeSet:
-      id: 1626398042572-2
+      id: 1626571907243-2
       author: omkars (generated)
       changes:
         - createTable:
@@ -42,6 +44,8 @@ databaseChangeLog:
                   name: id
                   type: INTEGER
               - column:
+                  constraints:
+                    nullable: false
                   name: name
                   type: VARCHAR(250)
               - column:
@@ -49,7 +53,7 @@ databaseChangeLog:
                   type: INTEGER
             tableName: city
   - changeSet:
-      id: 1626398042572-3
+      id: 1626571907243-3
       author: omkars (generated)
       changes:
         - createTable:
@@ -62,11 +66,13 @@ databaseChangeLog:
                   name: id
                   type: INTEGER
               - column:
+                  constraints:
+                    nullable: false
                   name: name
                   type: VARCHAR(250)
             tableName: country
   - changeSet:
-      id: 1626398042572-4
+      id: 1626571907243-4
       author: omkars (generated)
       changes:
         - createTable:
@@ -79,6 +85,8 @@ databaseChangeLog:
                   name: id
                   type: INTEGER
               - column:
+                  constraints:
+                    nullable: false
                   name: name
                   type: VARCHAR(250)
               - column:
@@ -86,7 +94,7 @@ databaseChangeLog:
                   type: INTEGER
             tableName: state
   - changeSet:
-      id: 1626398042572-5
+      id: 1626571907243-5
       author: omkars (generated)
       changes:
         - createTable:
@@ -102,7 +110,7 @@ databaseChangeLog:
                   type: INTEGER
             tableName: candidate_feedback
   - changeSet:
-      id: 1626398042572-6
+      id: 1626571907243-6
       author: omkars (generated)
       changes:
         - createTable:
@@ -119,18 +127,30 @@ databaseChangeLog:
                   name: request
                   type: INTEGER
               - column:
+                  constraints:
+                    nullable: false
                   name: scribe
                   type: VARCHAR(50)
               - column:
+                  constraints:
+                    nullable: false
                   name: candidate
                   type: VARCHAR(50)
               - column:
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
                   name: otp_generated
                   type: BOOLEAN
               - column:
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
                   name: otp_verified
                   type: BOOLEAN
               - column:
+                  constraints:
+                    nullable: false
                   name: exam_status
                   type: VARCHAR(30)
               - column:
@@ -138,7 +158,7 @@ databaseChangeLog:
                   type: INTEGER
             tableName: exam_event
   - changeSet:
-      id: 1626398042572-7
+      id: 1626571907243-7
       author: omkars (generated)
       changes:
         - createTable:
@@ -151,20 +171,31 @@ databaseChangeLog:
                   name: id
                   type: VARCHAR(50)
               - column:
+                  constraints:
+                    nullable: false
                   name: first_name
                   type: VARCHAR(200)
               - column:
+                  constraints:
+                    nullable: false
                   name: last_name
                   type: VARCHAR(200)
               - column:
+                  constraints:
+                    nullable: false
                   name: gender
                   type: VARCHAR(25)
               - column:
+                  constraints:
+                    nullable: false
                   name: mobile
                   type: VARCHAR(25)
+              - column:
+                  name: email
+                  type: VARCHAR(200)
             tableName: candidate
   - changeSet:
-      id: 1626398042572-8
+      id: 1626571907243-8
       author: omkars (generated)
       changes:
         - createTable:
@@ -178,9 +209,13 @@ databaseChangeLog:
                   name: id
                   type: INTEGER
               - column:
+                  constraints:
+                    nullable: false
                   name: start_time
                   type: TIMESTAMP WITH TIME ZONE
               - column:
+                  constraints:
+                    nullable: false
                   name: end_time
                   type: TIMESTAMP WITH TIME ZONE
               - column:
@@ -194,7 +229,7 @@ databaseChangeLog:
                   type: INTEGER
             tableName: exam_schedule
   - changeSet:
-      id: 1626398042572-9
+      id: 1626571907243-9
       author: omkars (generated)
       changes:
         - createTable:
@@ -221,7 +256,7 @@ databaseChangeLog:
                   type: VARCHAR(200)
             tableName: request
   - changeSet:
-      id: 1626398042572-10
+      id: 1626571907243-10
       author: omkars (generated)
       changes:
         - createTable:
@@ -234,15 +269,23 @@ databaseChangeLog:
                   name: id
                   type: VARCHAR(50)
               - column:
+                  constraints:
+                    nullable: false
                   name: first_name
                   type: VARCHAR(200)
               - column:
+                  constraints:
+                    nullable: false
                   name: last_name
                   type: VARCHAR(200)
               - column:
+                  constraints:
+                    nullable: false
                   name: gender
                   type: VARCHAR(25)
               - column:
+                  constraints:
+                    nullable: false
                   name: mobile
                   type: VARCHAR(25)
               - column:
@@ -259,7 +302,7 @@ databaseChangeLog:
                   type: INTEGER
             tableName: scribe
   - changeSet:
-      id: 1626398042572-11
+      id: 1626571907243-11
       author: omkars (generated)
       changes:
         - createTable:
@@ -272,11 +315,13 @@ databaseChangeLog:
                   name: id
                   type: INTEGER
               - column:
+                  constraints:
+                    nullable: false
                   name: name
                   type: VARCHAR(200)
             tableName: exam
   - changeSet:
-      id: 1626398042572-12
+      id: 1626571907243-12
       author: omkars (generated)
       changes:
         - createTable:
@@ -289,11 +334,13 @@ databaseChangeLog:
                   name: id
                   type: INTEGER
               - column:
+                  constraints:
+                    nullable: false
                   name: name
                   type: VARCHAR(200)
             tableName: language
   - changeSet:
-      id: 1626398042572-13
+      id: 1626571907243-13
       author: omkars (generated)
       changes:
         - createTable:
@@ -309,7 +356,7 @@ databaseChangeLog:
                   type: INTEGER
             tableName: scribe_feedback
   - changeSet:
-      id: 1626398042572-14
+      id: 1626571907243-14
       author: omkars (generated)
       changes:
         - createTable:
@@ -322,7 +369,7 @@ databaseChangeLog:
                   type: INTEGER
             tableName: scribe_language
   - changeSet:
-      id: 1626398042572-15
+      id: 1626571907243-15
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -337,7 +384,7 @@ databaseChangeLog:
             referencedTableName: address
             validate: true
   - changeSet:
-      id: 1626398042572-16
+      id: 1626571907243-16
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -352,7 +399,7 @@ databaseChangeLog:
             referencedTableName: city
             validate: true
   - changeSet:
-      id: 1626398042572-17
+      id: 1626571907243-17
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -367,7 +414,7 @@ databaseChangeLog:
             referencedTableName: country
             validate: true
   - changeSet:
-      id: 1626398042572-18
+      id: 1626571907243-18
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -382,7 +429,7 @@ databaseChangeLog:
             referencedTableName: exam_event
             validate: true
   - changeSet:
-      id: 1626398042572-19
+      id: 1626571907243-19
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -397,7 +444,7 @@ databaseChangeLog:
             referencedTableName: candidate
             validate: true
   - changeSet:
-      id: 1626398042572-20
+      id: 1626571907243-20
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -412,7 +459,7 @@ databaseChangeLog:
             referencedTableName: candidate
             validate: true
   - changeSet:
-      id: 1626398042572-21
+      id: 1626571907243-21
       author: omkars (generated)
       changes:
         - addUniqueConstraint:
@@ -420,7 +467,7 @@ databaseChangeLog:
             constraintName: exam_schedule_start_time_end_time_exam_language_key
             tableName: exam_schedule
   - changeSet:
-      id: 1626398042572-22
+      id: 1626571907243-22
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -435,7 +482,7 @@ databaseChangeLog:
             referencedTableName: exam_schedule
             validate: true
   - changeSet:
-      id: 1626398042572-23
+      id: 1626571907243-23
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -450,7 +497,7 @@ databaseChangeLog:
             referencedTableName: exam
             validate: true
   - changeSet:
-      id: 1626398042572-24
+      id: 1626571907243-24
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -465,7 +512,7 @@ databaseChangeLog:
             referencedTableName: language
             validate: true
   - changeSet:
-      id: 1626398042572-25
+      id: 1626571907243-25
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -480,7 +527,7 @@ databaseChangeLog:
             referencedTableName: scribe
             validate: true
   - changeSet:
-      id: 1626398042572-26
+      id: 1626571907243-26
       author: omkars (generated)
       changes:
         - addUniqueConstraint:
@@ -488,7 +535,7 @@ databaseChangeLog:
             constraintName: scribe_language_scribe_language_key
             tableName: scribe_language
   - changeSet:
-      id: 1626398042572-27
+      id: 1626571907243-27
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -503,7 +550,7 @@ databaseChangeLog:
             referencedTableName: city
             validate: true
   - changeSet:
-      id: 1626398042572-28
+      id: 1626571907243-28
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -518,7 +565,7 @@ databaseChangeLog:
             referencedTableName: country
             validate: true
   - changeSet:
-      id: 1626398042572-29
+      id: 1626571907243-29
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -533,7 +580,7 @@ databaseChangeLog:
             referencedTableName: state
             validate: true
   - changeSet:
-      id: 1626398042572-30
+      id: 1626571907243-30
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -548,7 +595,7 @@ databaseChangeLog:
             referencedTableName: state
             validate: true
   - changeSet:
-      id: 1626398042572-31
+      id: 1626571907243-31
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -563,7 +610,7 @@ databaseChangeLog:
             referencedTableName: exam_event
             validate: true
   - changeSet:
-      id: 1626398042572-32
+      id: 1626571907243-32
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -578,7 +625,7 @@ databaseChangeLog:
             referencedTableName: exam_schedule
             validate: true
   - changeSet:
-      id: 1626398042572-33
+      id: 1626571907243-33
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -593,7 +640,7 @@ databaseChangeLog:
             referencedTableName: request
             validate: true
   - changeSet:
-      id: 1626398042572-34
+      id: 1626571907243-34
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -608,7 +655,7 @@ databaseChangeLog:
             referencedTableName: scribe
             validate: true
   - changeSet:
-      id: 1626398042572-35
+      id: 1626571907243-35
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:
@@ -623,7 +670,7 @@ databaseChangeLog:
             referencedTableName: language
             validate: true
   - changeSet:
-      id: 1626398042572-36
+      id: 1626571907243-36
       author: omkars (generated)
       changes:
         - addForeignKeyConstraint:

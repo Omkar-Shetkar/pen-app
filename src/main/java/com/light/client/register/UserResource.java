@@ -59,6 +59,7 @@ public class UserResource {
                 .lastName(lastName)
                 .gender(gender)
                 .mobile(mobile)
+                .email(email)
                 .build();
     }
 }

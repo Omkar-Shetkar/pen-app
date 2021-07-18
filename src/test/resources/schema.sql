@@ -39,7 +39,8 @@ create TABLE IF NOT EXISTS candidate (
     first_name VARCHAR(200),
     last_name VARCHAR(200),
     gender VARCHAR(25),
-    mobile VARCHAR(25)
+    mobile VARCHAR(25),
+    email VARCHAR(200)
 );
 
 -------------------------------------------------------------
