@@ -46,7 +46,7 @@ function AppNavigator(props) {
               }}
             />
           )}
-          <Tab.Screen
+          {/* <Tab.Screen
             name="Notifications"
             component={NotificationsScreen}
             options={{
@@ -58,7 +58,7 @@ function AppNavigator(props) {
                 />
               ),
             }}
-          />
+          /> */}
           <Tab.Screen
             name="Account"
             component={AccountScreen}
