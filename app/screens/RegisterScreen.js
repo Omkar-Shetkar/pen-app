@@ -146,18 +146,19 @@ function RegisterScreen() {
       <ScrollView>
         {/* TODO: To be removed */}
         <AppForm
-          initialValues={{
-            selectedUserType: "",
-            firstName: "Vedant",
-            lastName: "Shetkar",
-            mobile: "1122334455",
-            email: "vedant.shetkar@gmail.com",
-            password: "1234",
-            gender: "MALE",
-            languages: languages[1],
-            // availability: "weekends",
-            city: cities[1],
-          }}
+          // initialValues={{
+          //   selectedUserType: "",
+          //   firstName: "Vedant",
+          //   lastName: "Shetkar",
+          //   mobile: "1122334455",
+          //   email: "vedant.shetkar@gmail.com",
+          //   password: "1234",
+          //   gender: "MALE",
+          //   languages: languages[1],
+          //   // availability: "weekends",
+          //   city: cities[1],
+          // }}
+          initialValues={{}}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >

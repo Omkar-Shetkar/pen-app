@@ -1,29 +1,43 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import * as Yup from "yup";
+import Toast from "react-native-toast-message";
 
-import userApi from "../api/user";
 import languagesApi from "../api/languages";
 import locationApi from "../api/location";
+import userApi from "../api/user";
 import AuthContext from "../auth/context";
 import AppButton from "../components/AppButton";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
 import AppForm from "../components/forms/AppForm";
 import AppFormField from "../components/forms/AppFormField";
-import AppFormPickerField from "../components/forms/AppFormPickerField";
 import AppFormMultiSelectField from "../components/forms/AppFormMultiSelectField";
+import AppFormPickerField from "../components/forms/AppFormPickerField";
 import SubmitButton from "../components/forms/SubmitButton";
 import Screen from "../components/Screen";
 import gender from "../config/gender";
-import userType from "../config/userType";
+import userTypeData from "../config/userType";
+import strings from "../config/strings";
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string().required().label("Name"),
-  gender: Yup.string().required().label("Gender"),
-  qualification: Yup.string().required().label("Qualification"),
+  userType: Yup.string().required().label("User Type"),
+  firstName: Yup.string().required().label("First Name"),
+  lastName: Yup.string().required().label("Last Name"),
   mobile: Yup.number().required().label("Mobile"),
-  email: Yup.string().required().label("Email"),
-  availability: Yup.string().required().label("Availability"),
+  email: Yup.string().optional().email().label("Email"),
+  gender: Yup.string().required().label("Gender"),
+  //TODO Fix the validation for languages and city
+  // languages: Yup.array().when("userType", {
+  //   is: (val) => val === "SCRIBE",
+  //   then: Yup.array().min(1).required().label("Languages"),
+  //   otherwise: Yup.array().notRequired(),
+  // }),
+  // // availability: Yup.string().required().label("Availability"),
+  // city: Yup.string().when("userType", {
+  //   is: (val) => val === "SCRIBE",
+  //   then: Yup.string().required().label("City"),
+  //   otherwise: Yup.string().notRequired(),
+  // }),
 });
 
 function AccountScreen(props) {
@@ -54,23 +68,63 @@ function AccountScreen(props) {
     loadCities();
   }, []);
 
-  console.log("account screen userDetails", userDetails);
-
   const genders = [
     { label: "Male", value: gender.MALE },
     { label: "Female", value: gender.FEMALE },
     { label: "Others", value: gender.OTHER },
   ];
 
+  const handleSubmit = async ({
+    firstName,
+    lastName,
+    email,
+    mobile,
+    gender,
+    languages,
+    city,
+  }) => {
+    userDetails.firstName = firstName;
+    userDetails.lastName = lastName;
+    userDetails.email = email;
+    userDetails.mobile = mobile;
+    userDetails.gender = gender;
+    if (userDetails.userType === userTypeData.SCRIBE) {
+      userDetails.languages = languages;
+      userDetails.city = city;
+    }
+    const result = await userApi.updateUserDetails(user.sub, userDetails);
+    if (result.ok) {
+      Toast.show({
+        type: "success",
+        text1: strings.account.success,
+        visibilityTime: 4000,
+      });
+    }
+    if (!result.ok) {
+      Toast.show({
+        type: "error",
+        text1: strings.account.failed,
+        visibilityTime: 4000,
+      });
+    }
+  };
+
   return (
     <Screen style={styles.container}>
       <ScrollView>
         <AppForm
           initialValues={userDetails}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
           <AppErrorMessage error={error} visible={error} />
+          <AppFormField
+            autoCorrect={false}
+            icon="account-circle"
+            name="userType"
+            placeholder="User Type"
+            editable={false}
+          />
           <AppFormField
             autoCorrect={false}
             icon="account-outline"
@@ -106,9 +160,10 @@ function AccountScreen(props) {
             keyboardType="email-address"
             name="email"
             placeholder="Email"
+            editable={false}
           />
 
-          {userDetails.userType === userType.SCRIBE && (
+          {userDetails && userDetails.userType === userTypeData.SCRIBE && (
             <>
               <AppFormMultiSelectField
                 uniqueKey="id"

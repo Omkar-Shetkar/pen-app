@@ -34,7 +34,7 @@ function LoginScreen(props) {
       <Image source={require("../assets/logo.png")} style={styles.logo}></Image>
       {/* TODO: To be removed */}
       <AppForm
-        initialValues={{ mobile: "1122334455", password: "1234" }}
+        initialValues={{ mobile: "9844491285", password: "1234" }}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >

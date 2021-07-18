@@ -1,4 +1,8 @@
 const strings = {
+  account: {
+    success: "Updated successfully!",
+    failed: "Updated failed!",
+  },
   register: {
     scribe: "Scribe writes exams for others",
     candidate: "Candidate gets assistance for his/her exams",
