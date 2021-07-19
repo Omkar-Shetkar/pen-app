@@ -8,11 +8,11 @@
         <version>2.5.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.light</groupId>
-    <artifactId>light-backend</artifactId>
+    <groupId>com.pen</groupId>
+    <artifactId>pen-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>light-backend</name>
-    <description>Light backend service</description>
+    <name>pen-backend</name>
+    <description>Pen backend service</description>
     <properties>
         <java.version>16</java.version>
         <liquibase.version>4.3.5</liquibase.version>

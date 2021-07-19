@@ -6,9 +6,9 @@
 FROM openjdk:16.0.1-jdk
 
 # Add Maintainer Info
-LABEL maintainer="tantragnyana@gmail.com"
+MAINTAINER "tantragnyana@gmail.com"
 
-# SspringBoot  default active profile
+# SpringBoot  default active profile
 ENV ENV_NAME dev
 
 # Java OPTS params
@@ -17,17 +17,8 @@ ENV BOOTAPP_JAVA_OPTS -Xms256m -Xmx1024m
 #Container log directory
 ENV LOG_PATH = "/logs"
 
-
-# Running applications with user privileges helps to mitigate some risks
-#So, an important improvement to the Dockerfile is to run the application as a non-root user:
-RUN addgroup --system javauser && adduser -S -s /bin/false -G javauser javauser
-USER javauser:javauser
-
-# Add a volume pointing to /tmp
-VOLUME /tmp
-
 # Make port 8080 available to the world outside this container
-EXPOSE 8080
+EXPOSE 8900
 
 # The application's jar file
 ARG JAR_FILE=target/*.jar
