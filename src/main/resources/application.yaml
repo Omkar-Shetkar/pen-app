@@ -28,7 +28,7 @@ spring:
     password: password
     initialization-mode: always
 
-light.exam:
+pen.exam:
   schedule.delay-in-ms: 2700000 # 45 Mins - OTP is generated at the most given delay before start of the exam
   otp.expire-in-ms: 3600000 # 60 Mins - OTP Expires after 1 Hr of generation
   initial-delay-in-ms: 180000 # 3 Min
@@ -63,7 +63,7 @@ spring:
           starttls:
             enable: true
 
-light.exam:
+pen.exam:
   schedule.delay-in-ms: 5000 # 5 Secs - OTP is generated at the most given delay before start of the exam
   otp.expire-in-ms: 5000 # 5 Secs - OTP Expires after 1 Hr of generation
   initial-delay-in-ms: 5000 # 5 Secs

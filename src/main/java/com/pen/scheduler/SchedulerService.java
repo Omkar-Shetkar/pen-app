@@ -56,7 +56,7 @@ public class SchedulerService {
     @Autowired
     private MessageSource messageSource;
 
-    @Scheduled(fixedDelayString = "${light.exam.schedule.delay-in-ms}", initialDelayString = "${light.exam.initial-delay-in-ms}")
+    @Scheduled(fixedDelayString = "${pen.exam.schedule.delay-in-ms}", initialDelayString = "${pen.exam.initial-delay-in-ms}")
     public void scheduleOtpGeneration() {
         log.debug("Scheduled OTP generation in progress.");
         // Get all examEvents eligible for OTP generation
@@ -72,7 +72,7 @@ public class SchedulerService {
         }
     }
 
-    @Scheduled(fixedDelayString = "${light.exam.schedule.delay-in-ms}", initialDelayString = "${light.exam.initial-delay-in-ms}")
+    @Scheduled(fixedDelayString = "${pen.exam.schedule.delay-in-ms}", initialDelayString = "${pen.exam.initial-delay-in-ms}")
     public void scheduleExamCompletion() {
         log.debug("Scanning exams to mark them for completion.");
         List<ExamEvent> allStartedExams = examEventService.getAllExamsEligibleForCompletion();

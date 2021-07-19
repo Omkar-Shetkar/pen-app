@@ -22,7 +22,7 @@ public class OtpService {
 
     private LoadingCache<Integer, Integer> otpCache;
 
-    public OtpService(@Value("${light.exam.otp.expire-in-ms}") long expiresInMs) {
+    public OtpService(@Value("${pen.exam.otp.expire-in-ms}") long expiresInMs) {
         otpCache = CacheBuilder.newBuilder()
                 .expireAfterWrite(expiresInMs, TimeUnit.MILLISECONDS)
                 .build(new CacheLoader<Integer, Integer>() {
