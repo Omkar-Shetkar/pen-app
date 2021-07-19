@@ -6,7 +6,7 @@ logging.level:
 
 spring:
   profiles:
-    active: dev
+    active: dev, prod
     banner:
       location: classpath:banner.txt
 ---
