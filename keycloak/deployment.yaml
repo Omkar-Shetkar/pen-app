@@ -35,6 +35,8 @@ spec:
               value: "postgres"
             - name: DB_PORT
               value: "5432"
+            - name: KEYCLOAK_IMPORT
+              value: "/tmp/realm-export.json"
           ports:
             - name: http
               containerPort: 8080
@@ -51,3 +53,10 @@ spec:
             limits:
               memory: "500Mi"
               cpu: "0.5"
+          volumeMounts:
+            - mountPath: /tmp
+              name: keycloak-config
+      volumes:
+        - name: keycloak-config
+          persistentVolumeClaim:
+            claimName: keycloak-pvc
