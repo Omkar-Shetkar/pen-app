@@ -19,10 +19,11 @@ spec:
           image: omkarshetkar/pen-backend:0.0.1
           ports:
             - containerPort: 8900
+          imagePullPolicy: Always
           resources:
             requests:
               memory: "1Gi"
-              cpu: "250m"
+              cpu: "1"
             limits:
               memory: "1Gi"
-              cpu: "500m"
+              cpu: "1"
