@@ -32,7 +32,7 @@ spec:
             - name: DB_PASSWORD
               value: "keycloak"
             - name: DB_ADDR
-              value: "postgres"
+              value: "postgres-service"
             - name: DB_PORT
               value: "5432"
             - name: KEYCLOAK_IMPORT

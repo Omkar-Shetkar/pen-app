@@ -1,0 +1,1 @@
+# Script to delete all resources
