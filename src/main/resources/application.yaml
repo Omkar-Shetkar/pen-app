@@ -10,7 +10,6 @@ spring:
     banner:
       location: classpath:banner.txt
 ---
-
 server.port: 8900
 
 spring:
@@ -21,9 +20,9 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://localhost:8080/auth/realms/light/protocol/openid-connect/certs
+          jwk-set-uri: http://keycloak-service:8080/auth/realms/light/protocol/openid-connect/certs
   datasource:
-    url: jdbc:postgresql://localhost:5432/light
+    url: jdbc:postgresql://postgres-service:5432/light
     username: postgres
     password: password
     initialization-mode: always
@@ -35,7 +34,7 @@ pen.exam:
 
 # Keycloak Configuration
 keycloak:
-  server: http://localhost:8080/auth
+  server: http://keycloak-service:8080/auth
   admin:
     realm: master
     client-id: admin-cli
