@@ -33,12 +33,13 @@ pen.exam:
   initial-delay-in-ms: 180000 # 3 Min
 
 # Keycloak Configuration
+
 keycloak:
   server: http://keycloak-service:8080/auth
   admin:
     realm: master
     client-id: admin-cli
-    client-secret: f399089c-1aea-4673-b93b-05a6e3b21fbd
+    client-secret: 25458eac-37c7-4dd9-bb90-753db60c97a0
 
 ---
 spring:
