@@ -24,7 +24,7 @@ EXPOSE 8900
 ARG JAR_FILE=target/*.jar
 
 # Add the application's jar to the container
-ADD ${JAR_FILE} light.jar
+ADD ${JAR_FILE} pen-backend.jar
 
 # Run the jar file
-ENTRYPOINT ["java","-jar","/light.jar"]
+ENTRYPOINT ["java","-jar","/pen-backend.jar"]
