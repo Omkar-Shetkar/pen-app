@@ -9,6 +9,16 @@ spring:
     active: dev, prod
     banner:
       location: classpath:banner.txt
+  info:
+    app:
+      name: "pen-backend"
+      description: "Spring Boot Pen Backend Project"
+      encoding: "@project.build.sourceEncoding@"
+      version: "@version@"
+      #reading these attributes from pom.xml file
+      java:
+        source: "@java.version@"
+        target: "@java.version@"
 ---
 server.port: 8900
 
@@ -69,3 +79,15 @@ pen.exam:
   initial-delay-in-ms: 5000 # 5 Secs
 
 server.port: 8900
+
+# HEALTH ENDPOINT
+# to details across firewwalls
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  # to show details while localhost is accessed like - http://localhost:8080/actuator.
+  endpoint:
+    health:
+      show-details: always

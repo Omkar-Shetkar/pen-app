@@ -14,6 +14,7 @@
     <name>pen-backend</name>
     <description>Pen backend service</description>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>16</java.version>
         <liquibase.version>4.3.5</liquibase.version>
         <guava.version>30.1-jre</guava.version>
