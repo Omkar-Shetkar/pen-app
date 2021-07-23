@@ -17,6 +17,7 @@ import SubmitButton from "../components/forms/SubmitButton";
 import Screen from "../components/Screen";
 import gender from "../config/gender";
 import userTypeData from "../config/userType";
+import useAuth from "../auth/useAuth";
 import strings from "../config/strings";
 
 const validationSchema = Yup.object().shape({
@@ -43,7 +44,9 @@ const validationSchema = Yup.object().shape({
 function AccountScreen(props) {
   const [error, setError] = useState();
 
-  const { user, setUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+
+  const { logout } = useAuth();
 
   const { data: userDetails, request: loadUserDetails } = useApi(
     userApi.getUserDetails
@@ -130,12 +133,14 @@ function AccountScreen(props) {
             icon="account-outline"
             name="firstName"
             placeholder="First Name"
+            editable={false}
           />
           <AppFormField
             autoCorrect={false}
             icon="account-outline"
             name="lastName"
             placeholder="Last Name"
+            editable={false}
           />
           <AppFormPickerField
             icon="gender-male-female"
@@ -188,11 +193,7 @@ function AccountScreen(props) {
           <SubmitButton title="Update" />
         </AppForm>
         {/* TODO: Logout to be implemented */}
-        <AppButton
-          title="Logout"
-          color="secondary"
-          onPress={() => setUser(null)}
-        />
+        <AppButton title="Logout" color="secondary" onPress={logout} />
       </ScrollView>
     </Screen>
   );

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 
 import Screen from "../components/Screen";
 import AppForm from "../components/forms/AppForm";
-import AppFormField from "../components/forms/AppFormField";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
 import SubmitButton from "../components/forms/SubmitButton";
 import AppFormPickerField from "../components/forms/AppFormPickerField";
@@ -13,8 +12,10 @@ import languagesApi from "../api/languages";
 import examsApi from "../api/exams";
 import scribesApi from "../api/scribes";
 import useApi from "../hooks/useApi";
+import locationApi from "../api/location";
 import strings from "../config/strings";
 import routes from "../navigation/routes";
+import AuthContext from "../auth/context";
 
 const validationSchema = Yup.object().shape({
   examDate: Yup.date()
@@ -43,9 +44,17 @@ const validationSchema = Yup.object().shape({
     })
     .required()
     .label("Exam"),
+  city: Yup.string()
+    .matches(/\b(?!city\b)\w+/, {
+      message: strings.search.cityError,
+    })
+    .required()
+    .label("Exam"),
 });
 
 function ScribeSearchScreen({ navigation }) {
+  const { user, setUser } = useContext(AuthContext);
+
   const [error, setError] = useState();
 
   const onTimeSelection = (event, selectedDate) => {
@@ -84,9 +93,19 @@ function ScribeSearchScreen({ navigation }) {
       }))
     : [];
 
+  const { data: cityData, request: loadCities } = useApi(locationApi.getCities);
+
+  const cities = cityData
+    ? cityData.map(({ id, name }) => ({
+        label: name,
+        value: id.toString(),
+      }))
+    : [];
+
   useEffect(() => {
     loadLanguages();
     loadExams();
+    loadCities();
   }, []);
 
   const handleSubmit = async (searchCriteria, { resetForm }) => {
@@ -101,12 +120,12 @@ function ScribeSearchScreen({ navigation }) {
     navigation.navigate(routes.SCRIBE_SEARCH_RESULTS, {
       data: result.data,
       requestUpdate: {
-        candidateId: 1,
+        candidateId: user.sub,
         startTime: result.config.params.from,
         endTime: result.config.params.to,
         language: searchCriteria.language,
         exam: searchCriteria.exam,
-        address: searchCriteria.address,
+        city: searchCriteria.city,
       },
     });
   };
@@ -121,6 +140,7 @@ function ScribeSearchScreen({ navigation }) {
             durationMinutes: "",
             language: "",
             exam: "",
+            city: "",
           }}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
@@ -180,11 +200,14 @@ function ScribeSearchScreen({ navigation }) {
             }}
           />
 
-          <AppFormField
-            autoCorrect={false}
+          <AppFormPickerField
             icon="map-marker-outline"
-            name="location"
-            placeholder="Exam Location"
+            name="city"
+            items={cities}
+            placeholder={{
+              label: "Exam Location",
+              value: "",
+            }}
           />
           <SubmitButton title="Search" />
         </AppForm>

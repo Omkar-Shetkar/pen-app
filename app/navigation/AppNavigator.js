@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -17,9 +17,11 @@ const Tab = createBottomTabNavigator();
  * @returns
  */
 function AppNavigator(props) {
+  const { user, setUser, isScribe } = useContext(AuthContext);
+
+  console.log("AppNavigator --> isScribe", isScribe);
   return (
     <AuthContext.Consumer>
-      {/* TODO: Use auth context to determine user type */}
       {({ isScribe }) => (
         <Tab.Navigator>
           <Tab.Screen

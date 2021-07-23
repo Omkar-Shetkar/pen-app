@@ -11,13 +11,13 @@ import { navigationRef } from "./app/navigation/rootNavigation";
 
 export default function App() {
   const [user, setUser] = useState();
-  const [isScribe, setIsScribe] = useState(true);
+  const [isScribe, setIsScribe] = useState(false);
 
   // TODO: After backend is up,
   //  application should fetch latest data or prompt user to reload the application.
   return (
     <>
-      <AuthContext.Provider value={{ user, setUser }}>
+      <AuthContext.Provider value={{ user, setUser, isScribe, setIsScribe }}>
         <NavigationContainer ref={navigationRef} theme={navigationTheme}>
           {user ? <AppNavigator /> : <AuthNavigator />}
         </NavigationContainer>

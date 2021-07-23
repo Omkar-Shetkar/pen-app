@@ -31,14 +31,14 @@ const validationSchema = Yup.object().shape({
   languages: Yup.array()
     .label("Languages")
     .when("selectedUserType", {
-      is: "SCRIBE",
+      is: "1",
       then: Yup.array().min(1).required().label("Languages"),
     }),
   // availability: Yup.string().required().label("Availability"),
   city: Yup.string()
     .label("City")
     .when("selectedUserType", {
-      is: "SCRIBE",
+      is: "1",
       then: Yup.string().required().label("City"),
     }),
 });
@@ -113,8 +113,12 @@ function RegisterScreen() {
     // availability,
     city,
   }) => {
+    let selectUserTypeValue = userTypes.find(
+      (u) => u.id === selectedUserType
+    ).value;
+
     const result = await authApi.register({
-      userType: selectedUserType,
+      userType: selectUserTypeValue,
       firstName,
       lastName,
       email,
@@ -125,6 +129,7 @@ function RegisterScreen() {
       // availability,
       city,
     });
+    console.log("result ", result);
     if (result.ok) {
       loginFun({ mobile, password });
     }
@@ -148,17 +153,27 @@ function RegisterScreen() {
         <AppForm
           // initialValues={{
           //   selectedUserType: "",
-          //   firstName: "Vedant",
-          //   lastName: "Shetkar",
-          //   mobile: "1122334455",
-          //   email: "vedant.shetkar@gmail.com",
+          //   firstName: "Omkar",
+          //   lastName: "S",
+          //   mobile: "9844491285",
+          //   email: "omkar.shetkar@gmail.com",
           //   password: "1234",
           //   gender: "MALE",
-          //   languages: languages[1],
-          //   // availability: "weekends",
-          //   city: cities[1],
+          //   languages: [languages[1]],
           // }}
-          initialValues={{}}
+          initialValues={{
+            selectedUserType: "",
+            firstName: "Vedant",
+            lastName: "S",
+            mobile: "1122334455",
+            email: "vedant.shetkar@gmail.com",
+            password: "1234",
+            gender: "MALE",
+            languages: [languages.length > 0 ? languages[1].id : ""],
+            // availability: "weekends",
+            city: cities.length > 0 ? cities[1].value : "",
+          }}
+          // initialValues={{}}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >

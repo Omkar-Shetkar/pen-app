@@ -9,11 +9,12 @@ const find = (searchCriteria, language) => {
   to.setHours(to.getHours() + parseInt(searchCriteria.durationHours));
   to.setMinutes(to.getMinutes() + parseInt(searchCriteria.durationMinutes));
 
-  console.log('Calling scribe FIND api...', from,to,searchCriteria.language);
+  console.log("Calling scribe FIND api...", from, to, searchCriteria.language);
   return apiClient.get(endPoint, {
     from: from.toISOString(),
     to: to.toISOString(),
     language: searchCriteria.language,
+    city: searchCriteria.city,
   });
 };
 

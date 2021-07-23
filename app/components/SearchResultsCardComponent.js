@@ -16,7 +16,7 @@ function SearchResultsCardComponent({
   thumbnailIcon,
 }) {
   return (
-    <TouchableWithoutFeedback>
+    <>
       <View style={styles.card}>
         <View style={styles.icon}>
           <MaterialCommunityIcons
@@ -37,7 +37,7 @@ function SearchResultsCardComponent({
           <ListItemButton title="Request" onPress={() => onPress()} />
         </View>
       </View>
-    </TouchableWithoutFeedback>
+    </>
   );
 }
 const styles = StyleSheet.create({

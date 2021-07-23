@@ -9,9 +9,12 @@ function AppFormOptionField({ name, data, onSelection, ...otherProps }) {
   const { setFieldTouched, handleChange, errors, touched, values } =
     useFormikContext();
 
+  console.log("values ", values);
   const handleUserSelection = (e) => {
-    onSelection(e);
-    values[name] = e.value;
+    if (e) {
+      onSelection(e);
+      values[name] = e.id;
+    }
   };
 
   return (
@@ -21,6 +24,7 @@ function AppFormOptionField({ name, data, onSelection, ...otherProps }) {
         data={data}
         animationTypes={["pulse"]}
         selectedBtn={handleUserSelection}
+        initial={values[name] ? values[name] : -1}
       />
       <AppErrorMessage error={errors[name]} visible={touched[name]} />
     </>

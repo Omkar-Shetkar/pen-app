@@ -32,7 +32,6 @@ function AppDateTimePicker({ icon, width = "100%" }) {
   };
 
   const time = () => {
-    console.log(date.getHours());
     const hours = date.getHours() % 12;
     const minutes = date.getMinutes();
     const format = date.getHours() >= 12 ? "PM" : "AM";
