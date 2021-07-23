@@ -1,0 +1,27 @@
+spring:
+  profiles: test
+  liquibase:
+    enabled: false
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
+  h2:
+    console:
+      enabled: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+pen.exam:
+  schedule.delay-in-ms: 5000 # 5 Secs - OTP is generated at the most given delay before start of the exam
+  otp.expire-in-ms: 5000 # 5 Secs - OTP Expires after 1 Hr of generation
+  initial-delay-in-ms: 5000 # 5 Secs
+
+server.port: 8900

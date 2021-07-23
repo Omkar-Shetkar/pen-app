@@ -13,5 +13,11 @@ public class KeycloakProperties {
 
     private String server;
 
+    private String realm;
+
+    private String clientId;
+
+    private String clientSecret;
+
     private Map<String, String> admin;
 }

@@ -1,8 +1,0 @@
-{
-  "realm": "light",
-  "auth-server-url": "http://keycloak-service:8080/auth",
-  "resource": "backend",
-  "credentials": {
-    "secret": "2eb7969e-d8c5-4fcc-a99f-3cbf2fce708c"
-  }
-}

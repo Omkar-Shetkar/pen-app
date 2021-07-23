@@ -34,7 +34,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Disabled
 // FIXME: Fix unit tests
 class SchedulerServiceTests extends BaseTestSetup {
 
@@ -78,7 +77,6 @@ class SchedulerServiceTests extends BaseTestSetup {
 
     //FIXME: Unit test fix
     @Test
-    @Disabled
     void testNonSchedulingOfOtpGeneration() {
         // Candidate creates a request
         ExamSchedule examSchedule = createExamSchedule(LocalDateTime.now().plusHours(3));

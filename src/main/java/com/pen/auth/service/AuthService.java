@@ -1,6 +1,7 @@
 package com.pen.auth.service;
 
 import com.pen.auth.config.KeyCloakConfig;
+import com.pen.auth.config.KeycloakProperties;
 import com.pen.candidate.service.CandidateService;
 import com.pen.client.auth.UserCredentials;
 import com.pen.client.exam.UserType;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.authorization.client.AuthzClient;
+import org.keycloak.authorization.client.Configuration;
 import org.keycloak.representations.AccessTokenResponse;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import javax.ws.rs.core.Response;
 import java.util.Collections;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -26,16 +29,23 @@ public class AuthService {
     private final ScribeService scribeService;
     private final CandidateService candidateService;
     private final KeyCloakConfig keyCloakConfig;
+    private final KeycloakProperties keycloakProperties;
 
     public AuthService(ScribeService scribeService, CandidateService candidateService,
-                       KeyCloakConfig keyCloakConfig) {
+                       KeyCloakConfig keyCloakConfig, KeycloakProperties keycloakProperties) {
         this.scribeService = scribeService;
         this.candidateService = candidateService;
         this.keyCloakConfig = keyCloakConfig;
+        this.keycloakProperties = keycloakProperties;
     }
 
     public AccessTokenResponse login(UserCredentials credentials) {
-        AuthzClient authzClient = AuthzClient.create();
+        Configuration configuration = new Configuration(keycloakProperties.getServer(),
+                keycloakProperties.getRealm(), keycloakProperties.getClientId(),
+                Map.ofEntries(Map.entry("secret", keycloakProperties.getClientSecret())),
+                null
+        );
+        AuthzClient authzClient = AuthzClient.create(configuration);
         AccessTokenResponse response = authzClient.obtainAccessToken(credentials.getUsername(),
                 credentials.getPassword());
         return response;
@@ -43,7 +53,7 @@ public class AuthService {
 
     public String addUser(UserResource userResource) {
         Keycloak keycloak = keyCloakConfig.getKeycloak();
-        UsersResource usersResource = keycloak.realm("light").users();
+        UsersResource usersResource = keycloak.realm(keycloakProperties.getRealm()).users();
         CredentialRepresentation credentialRepresentation =
                 createPasswordCredentials(userResource.getCredentials().getPassword());
 
