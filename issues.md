@@ -1,3 +1,5 @@
+- Loading icon for registration screen
+
 - If frontend screen is launched when server is down, after server is back, frontend not able to show latest data from server
 
 - Image for Welcome Screen
