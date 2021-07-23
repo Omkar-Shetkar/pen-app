@@ -643,7 +643,7 @@
         "web-origins",
         "roles",
         "profile",
-        "light:read-write",
+        "pen:read-write",
         "email"
       ],
       "optionalClientScopes": [
@@ -986,7 +986,7 @@
     },
     {
       "id": "e4e4ee25-ae63-44a5-94a8-594ddf72b5e8",
-      "name": "light:read-write",
+      "name": "pen:read-write",
       "protocol": "openid-connect",
       "attributes": {
         "include.in.token.scope": "true",
