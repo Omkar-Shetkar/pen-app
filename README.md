@@ -7,7 +7,7 @@ Infrastructure code for Pen app
 - Create db and users for postgres and keycloak
 
 ```
-create database light;
+create database pen;
 create database keycloak;
 create user keycloak PASSWORD 'keycloak';
 
