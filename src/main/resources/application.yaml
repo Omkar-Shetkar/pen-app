@@ -39,6 +39,5 @@ management:
   endpoint:
     health:
       show-details: always
-      group:
       readiness:
         include: "readinessState,customCheck"
