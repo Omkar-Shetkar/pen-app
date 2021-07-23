@@ -9,13 +9,13 @@ spring:
     active: prod
     banner:
       location: classpath:banner.txt
+
   info:
     app:
       name: "pen-backend"
-      description: "Spring Boot Pen Backend Project"
+      description: "Pen backend using Spring boot"
       encoding: "@project.build.sourceEncoding@"
       version: "@version@"
-      #reading these attributes from pom.xml file
       java:
         source: "@java.version@"
         target: "@java.version@"
@@ -39,3 +39,6 @@ management:
   endpoint:
     health:
       show-details: always
+      group:
+      readiness:
+        include: "readinessState,customCheck"

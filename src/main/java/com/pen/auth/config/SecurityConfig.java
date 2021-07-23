@@ -1,6 +1,9 @@
 package com.pen.auth.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
+import org.springframework.boot.actuate.context.ShutdownEndpoint;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
     private String jwkSetUri;
 
-    private static final String[] PERMIT_ALL = {"/rest/auth/**", "/rest/languages", "/rest/location/cities"};
+    private static final String[] PERMIT_ALL = {"/rest/auth/**", "/rest/languages", "/rest/location/cities","/"};
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -25,9 +28,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
                                 .antMatchers(PERMIT_ALL).permitAll()
+                                .antMatchers("/actuator/**").permitAll()
                                 .antMatchers("/rest/**")
                                 .hasAuthority("SCOPE_pen:read-write")
                                 .anyRequest().authenticated()
+
                 )
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .csrf().disable();
