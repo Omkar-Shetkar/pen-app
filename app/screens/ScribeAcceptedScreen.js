@@ -10,7 +10,7 @@ import requestsApi from "../api/requests";
 import gender from "../config/gender";
 import useAuth from "../auth/useAuth";
 
-function ScribeAcceptedScreen(props) {
+function ScribeAcceptedScreen({ navigation }) {
   const { user } = useAuth();
 
   const {
@@ -21,8 +21,13 @@ function ScribeAcceptedScreen(props) {
   } = useApi(requestsApi.findRequests);
 
   useEffect(() => {
-    callLoadListings();
-  }, []);
+    const tabPress = navigation.addListener("tabPress", (e) => {
+      callLoadListings();
+    });
+    const focus = navigation.addListener("focus", (e) => {
+      callLoadListings();
+    });
+  }, [navigation]);
 
   const callLoadListings = () => {
     loadListings({

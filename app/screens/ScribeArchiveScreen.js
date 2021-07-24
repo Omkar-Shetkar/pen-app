@@ -9,7 +9,7 @@ import examStatus from "../config/examStatus";
 import gender from "../config/gender";
 import useAuth from "../auth/useAuth";
 
-function ScribeArchiveScreen(props) {
+function ScribeArchiveScreen({ navigation }) {
   const { user } = useAuth();
   const {
     data: listing,
@@ -19,8 +19,13 @@ function ScribeArchiveScreen(props) {
   } = useApi(examEventsApi.findExamEvents);
 
   useEffect(() => {
-    callLoadListings();
-  }, []);
+    const tabPress = navigation.addListener("tabPress", (e) => {
+      callLoadListings();
+    });
+    const focus = navigation.addListener("focus", (e) => {
+      callLoadListings();
+    });
+  }, [navigation]);
 
   const icons = {
     subTitle: "pencil-outline",

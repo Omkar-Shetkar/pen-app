@@ -10,7 +10,7 @@ import requestsApi from "../api/requests";
 import gender from "../config/gender";
 import useAuth from "../auth/useAuth";
 
-function ScribeReceivedScreen(props) {
+function ScribeReceivedScreen({ navigation }) {
   const { user } = useAuth();
   const {
     data: listing,
@@ -20,8 +20,13 @@ function ScribeReceivedScreen(props) {
   } = useApi(requestsApi.findRequests);
 
   useEffect(() => {
-    callLoadListings();
-  }, []);
+    const tabPress = navigation.addListener("tabPress", (e) => {
+      callLoadListings();
+    });
+    const focus = navigation.addListener("focus", (e) => {
+      callLoadListings();
+    });
+  }, [navigation]);
 
   const callLoadListings = () => {
     loadListings({
@@ -55,6 +60,7 @@ function ScribeReceivedScreen(props) {
       {
         name: "accept",
         action: async () => {
+          console.log("action for ACCEPT called...");
           const result = await requestsApi.updateRequest(item.id, {
             requestStatus: requestStatus.ACCEPTED,
           });
@@ -101,7 +107,10 @@ function ScribeReceivedScreen(props) {
                 ? "face"
                 : "face-woman"
             }
-            onPress={() => handleOnPress(item)}
+            onPress={() => {
+              console.log("on press called...");
+              handleOnPress(item);
+            }}
           ></RequestCardComponent>
         )}
       ></FlatList>

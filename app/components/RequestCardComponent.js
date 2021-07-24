@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -17,7 +17,7 @@ function RequestCardComponent({
   thumbnailIcon,
 }) {
   return (
-    <TouchableWithoutFeedback>
+    <Pressable>
       <View style={styles.card}>
         <View style={styles.icon}>
           <MaterialCommunityIcons
@@ -68,7 +68,7 @@ function RequestCardComponent({
             ))}
         </View>
       </View>
-    </TouchableWithoutFeedback>
+    </Pressable>
   );
 }
 const styles = StyleSheet.create({

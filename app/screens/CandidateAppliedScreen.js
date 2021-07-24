@@ -10,7 +10,7 @@ import gender from "../config/gender";
 import requestStatus from "../config/requestStatus";
 import useAuth from "../auth/useAuth";
 
-function CandidateAppliedScreen(props) {
+function CandidateAppliedScreen({ navigation }) {
   const { user } = useAuth();
 
   const {
@@ -21,8 +21,13 @@ function CandidateAppliedScreen(props) {
   } = useApi(requestsApi.findRequests);
 
   useEffect(() => {
-    callLoadListings();
-  }, []);
+    const tabPress = navigation.addListener("tabPress", (e) => {
+      callLoadListings();
+    });
+    const focus = navigation.addListener("focus", (e) => {
+      callLoadListings();
+    });
+  }, [navigation]);
 
   const icons = {
     subTitle: "pencil-outline",
