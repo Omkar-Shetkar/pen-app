@@ -60,13 +60,6 @@ function RegisterScreen() {
     { label: "Others", value: gender.OTHER },
   ];
 
-  // const availabilities = [
-  //   { label: "Weekends", value: "weekends" },
-  //   { label: "Weekdays", value: "weekdays" },
-  //   { label: "Any Day", value: "any day" },
-  //   { label: "Not Available", value: "not available" },
-  // ];
-
   const { data: languages, request: loadLanguages } = useApi(
     languagesApi.getLanguages
   );
@@ -110,7 +103,6 @@ function RegisterScreen() {
     password,
     gender,
     languages,
-    // availability,
     city,
   }) => {
     let selectUserTypeValue = userTypes.find(
@@ -126,7 +118,6 @@ function RegisterScreen() {
       mobile,
       gender,
       languages,
-      // availability,
       city,
     });
     console.log("result ", result);
@@ -151,28 +142,28 @@ function RegisterScreen() {
       <ScrollView>
         {/* TODO: To be removed */}
         <AppForm
-          // initialValues={{
-          //   selectedUserType: "",
-          //   firstName: "Omkar",
-          //   lastName: "S",
-          //   mobile: "9844491285",
-          //   email: "omkar.shetkar@gmail.com",
-          //   password: "1234",
-          //   gender: "MALE",
-          //   languages: [languages[1]],
-          // }}
           initialValues={{
             selectedUserType: "",
-            firstName: "Vedant",
+            firstName: "Omkar",
             lastName: "S",
-            mobile: "1122334455",
-            email: "vedant.shetkar@gmail.com",
+            mobile: "9844491285",
+            email: "omkar.shetkar@gmail.com",
             password: "1234",
             gender: "MALE",
-            languages: [languages.length > 0 ? languages[1].id : ""],
-            // availability: "weekends",
-            city: cities.length > 0 ? cities[1].value : "",
+            // languages: [languages[1]],
           }}
+          // initialValues={{
+          //   selectedUserType: "",
+          //   firstName: "Vedant",
+          //   lastName: "S",
+          //   mobile: "1122334455",
+          //   email: "vedant.shetkar@gmail.com",
+          //   password: "1234",
+          //   gender: "MALE",
+          //   languages: [languages.length > 0 ? languages[1].id : ""],
+          //   // availability: "weekends",
+          //   city: cities.length > 0 ? cities[1].value : "",
+          // }}
           // initialValues={{}}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
@@ -253,15 +244,6 @@ function RegisterScreen() {
                   value: "",
                 }}
               />
-              {/* <AppFormPickerField
-                icon="calendar-check-outline"
-                name="availability"
-                items={availabilities}
-                placeholder={{
-                  label: "Availability",
-                  value: "",
-                }}
-              /> */}
             </>
           )}
 
