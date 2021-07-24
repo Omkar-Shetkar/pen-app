@@ -28,17 +28,16 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().optional().email().label("Email"),
   gender: Yup.string().required().label("Gender"),
   //TODO Fix the validation for languages and city
-  // languages: Yup.array().when("userType", {
-  //   is: (val) => val === "SCRIBE",
-  //   then: Yup.array().min(1).required().label("Languages"),
-  //   otherwise: Yup.array().notRequired(),
-  // }),
-  // // availability: Yup.string().required().label("Availability"),
-  // city: Yup.string().when("userType", {
-  //   is: (val) => val === "SCRIBE",
-  //   then: Yup.string().required().label("City"),
-  //   otherwise: Yup.string().notRequired(),
-  // }),
+  languages: Yup.array().when("userType", {
+    is: (val) => val === "SCRIBE",
+    then: Yup.array().min(1).required().label("Languages"),
+    otherwise: Yup.array().notRequired(),
+  }),
+  city: Yup.string().when("userType", {
+    is: (val) => val === "SCRIBE",
+    then: Yup.string().required().label("City"),
+    otherwise: Yup.string().notRequired(),
+  }),
 });
 
 function AccountScreen(props) {

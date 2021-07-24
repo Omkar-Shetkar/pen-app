@@ -20,11 +20,17 @@ import useAuth from "../auth/useAuth";
 import strings from "../config/strings";
 import AppFormOptionField from "../components/forms/AppFormOptionField";
 
+const mobileRegExp =
+  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
+
 const validationSchema = Yup.object().shape({
   selectedUserType: Yup.string().required().label("User Type"),
   firstName: Yup.string().required().label("First Name"),
   lastName: Yup.string().required().label("Last Name"),
-  mobile: Yup.number().required().label("Mobile"),
+  mobile: Yup.string()
+    .required()
+    .matches(mobileRegExp, "Mobile number not valid")
+    .label("Mobile"),
   email: Yup.string().optional().email().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
   gender: Yup.string().required().label("Gender"),
@@ -33,13 +39,14 @@ const validationSchema = Yup.object().shape({
     .when("selectedUserType", {
       is: "1",
       then: Yup.array().min(1).required().label("Languages"),
+      otherwise: Yup.array().notRequired(),
     }),
-  // availability: Yup.string().required().label("Availability"),
   city: Yup.string()
     .label("City")
     .when("selectedUserType", {
       is: "1",
       then: Yup.string().required().label("City"),
+      otherwise: Yup.string().notRequired(),
     }),
 });
 
@@ -142,16 +149,16 @@ function RegisterScreen() {
       <ScrollView>
         {/* TODO: To be removed */}
         <AppForm
-          initialValues={{
-            selectedUserType: "",
-            firstName: "Omkar",
-            lastName: "S",
-            mobile: "9844491285",
-            email: "omkar.shetkar@gmail.com",
-            password: "1234",
-            gender: "MALE",
-            // languages: [languages[1]],
-          }}
+          // initialValues={{
+          //   selectedUserType: "",
+          //   firstName: "Omkar",
+          //   lastName: "S",
+          //   mobile: "9844491285",
+          //   email: "omkar.shetkar@gmail.com",
+          //   password: "1234",
+          //   gender: "MALE",
+          //   // languages: [languages[1]],
+          // }}
           // initialValues={{
           //   selectedUserType: "",
           //   firstName: "Vedant",
@@ -164,7 +171,7 @@ function RegisterScreen() {
           //   // availability: "weekends",
           //   city: cities.length > 0 ? cities[1].value : "",
           // }}
-          // initialValues={{}}
+          initialValues={{}}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
