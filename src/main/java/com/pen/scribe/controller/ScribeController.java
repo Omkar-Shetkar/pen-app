@@ -4,7 +4,6 @@ import com.pen.client.scribe.ScribeSearchFilter;
 import com.pen.client.scribe.ScribeUpdate;
 import com.pen.scribe.domain.Scribe;
 import com.pen.scribe.service.ScribeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,8 +21,12 @@ public class ScribeController {
     public static final String ALL = "/rest/scribes/";
     public static final String UPDATE = ALL + "{id}/";
 
-    @Autowired
-    private ScribeService scribeService;
+    private final ScribeService scribeService;
+
+    ScribeController(ScribeService scribeService){
+        this.scribeService = scribeService;
+    }
+
 
     //TODO: Creation of Scribe to be handled
     @PostMapping
@@ -34,7 +37,7 @@ public class ScribeController {
     /**
      * @param id           Scribe id
      * @param scribeUpdate
-     * @return
+     * @return Scribe
      */
     @PutMapping("{id}/")
     public ResponseEntity<Scribe> updateScribe(@PathVariable String id, @Validated @RequestBody ScribeUpdate scribeUpdate) {
@@ -50,7 +53,7 @@ public class ScribeController {
      * Find by exam schedule, language, and venue location
      *
      * @param searchFilter
-     * @return
+     * @return Set of Scribe
      */
     @GetMapping
     public ResponseEntity<Set<Scribe>> find(@Validated ScribeSearchFilter searchFilter) {

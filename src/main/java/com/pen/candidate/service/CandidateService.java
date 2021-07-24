@@ -3,18 +3,20 @@ package com.pen.candidate.service;
 import com.pen.candidate.domain.Candidate;
 import com.pen.candidate.repository.CandidateRepository;
 import com.pen.client.register.UserResource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CandidateService {
 
-    @Autowired
-    private CandidateRepository candidateRepository;
+    private final CandidateRepository candidateRepository;
+
+    public CandidateService(CandidateRepository candidateRepository){
+        this.candidateRepository = candidateRepository;
+    }
 
     /**
      * @param candidateId
-     * @return
+     * @return candidate
      * @throws IllegalArgumentException - For invalid candidate id
      */
     public Candidate findById(String candidateId) {

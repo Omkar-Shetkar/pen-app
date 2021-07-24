@@ -14,8 +14,11 @@ public class LocationController {
 
     public final static String CITIES = "/rest/location/cities";
 
-    @Autowired
-    private LocationService locationService;
+    final private LocationService locationService;
+
+    LocationController(LocationService locationService){
+        this.locationService = locationService;
+    }
 
     @GetMapping("/cities")
     public ResponseEntity<Iterable<City>> getCities() {

@@ -23,8 +23,12 @@ public class RequestController {
 
     public static final String SINGLE = "/rest/requests/{id}";
 
-    @Autowired
-    private RequestService requestService;
+    final private RequestService requestService;
+
+    RequestController(RequestService requestService){
+        this.requestService  = requestService;
+    }
+
 
     @PostMapping
     public ResponseEntity<Request> create(@Validated @RequestBody RequestCreationModel requestCreationModel) {

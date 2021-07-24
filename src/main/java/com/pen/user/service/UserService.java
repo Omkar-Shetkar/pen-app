@@ -13,8 +13,8 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private ScribeRepository scribeRepository;
-    private CandidateRepository candidateRepository;
+    private final ScribeRepository scribeRepository;
+    private final CandidateRepository candidateRepository;
 
     public UserService(ScribeRepository scribeRepository, CandidateRepository candidateRepository) {
         this.scribeRepository = scribeRepository;
@@ -22,9 +22,9 @@ public class UserService {
     }
 
     public UserResource getUser(String userId) {
-        Optional<UserResource> userResource = scribeRepository.findById(userId).map(s -> s.asUserResource());
+        Optional<UserResource> userResource = scribeRepository.findById(userId).map(Scribe::asUserResource);
         if (userResource.isEmpty()) {
-            userResource = candidateRepository.findById(userId).map(c -> c.asUserResource());
+            userResource = candidateRepository.findById(userId).map(Candidate::asUserResource);
         }
         return userResource
                 .orElseThrow(() -> new IllegalArgumentException(String.format("User %s not found!", userId)));

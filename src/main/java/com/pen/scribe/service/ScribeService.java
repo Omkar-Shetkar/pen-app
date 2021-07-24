@@ -16,8 +16,11 @@ import java.util.stream.Collectors;
 @Service
 public class ScribeService {
 
-    @Autowired
-    private ScribeRepository scribeRepository;
+    private final ScribeRepository scribeRepository;
+
+    ScribeService(ScribeRepository scribeRepository){
+        this.scribeRepository = scribeRepository;
+    }
 
     public final Scribe updateScribeAvailability(String scribeId, ScribeUpdate scribeUpdate) {
 
@@ -28,8 +31,8 @@ public class ScribeService {
     }
 
     /**
-     * @param scribeId
-     * @return
+     * @param scribe
+     * @return Scribe
      * @throws IllegalArgumentException - For invalid scribe id
      */
     public Scribe findById(String scribeId) {
@@ -48,7 +51,7 @@ public class ScribeService {
 
     public Scribe create(String userId, UserResource user) {
         Set<ScribeLanguage> scribeLanguages = user.getLanguages().stream()
-                .map(l -> new ScribeLanguage(l))
+                .map(ScribeLanguage::new)
                 .collect(Collectors.toSet());
         Scribe scribe = new Scribe(userId, user.getFirstName(), user.getLastName(), user.getGender(), scribeLanguages, user.getCity(),
                 user.getLocation(), Availability.ANY_DAY, user.getMobile(), user.getEmail());

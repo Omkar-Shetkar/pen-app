@@ -5,7 +5,6 @@ import com.pen.client.auth.UserCredentials;
 import com.pen.client.register.UserResource;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.representations.AccessTokenResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +18,11 @@ import org.springframework.web.server.ResponseStatusException;
 @Slf4j
 public class AuthController {
 
-    @Autowired
-    private AuthService authService;
+    final private AuthService authService;
+
+    AuthController (AuthService authService){
+        this.authService = authService;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<AccessTokenResponse> login(@RequestBody UserCredentials credentials) {

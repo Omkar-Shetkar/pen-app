@@ -15,7 +15,6 @@ import com.pen.request.service.RequestService;
 import com.pen.scribe.domain.Scribe;
 import com.pen.scribe.service.ScribeService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -31,30 +30,27 @@ import static com.pen.request.domain.RequestStatus.ACCEPTED;
 public class SchedulerService {
 
     public static final int SCHEDULED_IN_NEXT_HOURS = 1;
+    final private ExamEventService examEventService;
+    final private ExamScheduleService examScheduleService;
+    final private CandidateService candidateService;
+    final private ScribeService scribeService;
+    final private RequestService requestService;
+    final private OtpService otpService;
+    final private EmailService emailService;
+    final private MessageSource messageSource;
 
-    @Autowired
-    private ExamEventService examEventService;
 
-    @Autowired
-    private ExamScheduleService examScheduleService;
+    SchedulerService(ExamEventService examEventService,ExamScheduleService examScheduleService, CandidateService candidateService,ScribeService scribeService, RequestService requestService, OtpService otpService, EmailService emailService, MessageSource messageSource){
+        this.examEventService = examEventService;
+        this.examScheduleService = examScheduleService;
+        this.candidateService = candidateService;
+        this.scribeService = scribeService;
+        this.requestService = requestService;
+        this.otpService = otpService;
+        this.emailService = emailService;
+        this.messageSource = messageSource;
+    }
 
-    @Autowired
-    private CandidateService candidateService;
-
-    @Autowired
-    private ScribeService scribeService;
-
-    @Autowired
-    private RequestService requestService;
-
-    @Autowired
-    private OtpService otpService;
-
-    @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    private MessageSource messageSource;
 
     @Scheduled(fixedDelayString = "${pen.exam.schedule.delay-in-ms}", initialDelayString = "${pen.exam.initial-delay-in-ms}")
     public void scheduleOtpGeneration() {
@@ -87,9 +83,9 @@ public class SchedulerService {
         Scribe scribe = scribeService.findById(otpRequest.getScribeId());
         Candidate candidate = candidateService.findById(otpRequest.getCandidateId());
         Locale locale = LocaleContextHolder.getLocale();
-        String message = messageSource.getMessage("otp-notification",
-                new String[]{scribe.getFirstName(), String.valueOf(otp),
-                        candidate.getFirstName() + " " + candidate.getLastName()}, locale);
+//        String message = messageSource.getMessage("otp-notification",
+//                new String[]{scribe.getFirstName(), String.valueOf(otp),
+//                        candidate.getFirstName() + " " + candidate.getLastName()}, locale);
         //FIXME: To be uncommented later to send mail.
 //        emailService.send(scribe.getEmail(), "OTP for Scribe", message);
         event.setOtpGenerated(true);

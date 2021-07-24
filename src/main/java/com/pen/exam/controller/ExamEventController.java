@@ -7,6 +7,7 @@ import com.pen.exam.domain.ExamEvent;
 import com.pen.exam.domain.ExamStatus;
 import com.pen.exam.service.ExamEventService;
 import com.pen.client.request.ExamEventResource;
+import com.pen.otp.service.OtpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +29,13 @@ public class ExamEventController {
 
     public static final String FEEDBACK = "/rest/exams/events/{id}/feedback";
 
-    @Autowired
     private ExamEventService examEventService;
-
-    @Autowired
     private com.pen.otp.service.OtpService otpService;
+
+    ExamEventController(ExamEventService examEventService, OtpService otpService){
+        this.examEventService = examEventService;
+        this.otpService = otpService;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ExamEvent> get(@PathVariable long id) {

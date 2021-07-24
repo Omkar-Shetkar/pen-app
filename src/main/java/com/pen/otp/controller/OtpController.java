@@ -21,8 +21,11 @@ public class OtpController {
     public static final String SUCCESS = "SUCCESS";
     public static final String FAILED = "FAILED";
 
-    @Autowired
-    private OtpService otpService;
+    final private OtpService otpService;
+
+    OtpController (OtpService otpService){
+        this.otpService = otpService;
+    }
 
     @PostMapping
     public ResponseEntity<Integer> create(@Validated @RequestBody OtpRequest otpRequest) {
