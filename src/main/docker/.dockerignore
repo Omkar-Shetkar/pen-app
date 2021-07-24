@@ -1,5 +1,0 @@
-.dockerignore
-**/*.log
-Dockerfile
-.git
-.gitignore
