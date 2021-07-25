@@ -9,8 +9,9 @@ const createRequest = (requestUpdate) => {
   data.append("startTime", requestUpdate.startTime);
   data.append("endTime", requestUpdate.endTime);
   data.append("language", requestUpdate.language);
-  data.append("city", requestUpdate.city);
   data.append("exam", requestUpdate.exam);
+  data.append("address", requestUpdate.address);
+  data.append("city", requestUpdate.city);
 
   console.log("Create Request API called...", requestUpdate);
   return apiClient.post(endPoint, requestUpdate);

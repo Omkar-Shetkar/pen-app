@@ -59,17 +59,17 @@ function ScribeAcceptedScreen({ navigation }) {
     examDate: "calendar",
     duration: "av-timer",
     language: "alpha",
-    venue: "map-marker-outline",
+    address: "map-marker-outline",
   };
 
-  const examDetails = ({ start, end, language, venue }) => {
+  const examDetails = ({ start, end, language, address }) => {
     start = moment(start).format("MMMM Do, h:mm A");
     end = moment(end).format("MMMM Do, h:mm A");
     return {
       start,
       end,
       language,
-      venue,
+      address,
     };
   };
 

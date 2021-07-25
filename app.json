@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "light",
-    "slug": "light",
+    "name": "pen",
+    "slug": "pen",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",

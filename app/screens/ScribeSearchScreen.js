@@ -4,6 +4,7 @@ import * as Yup from "yup";
 
 import Screen from "../components/Screen";
 import AppForm from "../components/forms/AppForm";
+import AppFormField from "../components/forms/AppFormField";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
 import SubmitButton from "../components/forms/SubmitButton";
 import AppFormPickerField from "../components/forms/AppFormPickerField";
@@ -44,12 +45,13 @@ const validationSchema = Yup.object().shape({
     })
     .required()
     .label("Exam"),
+  address: Yup.string().required().max(100),
   city: Yup.string()
     .matches(/\b(?!city\b)\w+/, {
       message: strings.search.cityError,
     })
     .required()
-    .label("Exam"),
+    .label("City"),
 });
 
 function ScribeSearchScreen({ navigation }) {
@@ -125,6 +127,7 @@ function ScribeSearchScreen({ navigation }) {
         endTime: result.config.params.to,
         language: searchCriteria.language,
         exam: searchCriteria.exam,
+        address: searchCriteria.address,
         city: searchCriteria.city,
       },
     });
@@ -140,6 +143,7 @@ function ScribeSearchScreen({ navigation }) {
             durationMinutes: "",
             language: "",
             exam: "",
+            address: "",
             city: "",
           }}
           onSubmit={handleSubmit}
@@ -199,13 +203,18 @@ function ScribeSearchScreen({ navigation }) {
               value: "exam",
             }}
           />
-
+          <AppFormField
+            autoCorrect={false}
+            icon="map-marker-outline"
+            name="address"
+            placeholder="Address"
+          />
           <AppFormPickerField
             icon="map-marker-outline"
             name="city"
             items={cities}
             placeholder={{
-              label: "Exam Location",
+              label: "City",
               value: "",
             }}
           />
