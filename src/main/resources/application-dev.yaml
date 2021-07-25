@@ -18,8 +18,8 @@ keycloak:
   server: http://localhost:8080/auth
   realm: pen-dev
   client-id: backend
-  client-secret: 42b1298d-5cbf-4cdb-b21a-debf30439730
+  client-secret: 2eb7969e-d8c5-4fcc-a99f-3cbf2fce708c
   admin:
     realm: master
     client-id: admin-cli
-    client-secret: 699aa6d5-72c0-44ce-9b3b-d8bf57304f69
+    client-secret: f399089c-1aea-4673-b93b-05a6e3b21fbd
