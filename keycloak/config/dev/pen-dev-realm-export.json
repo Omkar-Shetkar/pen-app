@@ -4,8 +4,8 @@
   "notBefore": 0,
   "revokeRefreshToken": false,
   "refreshTokenMaxReuse": 0,
-  "accessTokenLifespan": 300,
-  "accessTokenLifespanForImplicitFlow": 900,
+  "accessTokenLifespan": 691200,
+  "accessTokenLifespanForImplicitFlow": 691200,
   "ssoSessionIdleTimeout": 1800,
   "ssoSessionMaxLifespan": 36000,
   "ssoSessionIdleTimeoutRememberMe": 0,
@@ -852,15 +852,6 @@
       ]
     },
     {
-      "id": "e4e4ee25-ae63-44a5-94a8-594ddf72b5e8",
-      "name": "pen:read-write",
-      "protocol": "openid-connect",
-      "attributes": {
-        "include.in.token.scope": "true",
-        "display.on.consent.screen": "true"
-      }
-    },
-    {
       "id": "aa35bd76-00dd-474e-a932-2c75fb1595bd",
       "name": "microprofile-jwt",
       "description": "Microprofile - JWT built-in scope",
@@ -909,6 +900,15 @@
       "protocol": "openid-connect",
       "attributes": {
         "consent.screen.text": "${offlineAccessScopeConsentText}",
+        "display.on.consent.screen": "true"
+      }
+    },
+    {
+      "id": "e4e4ee25-ae63-44a5-94a8-594ddf72b5e8",
+      "name": "pen:read-write",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
         "display.on.consent.screen": "true"
       }
     },
