@@ -60,12 +60,15 @@ public interface ExamEventRepository extends CrudRepository<ExamEvent, Long> {
     @Query("""
             SELECT * FROM exam_event e
             WHERE
-            e.exam_status = 'STARTED' AND
+            (e.exam_status = 'STARTED'
+            -- TODO: To be removed once OTP service is integrated
+            OR e.exam_status = 'NOT_STARTED')
+             AND
             e.exam_schedule IN
             (
                 SELECT id FROM exam_schedule es
                 WHERE
-                es.end_time > now()::timestamp
+                es.end_time < now()::timestamp
                         
             )
             """)

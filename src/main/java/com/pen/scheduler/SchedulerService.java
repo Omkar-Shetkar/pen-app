@@ -68,6 +68,10 @@ public class SchedulerService {
         }
     }
 
+    /**
+     * Scans the exams to mark them as completed.
+     * Also, deletes corresponding requests which are expired and not ACCEPTED.
+     */
     @Scheduled(fixedDelayString = "${pen.exam.schedule.delay-in-ms}", initialDelayString = "${pen.exam.initial-delay-in-ms}")
     public void scheduleExamCompletion() {
         log.debug("Scanning exams to mark them for completion.");
