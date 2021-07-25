@@ -75,6 +75,7 @@ public class AuthService {
             } else {
                 candidateService.create(userId, userResource);
             }
+            log.info("Created user with id {}", userId);
             return userId;
         } else if (response.getStatus() == HttpStatus.CONFLICT.value()) {
             throw new IllegalArgumentException(String.format("Account already exists for mobile %s",

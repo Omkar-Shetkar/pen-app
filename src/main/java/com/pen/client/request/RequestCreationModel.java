@@ -28,8 +28,12 @@ public class RequestCreationModel {
     private Long language;
 
     @NonNull
-    private Long address;
+    private Long exam;
 
     @NonNull
-    private Long exam;
+    private String address;
+
+    @NonNull
+    private Long city;
+
 }

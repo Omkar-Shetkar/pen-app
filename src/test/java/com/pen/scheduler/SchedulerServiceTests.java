@@ -2,15 +2,14 @@ package com.pen.scheduler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pen.BaseTestSetup;
+import com.pen.client.request.RequestCreationModel;
+import com.pen.client.request.RequestUpdateModel;
 import com.pen.exam.domain.ExamEvent;
 import com.pen.exam.domain.ExamSchedule;
 import com.pen.exam.service.ExamEventService;
-import com.pen.client.request.RequestCreationModel;
-import com.pen.client.request.RequestUpdateModel;
 import com.pen.request.domain.Request;
 import org.awaitility.Awaitility;
 import org.awaitility.Durations;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +40,8 @@ class SchedulerServiceTests extends BaseTestSetup {
     public static final String SCRIBE_ID = "1";
     public static final long EXAM_ID = 101;
     public static final long LANGUAGE_ID = 1L;
-    public static final long ADDRESS_ID = 1L;
+    public static final String ADDRESS = "venue-1";
+    public static final long CITY_ID = 1L;
 
     @SpyBean
     private SchedulerService schedulerService;
@@ -104,15 +104,16 @@ class SchedulerServiceTests extends BaseTestSetup {
         examSchedule.setStartTime(new Date(startTime.toEpochMilli()));
         examSchedule.setEndTime(new Date(endTime.toEpochMilli()));
         examSchedule.setLanguage(LANGUAGE_ID);
-        examSchedule.setAddress(ADDRESS_ID);
         examSchedule.setExam(EXAM_ID);
+        examSchedule.setAddress(ADDRESS);
+        examSchedule.setCity(CITY_ID);
 
         return examSchedule;
     }
 
     private RequestCreationModel createRequestUpdate(String scribeId, ExamSchedule examSchedule) {
         return new RequestCreationModel(scribeId, CANDIDATE_ID, examSchedule.getStartTime(), examSchedule.getEndTime(),
-                examSchedule.getLanguage(), examSchedule.getAddress(), examSchedule.getExam());
+                examSchedule.getLanguage(), examSchedule.getExam(), examSchedule.getAddress(), examSchedule.getCity());
     }
 
     private Request candidateCreatesRequestAndScribeAcceptsIt(String scribeId, ExamSchedule examSchedule) {

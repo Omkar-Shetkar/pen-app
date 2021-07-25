@@ -3,11 +3,11 @@ package com.pen.request.service;
 import com.pen.candidate.domain.Candidate;
 import com.pen.candidate.service.CandidateService;
 import com.pen.client.exam.ExamEventUpdate;
-import com.pen.exam.domain.ExamSchedule;
-import com.pen.exam.service.ExamEventService;
 import com.pen.client.request.RequestCreationModel;
 import com.pen.client.request.RequestResource;
 import com.pen.client.request.RequestSearchFilter;
+import com.pen.exam.domain.ExamSchedule;
+import com.pen.exam.service.ExamEventService;
 import com.pen.request.domain.Request;
 import com.pen.request.domain.RequestStatus;
 import com.pen.request.repository.ExamScheduleRepository;
@@ -58,7 +58,8 @@ public class RequestService {
                         {
                             ExamSchedule newSchedule = new ExamSchedule(requestCreationModel.getStartTime(),
                                     requestCreationModel.getEndTime(), requestCreationModel.getLanguage(),
-                                    requestCreationModel.getAddress(), requestCreationModel.getExam());
+                                    requestCreationModel.getExam(), requestCreationModel.getAddress(),
+                                    requestCreationModel.getCity());
                             return examScheduleRepository.save(newSchedule);
                         }
                 );

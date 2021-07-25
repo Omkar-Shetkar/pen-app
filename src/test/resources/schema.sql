@@ -87,10 +87,11 @@ create TABLE IF NOT EXISTS exam_schedule (
     end_time TIMESTAMP,
     exam INTEGER,
     language INTEGER,
-    address INTEGER,
+    address VARCHAR(512),
+    city INTEGER,
     FOREIGN KEY (exam) REFERENCES exam(id),
     FOREIGN KEY (language) REFERENCES language(id),
-    FOREIGN KEY (address) REFERENCES address(id),
+    FOREIGN KEY (city) REFERENCES city(id),
     UNIQUE(start_time, end_time, exam, language)
 );
 

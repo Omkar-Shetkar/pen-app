@@ -41,6 +41,8 @@ public class ExamEventResourceRowMapper implements RowMapper<ExamEventResource> 
                 .start(resultSet.getTimestamp("start_time"))
                 .end(resultSet.getTimestamp("end_time"))
                 .language(resultSet.getString("lang"))
+                .city(resultSet.getString("city"))
+                .address(resultSet.getString("address"))
                 .build();
 
         return new ExamEventResource(resultSet.getLong("id"), examStatus, scribeResource,

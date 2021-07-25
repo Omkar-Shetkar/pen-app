@@ -35,16 +35,15 @@ public interface RequestRepository extends CrudRepository<Request, Long> {
                               SELECT r.id id, r.status status, 
                               c.id c_id, c.first_name c_first_name, c.last_name c_last_name, c.gender c_gender, c.mobile c_mobile, c.email c_email,
                               s.id s_id, s.first_name s_first_name, s.last_name s_last_name, s.gender s_gender, s.email s_email, s.mobile s_mobile,
-                                es.start_time start_time, es.end_time end_time, e.name exam,
-                                l.name lang
-            --                    , a.city city
-                                FROM request r
+                              es.start_time start_time, es.end_time end_time, e.name exam,
+                              l.name lang, cy.name city, es.address address
+                              FROM request r
                             JOIN candidate c ON r.candidate=c.id
                             JOIN scribe s ON r.scribe=s.id
                             JOIN exam_schedule es ON r.exam_schedule=es.id
                             JOIN exam e ON e.id=es.exam
                             JOIN language l ON l.id=es.language
-                --            JOIN address a ON a.id=es.address
+                            JOIN city cy ON cy.id=es.city
                                WHERE
                                      (:scribe IS NULL OR r.scribe = :scribe) AND
                                      (:candidate IS NULL OR r.candidate = :candidate) AND

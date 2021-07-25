@@ -26,18 +26,23 @@ public class ExamSchedule {
     private Long language;
 
     @NonNull
-    private Long address;
-
-    @NonNull
     private Long exam;
 
-    public ExamSchedule(final Date startTime, final Date endTime, final Long language, final Long address,
-                        final Long exam) {
+    @NonNull
+    private String address;
+
+    @NonNull
+    private Long city;
+
+    public ExamSchedule(final Date startTime, final Date endTime, final Long language, final Long exam,
+                        final String address, final Long city
+    ) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.language = language;
-        this.address = address;
         this.exam = exam;
+        this.address = address;
+        this.city = city;
     }
 
 }

@@ -3,10 +3,10 @@ package com.pen.request;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pen.BaseTestSetup;
-import com.pen.exam.domain.ExamSchedule;
 import com.pen.client.request.RequestCreationModel;
 import com.pen.client.request.RequestResource;
 import com.pen.client.request.RequestUpdateModel;
+import com.pen.exam.domain.ExamSchedule;
 import com.pen.request.domain.Request;
 import com.pen.request.domain.RequestStatus;
 import com.pen.request.repository.ExamScheduleRepository;
@@ -39,7 +39,8 @@ class RequestControllerTests extends BaseTestSetup {
     public static final String CANDIDATE = "100";
     public static final long EXAM_ID = 101;
     public static final long LANGUAGE_ID = 1;
-    public static final long ADDRESS_ID = 1;
+    public static final String ADDRESS = "venue-1";
+    public static final long CITY_ID = 1L;
 
     @Autowired
     private MockMvc mockMvc;
@@ -78,7 +79,7 @@ class RequestControllerTests extends BaseTestSetup {
         RequestCreationModel requestCreationModel = createRequestUpdate("1");
         String content = mapper.writeValueAsString(requestCreationModel);
         String response = mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
-                
+
                 .content(content))
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
@@ -290,7 +291,7 @@ class RequestControllerTests extends BaseTestSetup {
         Instant end = start.plus(2, HOURS);
 
         return new RequestCreationModel(scribeId, CANDIDATE, new Date(start.toEpochMilli()), new Date(end.toEpochMilli()),
-                LANGUAGE_ID, ADDRESS_ID, EXAM_ID);
+                LANGUAGE_ID, EXAM_ID, ADDRESS, CITY_ID);
 
     }
 

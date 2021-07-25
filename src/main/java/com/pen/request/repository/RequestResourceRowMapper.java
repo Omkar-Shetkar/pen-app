@@ -40,6 +40,8 @@ public class RequestResourceRowMapper implements RowMapper<RequestResource> {
                 .start(resultSet.getTimestamp("start_time"))
                 .end(resultSet.getTimestamp("end_time"))
                 .language(resultSet.getString("lang"))
+                .city(resultSet.getString("city"))
+                .address(resultSet.getString("address"))
                 .build();
 
         return new RequestResource(resultSet.getLong("id"), status, scribeResource, candidateResource, examResource);

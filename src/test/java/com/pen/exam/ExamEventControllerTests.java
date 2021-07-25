@@ -4,12 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pen.BaseTestSetup;
 import com.pen.client.exam.FeedbackDetails;
 import com.pen.client.exam.UserType;
+import com.pen.client.request.RequestCreationModel;
+import com.pen.client.request.RequestUpdateModel;
 import com.pen.exam.controller.ExamEventController;
 import com.pen.exam.domain.ExamEvent;
 import com.pen.exam.domain.ExamSchedule;
 import com.pen.exam.service.ExamEventService;
-import com.pen.client.request.RequestCreationModel;
-import com.pen.client.request.RequestUpdateModel;
 import com.pen.request.domain.Request;
 import com.pen.request.repository.ExamScheduleRepository;
 import com.pen.scribe.domain.Scribe;
@@ -44,7 +44,8 @@ class ExamEventControllerTests extends BaseTestSetup {
     public static final String CANDIDATE_ID = "100";
     public static final long EXAM_ID = 101L;
     public static final long LANGUAGE_ID = 1L;
-    public static final long ADDRESS_ID = 1L;
+    public static final String ADDRESS = "venue-1";
+    public static final long CITY_ID = 1L;
 
     @Autowired
     private MockMvc mockMvc;
@@ -212,7 +213,8 @@ class ExamEventControllerTests extends BaseTestSetup {
         examSchedule.setStartTime(new Date(startTime.toEpochMilli()));
         examSchedule.setEndTime(new Date(endTime.toEpochMilli()));
         examSchedule.setLanguage(LANGUAGE_ID);
-        examSchedule.setAddress(ADDRESS_ID);
+        examSchedule.setAddress(ADDRESS);
+        examSchedule.setCity(CITY_ID);
         examSchedule.setExam(EXAM_ID);
         return examSchedule;
     }
@@ -225,15 +227,16 @@ class ExamEventControllerTests extends BaseTestSetup {
         examSchedule.setStartTime(new Date(start.toEpochMilli()));
         examSchedule.setEndTime(new Date(end.toEpochMilli()));
         examSchedule.setLanguage(LANGUAGE_ID);
-        examSchedule.setAddress(ADDRESS_ID);
         examSchedule.setExam(EXAM_ID);
+        examSchedule.setAddress(ADDRESS);
+        examSchedule.setCity(CITY_ID);
         return examSchedule;
     }
 
 
     private RequestCreationModel createRequestUpdate(String scribeId, ExamSchedule examSchedule) {
         return new RequestCreationModel(scribeId, CANDIDATE_ID, examSchedule.getStartTime(), examSchedule.getEndTime(),
-                examSchedule.getLanguage(), examSchedule.getAddress(), examSchedule.getExam());
+                examSchedule.getLanguage(), examSchedule.getExam(), examSchedule.getAddress(), examSchedule.getCity());
     }
 
     private Request createRequest(String scribeId, ExamSchedule examSchedule) {
