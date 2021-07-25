@@ -76,6 +76,10 @@ function AccountScreen(props) {
     { label: "Others", value: gender.OTHER },
   ];
 
+  const { error: updateError, request: updateUser } = useApi(
+    userApi.updateUserDetails
+  );
+
   const handleSubmit = async ({
     firstName,
     lastName,
@@ -94,18 +98,18 @@ function AccountScreen(props) {
       userDetails.languages = languages;
       userDetails.city = city;
     }
-    const result = await userApi.updateUserDetails(user.sub, userDetails);
-    if (result.ok) {
-      Toast.show({
-        type: "success",
-        text1: strings.account.success,
-        visibilityTime: 4000,
-      });
-    }
-    if (!result.ok) {
+    updateUser(user.sub, userDetails);
+
+    if (updateError) {
       Toast.show({
         type: "error",
         text1: strings.account.failed,
+        visibilityTime: 4000,
+      });
+    } else {
+      Toast.show({
+        type: "success",
+        text1: strings.account.success,
         visibilityTime: 4000,
       });
     }

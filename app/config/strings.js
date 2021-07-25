@@ -3,6 +3,9 @@ const strings = {
     success: "Updated successfully!",
     failed: "Updated failed!",
   },
+  login: {
+    sessionExpired: "Your session has expired! \n Please login again.",
+  },
   register: {
     scribe: "Scribe writes exams for others",
     candidate: "Candidate gets assistance for his/her exams",
