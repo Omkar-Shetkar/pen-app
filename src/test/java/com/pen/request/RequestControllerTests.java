@@ -10,6 +10,7 @@ import com.pen.exam.domain.ExamSchedule;
 import com.pen.request.domain.Request;
 import com.pen.request.domain.RequestStatus;
 import com.pen.request.repository.ExamScheduleRepository;
+import com.pen.scribe.controller.ScribeController;
 import com.pen.scribe.domain.Scribe;
 import com.pen.scribe.service.ScribeService;
 import org.junit.jupiter.api.Assertions;
@@ -188,7 +189,7 @@ class RequestControllerTests extends BaseTestSetup {
                 .andReturn().getResponse().getContentAsString();
 
         List<LinkedHashMap<String, String>> requestSet = mapper.readValue(response, List.class);
-        Assertions.assertEquals(2, requestSet.size());
+        Assertions.assertEquals(3, requestSet.size());
         Assertions.assertEquals(requestSet.iterator().next().get("status"), RequestStatus.DISABLED.toString());
 
         //************ Scribe rejects the request, then remaining requests get enabled again *********************
@@ -203,7 +204,7 @@ class RequestControllerTests extends BaseTestSetup {
                 .andReturn().getResponse().getContentAsString();
 
         requestSet = mapper.readValue(response, List.class);
-        Assertions.assertEquals(2, requestSet.size());
+        Assertions.assertEquals(3, requestSet.size());
         Assertions.assertEquals(requestSet.iterator().next().get("status"), RequestStatus.PENDING.toString());
     }
 
@@ -323,6 +324,75 @@ class RequestControllerTests extends BaseTestSetup {
             assertEquals(2, examScheduleList.size());
         }
 
+    }
+
+    /**
+     * Scribes who are already writing exam for the given time slot, should not be listed in search results.
+     */
+    @Test
+    void alreadyAssignedScribesShouldNotBeListed() throws Exception {
+
+        /**
+         * Search for scribes for the given time schedule.
+         * Since scribe is free during the given time schedule, will be listed in search results.
+         */
+        SimpleDateFormat format = new SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        Instant start = LocalDateTime.of(2099, 10, 1, 6, 30)
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
+        Instant end = LocalDateTime.of(2099, 10, 1, 6, 45)
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
+
+        String response = mockMvc.perform(get(ScribeController.ALL)
+                .contentType(APPLICATION_JSON)
+                .param("from", format.format(new Date(start.toEpochMilli())))
+                .param("to", format.format(new Date(end.toEpochMilli())))
+                .param("language", String.valueOf(1L))
+                .param("city", String.valueOf(1L)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        Set<Scribe> result = mapper.readValue(response, Set.class);
+        Assertions.assertEquals(2, result.size());
+
+
+        /**
+         * Scribe gets a request and accepts it.
+         */
+
+        Request request = createRequest(SCRIBE, start, end);
+
+        // Scribe accepts the request
+        String content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
+        response = mockMvc.perform(patch(SINGLE, request.getId())
+                .contentType(APPLICATION_JSON)
+                .content(content))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        request = mapper.readValue(response, Request.class);
+        assertEquals(ACCEPTED, request.getStatus());
+
+        /**
+         * Search for scribes for the given time schedule.
+         * Since scribe has already writing for the given time schedule, won't be listed in search results.
+         */
+
+        response = mockMvc.perform(get(ScribeController.ALL)
+                .contentType(APPLICATION_JSON)
+                .param("from", format.format(new Date(start.toEpochMilli())))
+                .param("to", format.format(new Date(end.toEpochMilli())))
+                .param("language", String.valueOf(1L))
+                .param("city", String.valueOf(1L)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        result = mapper.readValue(response, Set.class);
+        Assertions.assertEquals(1, result.size());
     }
 
     private Request candidateCreatesRequestAndScribeAcceptsIt() throws Exception {

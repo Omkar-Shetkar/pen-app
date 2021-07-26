@@ -41,11 +41,12 @@ INSERT INTO scribe (id, first_name, last_name, gender, mobile, email, city, avai
             VALUES (2, 'scribe2-fn','scribe2-ln', 'FEMALE', '222-222', 'scribe02@gmail.com', 2, 'WEEKDAYS');
 INSERT INTO scribe (id, first_name, last_name, gender, mobile, email, city, availability)
             VALUES (3, 'scribe3-fn','scribe3-ln', 'MALE', '333-333', 'scribe03@gmail.com', 3, 'ANY_DAY');
---INSERT INTO scribe (id, first_name, last_name, gender, mobile, email, city, availability)
---            VALUES (4, 'scribe4-fn','scribe4-ln', 'MALE', '444-444', 'scribe04@gmail.com', 300, 'NOT_AVAILABLE');
+INSERT INTO scribe (id, first_name, last_name, gender, mobile, email, city, availability)
+            VALUES (4, 'scribe4-fn','scribe4-ln', 'MALE', '444-444', 'scribe04@gmail.com', 1, 'WEEKENDS');
 
 INSERT INTO scribe_language(scribe, language) VALUES (1, 1);
 INSERT INTO scribe_language(scribe, language) VALUES (1, 2);
 INSERT INTO scribe_language(scribe, language) VALUES (2, 1);
 INSERT INTO scribe_language(scribe, language) VALUES (3, 3);
+INSERT INTO scribe_language(scribe, language) VALUES (4, 1);
 -------------------------------------------------------------

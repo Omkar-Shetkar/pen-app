@@ -98,7 +98,7 @@ class ScribeControllerTests extends BaseTestSetup {
                 .andReturn().getResponse().getContentAsString();
 
         Set<Scribe> result = mapper.readValue(response, Set.class);
-        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals(2, result.size());
     }
 
 }
