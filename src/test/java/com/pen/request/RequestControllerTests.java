@@ -37,6 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class RequestControllerTests extends BaseTestSetup {
 
     public static final String CANDIDATE = "100";
+    public static final String SCRIBE = "1";
     public static final long EXAM_ID = 101;
     public static final long LANGUAGE_ID = 1;
     public static final String ADDRESS = "venue-1";
@@ -152,7 +153,7 @@ class RequestControllerTests extends BaseTestSetup {
         // Scribe has rejected the request
         scribeRejectsRequest(request);
 
-        // Scribe tries to accept the request again
+        // Scribe tries to accept the request again and should assert it as BAD REQUEST
         content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
         mockMvc.perform(patch(SINGLE, request.getId())
                 .contentType(APPLICATION_JSON)
@@ -240,24 +241,88 @@ class RequestControllerTests extends BaseTestSetup {
      */
     @Test
     void testMultipleRequestsForSameTimeSlot() throws Exception {
-        Request request = candidateCreatesRequestAndScribeAcceptsIt();
+
+        /**
+         * Scribe gets a request and accepts it.
+         */
+        Instant start = LocalDateTime.of(2099, 10, 1, 6, 30)
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
+        Instant end = LocalDateTime.of(2099, 10, 1, 6, 45)
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
+        Request request = createRequest(SCRIBE, start, end);
 
         // Scribe accepts the request
         String content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
-        mockMvc.perform(patch(SINGLE, request.getId())
+        String response = mockMvc.perform(patch(SINGLE, request.getId())
+                .contentType(APPLICATION_JSON)
+                .content(content))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        request = mapper.readValue(response, Request.class);
+        assertEquals(ACCEPTED, request.getStatus());
+
+        /**
+         * Scribe gets another request for the same time slot and should not be able to accept it.
+         */
+        Request anotherRequest = createRequest(SCRIBE, start, end);
+
+        // Scribe accepts the request
+        content = mapper.writeValueAsString(new RequestUpdateModel(ACCEPTED));
+        mockMvc.perform(patch(SINGLE, anotherRequest.getId())
                 .contentType(APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isBadRequest());
 
         // Now, scribe should have only one request in ACCEPTED status
-        String response = mockMvc.perform(get((ALL))
-                .param("scribe", String.valueOf(request.getScribe()))
+        response = mockMvc.perform(get((ALL))
+                .param("scribe", String.valueOf(SCRIBE))
                 .param("requestStatus", ACCEPTED.toString()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         List<LinkedHashMap<String, String>> requestSet = mapper.readValue(response, List.class);
         Assertions.assertEquals(1, requestSet.size());
         Assertions.assertEquals(String.valueOf(request.getId()), String.valueOf(requestSet.iterator().next().get("id")));
+    }
+
+    /**
+     * Overlapping but not exactly equal time schedules should be different.
+     */
+    @Test
+    void testOverlappingExamSchedules() {
+        /**
+         * Scribe gets a request and accepts it.
+         */
+        Instant start = LocalDateTime.of(2099, 10, 1, 6, 30)
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
+        Instant end = LocalDateTime.of(2099, 10, 1, 6, 45)
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
+        Request request = createRequest(SCRIBE, start, end);
+        Iterable<ExamSchedule> examSchedules = examScheduleRepository.findAll();
+
+        // Expect one exam schedule
+        if (examSchedules instanceof List examScheduleList) {
+            assertEquals(1, examScheduleList.size());
+        }
+
+        start = LocalDateTime.of(2099, 10, 1, 6, 30)
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
+        end = LocalDateTime.of(2099, 10, 1, 6, 35)
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
+        request = createRequest(SCRIBE, start, end);
+        examSchedules = examScheduleRepository.findAll();
+
+        // Expect two exam schedules
+        if (examSchedules instanceof List examScheduleList) {
+            assertEquals(2, examScheduleList.size());
+        }
+
     }
 
     private Request candidateCreatesRequestAndScribeAcceptsIt() throws Exception {
@@ -290,14 +355,32 @@ class RequestControllerTests extends BaseTestSetup {
                 .toInstant();
         Instant end = start.plus(2, HOURS);
 
-        return new RequestCreationModel(scribeId, CANDIDATE, new Date(start.toEpochMilli()), new Date(end.toEpochMilli()),
-                LANGUAGE_ID, EXAM_ID, ADDRESS, CITY_ID);
+        return createRequestUpdate(scribeId, start, end);
+    }
 
+    private RequestCreationModel createRequestUpdate(String scribeId, Instant start, Instant end) {
+        return new RequestCreationModel(scribeId, CANDIDATE,
+                new Date(start.toEpochMilli()), new Date(end.toEpochMilli()),
+                LANGUAGE_ID, EXAM_ID, ADDRESS, CITY_ID);
     }
 
     private Request createRequest(String scribeId) {
         try {
             RequestCreationModel requestCreationModel = createRequestUpdate(scribeId);
+            String content = mapper.writeValueAsString(requestCreationModel);
+            String response = mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
+                    .content(content))
+                    .andExpect(status().isCreated())
+                    .andReturn().getResponse().getContentAsString();
+            return mapper.readValue(response, Request.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Request createRequest(String scribeId, Instant start, Instant end) {
+        try {
+            RequestCreationModel requestCreationModel = createRequestUpdate(scribeId, start, end);
             String content = mapper.writeValueAsString(requestCreationModel);
             String response = mockMvc.perform(post(ALL).contentType(APPLICATION_JSON)
                     .content(content))

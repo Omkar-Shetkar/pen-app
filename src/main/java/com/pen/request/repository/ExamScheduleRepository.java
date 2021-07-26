@@ -14,8 +14,8 @@ public interface ExamScheduleRepository extends CrudRepository<ExamSchedule, Lon
             WHERE 
             e.exam = :exam AND 
             e.language = :language AND 
-            (DATE_TRUNC('MINUTE',e.start_Time) <= DATE_TRUNC('MINUTE',:endTime::timestamp) 
-                AND DATE_TRUNC('MINUTE',e.end_time) >= DATE_TRUNC('MINUTE',:startTime::timestamp))
+            (DATE_TRUNC('MINUTE',e.start_Time) = DATE_TRUNC('MINUTE',:startTime::timestamp) 
+                AND DATE_TRUNC('MINUTE',e.end_time) = DATE_TRUNC('MINUTE',:endTime::timestamp))
             """)
     Optional<ExamSchedule> find(Long exam, Date startTime, Date endTime, Long language);
 }
