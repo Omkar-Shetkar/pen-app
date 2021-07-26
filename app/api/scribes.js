@@ -11,6 +11,7 @@ const find = (searchCriteria, language) => {
 
   console.log("Calling scribe FIND api...", from, to, searchCriteria.language);
   return apiClient.get(endPoint, {
+    candidate: searchCriteria.candidate,
     from: from.toISOString(),
     to: to.toISOString(),
     language: searchCriteria.language,

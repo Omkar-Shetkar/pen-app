@@ -111,7 +111,10 @@ function ScribeSearchScreen({ navigation }) {
   }, []);
 
   const handleSubmit = async (searchCriteria, { resetForm }) => {
-    const result = await scribesApi.find(searchCriteria);
+    const result = await scribesApi.find({
+      candidate: user.sub,
+      ...searchCriteria,
+    });
 
     if (result.data.length == 0) {
       return alert(strings.search.noScribeFound);
