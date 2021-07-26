@@ -17,6 +17,9 @@ import java.util.Date;
 public class ScribeSearchFilter {
 
     @NonNull
+    private String candidate;
+
+    @NonNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date from;
 

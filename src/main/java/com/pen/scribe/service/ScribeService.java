@@ -31,7 +31,7 @@ public class ScribeService {
     }
 
     /**
-     * @param scribe
+     * @param scribeId
      * @return Scribe
      * @throws IllegalArgumentException - For invalid scribe id
      */
@@ -41,7 +41,7 @@ public class ScribeService {
     }
 
     public Set<Scribe> searchScribes(ScribeSearchFilter searchFilter) {
-        return scribeRepository.findByAvailabilityAndLanguage(searchFilter.getFrom(),
+        return scribeRepository.findByAvailabilityAndLanguage(searchFilter.getCandidate(), searchFilter.getFrom(),
                 searchFilter.getTo(), searchFilter.getLanguage(), searchFilter.getCity());
     }
 

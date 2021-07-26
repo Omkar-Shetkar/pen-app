@@ -25,13 +25,14 @@ public interface ScribeRepository extends CrudRepository<Scribe, String>, Custom
                SELECT scribe FROM request r
                INNER JOIN exam_schedule es ON es.id = r.exam_schedule
                WHERE r.scribe = s.id
-               AND r.status = 'ACCEPTED'
+               AND (r.status = 'ACCEPTED' OR (r.status = 'PENDING' AND r.candidate = :candidate))
                AND 
                 (DATE_TRUNC('MINUTE',es.start_Time) <= DATE_TRUNC('MINUTE',:to::timestamp) 
                 AND DATE_TRUNC('MINUTE',es.end_time) >= DATE_TRUNC('MINUTE',:from::timestamp))
             )
             """)
         //TODO: Availability need to be considered
-    Set<Scribe> findByAvailabilityAndLanguage(@Param("from") Date from, @Param("to") Date to,
+    Set<Scribe> findByAvailabilityAndLanguage(@Param("candidate") String candidate,
+                                              @Param("from") Date from, @Param("to") Date to,
                                               @Param("language") Long language, @Param("city") Long city);
 }

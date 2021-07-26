@@ -10,6 +10,7 @@ import com.pen.exam.domain.ExamSchedule;
 import com.pen.request.domain.Request;
 import com.pen.request.domain.RequestStatus;
 import com.pen.request.repository.ExamScheduleRepository;
+import com.pen.request.repository.RequestRepository;
 import com.pen.scribe.controller.ScribeController;
 import com.pen.scribe.domain.Scribe;
 import com.pen.scribe.service.ScribeService;
@@ -52,6 +53,8 @@ class RequestControllerTests extends BaseTestSetup {
     private ScribeService scribeService;
     @Autowired
     private ExamScheduleRepository examScheduleRepository;
+    @Autowired
+    private RequestRepository requestRepository;
 
     @Test
     void testCandidateRequestsForExam() throws Exception {
@@ -384,6 +387,7 @@ class RequestControllerTests extends BaseTestSetup {
 
         response = mockMvc.perform(get(ScribeController.ALL)
                 .contentType(APPLICATION_JSON)
+                .param("candidate", String.valueOf(CANDIDATE))
                 .param("from", format.format(new Date(start.toEpochMilli())))
                 .param("to", format.format(new Date(end.toEpochMilli())))
                 .param("language", String.valueOf(1L))
@@ -393,6 +397,60 @@ class RequestControllerTests extends BaseTestSetup {
 
         result = mapper.readValue(response, Set.class);
         Assertions.assertEquals(1, result.size());
+    }
+
+    /**
+     * Candidate raises requests for the same scribe multiple times.
+     *
+     * @throws Exception
+     */
+    @Test
+    void candidateRequestsScribeMultipleTimes() throws Exception {
+        /**
+         * Search for scribes for the given time schedule.
+         * Since scribe has already writing for the given time schedule, won't be listed in search results.
+         */
+
+        Instant start = LocalDateTime.of(2099, 10, 1, 6, 30)
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
+        Instant end = LocalDateTime.of(2099, 10, 1, 6, 45)
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
+        SimpleDateFormat format = new SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        String response = mockMvc.perform(get(ScribeController.ALL)
+                .contentType(APPLICATION_JSON)
+                .param("candidate", String.valueOf(CANDIDATE))
+                .param("from", format.format(new Date(start.toEpochMilli())))
+                .param("to", format.format(new Date(end.toEpochMilli())))
+                .param("language", String.valueOf(1L))
+                .param("city", String.valueOf(1L)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        Set result = mapper.readValue(response, Set.class);
+
+        assertEquals(2, result.size());
+        // Candidate raises a request for scribe with id '1'
+        Request request = createRequest(SCRIBE, start, end);
+
+        response = mockMvc.perform(get(ScribeController.ALL)
+                .contentType(APPLICATION_JSON)
+                .param("candidate", String.valueOf(CANDIDATE))
+                .param("from", format.format(new Date(start.toEpochMilli())))
+                .param("to", format.format(new Date(end.toEpochMilli())))
+                .param("language", String.valueOf(1L))
+                .param("city", String.valueOf(1L)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        result = mapper.readValue(response, Set.class);
+
+        assertEquals(1, result.size());
+
     }
 
     private Request candidateCreatesRequestAndScribeAcceptsIt() throws Exception {

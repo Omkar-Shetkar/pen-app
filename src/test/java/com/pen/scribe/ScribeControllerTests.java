@@ -43,6 +43,8 @@ class ScribeControllerTests extends BaseTestSetup {
     @Autowired
     private ObjectMapper mapper;
 
+    public static final String CANDIDATE = "100";
+
     //    @Test
     @Disabled("To be done later")
     void createScribe() throws Exception {
@@ -90,6 +92,7 @@ class ScribeControllerTests extends BaseTestSetup {
 
         String response = mockMvc.perform(get(ALL)
                 .contentType(APPLICATION_JSON)
+                .param("candidate", String.valueOf(CANDIDATE))
                 .param("from", format.format(new Date(start.toEpochMilli())))
                 .param("to", format.format(new Date(end.toEpochMilli())))
                 .param("language", String.valueOf(1L))
