@@ -8,6 +8,7 @@ import examEventsApi from "../api/examEvents";
 import examStatus from "../config/examStatus";
 import gender from "../config/gender";
 import useAuth from "../auth/useAuth";
+import strings from "../config/strings";
 
 function CandidateArchiveScreen({ navigation }) {
   const { user } = useAuth();
@@ -61,6 +62,8 @@ function CandidateArchiveScreen({ navigation }) {
         keyExtractor={(item) => item.id.toString()}
         onRefresh={callLoadListings}
         refreshing={listingLoading}
+        accessible={true}
+        accessibilityLabel={strings.candidate.a11y.archived}
         renderItem={({ item }) => (
           <RequestCardComponent
             title={

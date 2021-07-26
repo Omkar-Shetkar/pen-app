@@ -2,6 +2,7 @@ import React from "react";
 import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 import AppButton from "../components/AppButton";
 import colors from "../config/colors";
+import strings from "../config/strings";
 import routes from "../navigation/routes";
 
 export default function WelcomeScreen({ navigation }) {
@@ -11,18 +12,27 @@ export default function WelcomeScreen({ navigation }) {
       style={styles.background}
       blurRadius={2}
     >
-      <View style={styles.logoContainer}>
+      <View style={styles.logoContainer} accessible={true}>
         <Image source={require("../assets/logo-red.png")} style={styles.logo} />
-        <Text style={styles.text}>Platform for Scribe and Candidate</Text>
+        <Text
+          style={styles.text}
+          accessibilityLabel={strings.welcome.a11y.welcomeMessage}
+        >
+          Platform for Scribe and Candidate
+        </Text>
       </View>
 
       <AppButton
         title="Login"
+        accessible={true}
+        accessibilityLabel={strings.welcome.a11y.login}
         backgroundColor={colors.primary}
         onPress={() => navigation.navigate(routes.LOGIN)}
       />
       <AppButton
         title="Register"
+        accessible={true}
+        accessibilityLabel={strings.welcome.a11y.register}
         backgroundColor={colors.secondary}
         onPress={() => navigation.navigate(routes.REGISTER)}
       />

@@ -3,11 +3,17 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import colors from "../config/colors";
 
-function ListItemButton({ title, onPress, color = colors.primary }) {
+function ListItemButton({
+  title,
+  onPress,
+  color = colors.primary,
+  ...otherProperties
+}) {
   return (
     <TouchableOpacity
       style={[styles.button, { backgroundColor: color }]}
       onPress={onPress}
+      {...otherProperties}
     >
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>

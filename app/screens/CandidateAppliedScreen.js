@@ -9,6 +9,7 @@ import requestsApi from "../api/requests";
 import gender from "../config/gender";
 import requestStatus from "../config/requestStatus";
 import useAuth from "../auth/useAuth";
+import strings from "../config/strings";
 
 function CandidateAppliedScreen({ navigation }) {
   const { user } = useAuth();
@@ -79,6 +80,8 @@ function CandidateAppliedScreen({ navigation }) {
         keyExtractor={(item) => item.id.toString()}
         onRefresh={callLoadListings}
         refreshing={listingLoading}
+        accessible={true}
+        accessibilityLabel={strings.candidate.a11y.applied}
         renderItem={({ item }) => (
           <RequestCardComponent
             actions={actions(item)}

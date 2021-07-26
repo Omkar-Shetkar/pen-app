@@ -8,6 +8,7 @@ import requestsApi from "../api/requests";
 import requestStatus from "../config/requestStatus";
 import gender from "../config/gender";
 import useAuth from "../auth/useAuth";
+import strings from "../config/strings";
 
 function CandidateAcceptedScreen({ navigation }) {
   const { user } = useAuth();
@@ -63,6 +64,8 @@ function CandidateAcceptedScreen({ navigation }) {
         keyExtractor={(listing) => listing.id.toString()}
         onRefresh={callLoadListings}
         refreshing={listingLoading}
+        accessible={true}
+        accessibilityLabel={strings.candidate.a11y.accepted}
         renderItem={({ item }) => (
           <RequestCardComponent
             title={

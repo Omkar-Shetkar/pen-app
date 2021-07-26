@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import AccountScreen from "../screens/AccountScreen";
-import NotificationsScreen from "../screens/NotificationsScreen";
 import RequestsNavigator from "./RequestsNavigator";
 import AuthContext from "../auth/context";
 import ScribeSearchNavigator from "./ScribeSearchNavigator";
@@ -35,7 +34,7 @@ function AppNavigator(props) {
           />
           {!isScribe && (
             <Tab.Screen
-              name="ScribeSearch"
+              name="Search"
               component={ScribeSearchNavigator}
               options={{
                 tabBarIcon: ({ color, size }) => (

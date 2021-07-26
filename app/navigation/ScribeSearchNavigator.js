@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 
 const ScribeSearchNavigator = () => (
   <Stack.Navigator mode="card" screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="ScribeSearch" component={ScribeSearchScreen} />
+    <Stack.Screen name="Search" component={ScribeSearchScreen} />
     <Stack.Screen
       name="ScribeSearchResults"
       component={ScribeSearchResultsScreen}

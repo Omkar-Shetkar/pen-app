@@ -8,6 +8,7 @@ import AppErrorMessage from "../components/forms/AppErrorMessage";
 import Screen from "../components/Screen";
 import authApi from "../api/auth";
 import useAuth from "../auth/useAuth";
+import strings from "../config/strings";
 
 const validationSchema = Yup.object().shape({
   mobile: Yup.number().required().label("Mobile"),
@@ -34,7 +35,7 @@ function LoginScreen(props) {
       <Image source={require("../assets/logo.png")} style={styles.logo}></Image>
       {/* TODO: To be removed */}
       <AppForm
-        initialValues={{ mobile: "1122334455", password: "1234" }}
+        initialValues={{ mobile: "111222", password: "1234" }}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
@@ -50,7 +51,9 @@ function LoginScreen(props) {
           name="mobile"
           placeholder="Mobile"
           textContentType="telephoneNumber"
-        ></AppFormField>
+          accessible={true}
+          accessibilityHint={strings.login.a11y.mobile}
+        />
         <AppFormField
           autoCapitalize="none"
           autoCorrect={false}
@@ -59,8 +62,14 @@ function LoginScreen(props) {
           placeholder="Password"
           secureTextEntry
           textContentType="password"
-        ></AppFormField>
-        <SubmitButton title="Login" />
+          accessible={true}
+          accessibilityHint={strings.login.a11y.password}
+        />
+        <SubmitButton
+          title="Login"
+          accessible={true}
+          accessibilityLabel={strings.login.a11y.login}
+        />
       </AppForm>
     </Screen>
   );

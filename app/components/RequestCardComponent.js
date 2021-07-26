@@ -7,6 +7,7 @@ import AppText from "./AppText";
 import colors from "../config/colors";
 import defaultStyles from "../config/styles";
 import ListItemButton from "./ListItemButton";
+import strings from "../config/strings";
 
 function RequestCardComponent({
   actions,
@@ -27,7 +28,12 @@ function RequestCardComponent({
           />
         </View>
         <View style={styles.content}>
-          <AppText numberOfLines={2} style={styles.title}>
+          <AppText
+            numberOfLines={2}
+            style={styles.title}
+            accessible={true}
+            accessibilityLabel={strings.request.ally.message + title}
+          >
             {title}
           </AppText>
 
@@ -39,7 +45,12 @@ function RequestCardComponent({
                 color={defaultStyles.colors.medium}
               />
             )}
-            <AppText numberOfLines={2} style={styles.subTitle}>
+            <AppText
+              numberOfLines={2}
+              style={styles.subTitle}
+              accessible={true}
+              accessibilityLabel={"For the exam " + subTitle}
+            >
               {subTitle}
             </AppText>
           </View>
@@ -51,7 +62,12 @@ function RequestCardComponent({
                 size={15}
                 color={defaultStyles.colors.medium}
               />
-              <AppText numberOfLines={5} style={styles.title}>
+              <AppText
+                numberOfLines={5}
+                style={styles.title}
+                accessible={true}
+                accessibilityLabel={key + ", " + details[key]}
+              >
                 {details[key]}
               </AppText>
             </View>
@@ -64,6 +80,8 @@ function RequestCardComponent({
                 title={item.name}
                 onPress={item.action}
                 color={item.color}
+                accessible={true}
+                accessibilityLabel={"Select to " + item.name + " the request"}
               />
             ))}
         </View>
