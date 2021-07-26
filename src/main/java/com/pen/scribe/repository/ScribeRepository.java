@@ -25,6 +25,7 @@ public interface ScribeRepository extends CrudRepository<Scribe, String>, Custom
                SELECT scribe FROM request r
                INNER JOIN exam_schedule es ON es.id = r.exam_schedule
                WHERE r.scribe = s.id
+               AND r.status = 'ACCEPTED'
                AND 
                 (DATE_TRUNC('MINUTE',es.start_Time) <= DATE_TRUNC('MINUTE',:to::timestamp) 
                 AND DATE_TRUNC('MINUTE',es.end_time) >= DATE_TRUNC('MINUTE',:from::timestamp))
