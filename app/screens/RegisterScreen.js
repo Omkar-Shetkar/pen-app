@@ -30,6 +30,7 @@ const validationSchema = Yup.object().shape({
   lastName: Yup.string().required().label("Last Name"),
   mobile: Yup.string()
     .required()
+    .max(10)
     .matches(mobileRegExp, "Mobile number not valid")
     .label("Mobile"),
   email: Yup.string().optional().email().label("Email"),
