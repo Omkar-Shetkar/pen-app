@@ -10,11 +10,11 @@ export default useAuth = () => {
 
   const login = async (authToken) => {
     const user = jwtDecode(authToken);
-    setUser(user);
     authStorage.storeToken(authToken);
     const userDetails = await userApi.getUserDetails(user.sub);
     console.log("Setting user type to ", userDetails.data.userType);
     setIsScribe(userDetails.data.userType === userType.SCRIBE ? true : false);
+    setUser(user);
   };
 
   const logout = () => {

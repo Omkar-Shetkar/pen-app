@@ -31,11 +31,13 @@ function LoginScreen(props) {
       password: password,
     });
 
-    setLoading(false);
-
-    if (!result.ok) return setLoginFailed(true);
+    if (!result.ok) {
+      setLoading(false);
+      return setLoginFailed(true);
+    }
     setLoginFailed(false);
     login(result.data.access_token);
+    setLoading(false);
   };
 
   return (

@@ -22,7 +22,7 @@ function AppNavigator(props) {
   return (
     <AuthContext.Consumer>
       {({ isScribe }) => (
-        <Tab.Navigator>
+        <Tab.Navigator initialRouteName={!isScribe ? "Search" : ""}>
           <Tab.Screen
             name="Requests"
             component={RequestsNavigator}
@@ -39,7 +39,7 @@ function AppNavigator(props) {
               options={{
                 tabBarIcon: ({ color, size }) => (
                   <MaterialCommunityIcons
-                    name="account-search-outline"
+                    name="account-search"
                     color={color}
                     size={size}
                   />
