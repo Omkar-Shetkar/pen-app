@@ -163,6 +163,7 @@ function AccountScreen(props) {
                 label: "Gender",
                 value: "",
               }}
+              disabled
             />
 
             <AppFormField
@@ -203,7 +204,9 @@ function AccountScreen(props) {
               </>
             )}
 
-            <SubmitButton title="Update" />
+            {userDetails.userType === userTypeData.SCRIBE && (
+              <SubmitButton title="Update" />
+            )}
           </AppForm>
           {/* TODO: Logout to be implemented */}
           <AppButton title="Logout" color="secondary" onPress={logout} />

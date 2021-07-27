@@ -9,7 +9,15 @@ import defaultStyles from "../../config/styles";
 import AppText from "../AppText";
 import colors from "../../config/colors";
 
-function AppFormPickerField({ name, items, placeholder, suffix, icon, width }) {
+function AppFormPickerField({
+  name,
+  items,
+  placeholder,
+  suffix,
+  icon,
+  width,
+  ...otherProperties
+}) {
   const { values, handleChange, errors, touched } = useFormikContext();
 
   return (
@@ -30,6 +38,7 @@ function AppFormPickerField({ name, items, placeholder, suffix, icon, width }) {
             onValueChange={handleChange(name)}
             style={{ ...pickerSelectStyles }}
             value={values[name] ? values[name].toString() : ""}
+            {...otherProperties}
           />
         </View>
         <AppText>
