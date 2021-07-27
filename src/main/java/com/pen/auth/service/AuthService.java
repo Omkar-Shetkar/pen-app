@@ -70,7 +70,9 @@ public class AuthService {
         if (response.getStatus() == HttpStatus.CREATED.value()) {
             String location = response.getHeaderString("location");
             String userId = location.substring(location.lastIndexOf('/') + 1);
-            if (userResource.getUserType().equals(UserType.SCRIBE)) {
+            //enum should be compared using ==
+            log.info("Adduser user resource userType {}",userResource.getUserType());
+            if (userResource.getUserType() == UserType.SCRIBE) {
                 scribeService.create(userId, userResource);
             } else {
                 candidateService.create(userId, userResource);

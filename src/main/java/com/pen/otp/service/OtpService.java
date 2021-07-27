@@ -37,7 +37,7 @@ public class OtpService {
         int otp = 100000 + random.nextInt(900000);
         int hash = getHashOfOtpRequest(otpRequest);
         otpCache.put(hash, otp);
-        log.info("OTP generated for {}", otpRequest);
+        log.info("OTP generated for candidateId{}, scripbeId{}", otpRequest.getCandidateId(), otpRequest.getScribeId());
         return otp;
     }
 

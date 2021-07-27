@@ -6,11 +6,13 @@ import com.pen.client.exam.UserType;
 import com.pen.client.register.UserResource;
 import com.pen.scribe.domain.Scribe;
 import com.pen.scribe.repository.ScribeRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserService {
 
     private final ScribeRepository scribeRepository;
@@ -22,6 +24,7 @@ public class UserService {
     }
 
     public UserResource getUser(String userId) {
+        log.info("GetUser userId{}", userId);
         Optional<UserResource> userResource = scribeRepository.findById(userId).map(Scribe::asUserResource);
         if (userResource.isEmpty()) {
             userResource = candidateRepository.findById(userId).map(Candidate::asUserResource);
@@ -31,6 +34,7 @@ public class UserService {
     }
 
     public UserResource updateUser(UserResource userResource) {
+        log.info("UpdateUser userResource {}", userResource);
         if (userResource.getUserType().equals(UserType.SCRIBE)) {
             Scribe scribe = userResource.asScribe();
             return scribeRepository.update(scribe).asUserResource();

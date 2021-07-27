@@ -11,8 +11,11 @@ import java.util.Optional;
 @Service
 public class ExamService {
 
-    @Autowired
     private ExamRepository examRepository;
+
+    ExamService(ExamRepository examRepository){
+        this.examRepository = examRepository;
+    }
 
     public Exam save(ExamUpdate examUpdate) {
         var exam = new Exam(examUpdate.getExamName());

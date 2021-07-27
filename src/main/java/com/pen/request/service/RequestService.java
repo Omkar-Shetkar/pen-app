@@ -65,7 +65,7 @@ public class RequestService {
                 );
 
         Request request = new Request(scribe.getId(), candidate.getId(), examSchedule.getId());
-
+        log.info("New request created with requestId {}", request.getId());
         return requestRepository.save(request);
 
     }
@@ -82,10 +82,12 @@ public class RequestService {
     }
 
     public void deleteRequest(long requestId) {
+        log.info("Delete request created with requestId {}", requestId);
         requestRepository.deleteById(requestId);
     }
 
     public void deleteByExamScheduleAndNotStatus(long examSchedule, RequestStatus status) {
+        log.info("DeleteBy ExamScheduleAndNotStatus  examSchedule{}, requestStatus {}", examSchedule, status);
         requestRepository.deleteByExamScheduleAndNotStatus(examSchedule, status);
     }
 
@@ -97,7 +99,7 @@ public class RequestService {
      * @return Updated {@link Request} instance
      */
     private Request updateStatus(Request request, RequestStatus targetStatus) {
-
+        log.info("update request with requestId {} and targetStatus{}", request.getStatus(), targetStatus.toString());
         RequestStatus remainingRequestStatus = PENDING;
 
         switch (request.getStatus()) {

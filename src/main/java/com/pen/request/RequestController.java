@@ -6,6 +6,7 @@ import com.pen.client.request.RequestSearchFilter;
 import com.pen.client.request.RequestUpdateModel;
 import com.pen.request.domain.Request;
 import com.pen.request.service.RequestService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rest/requests")
+@Slf4j
 public class RequestController {
 
     public static final String ALL = "/rest/requests";
@@ -35,6 +37,7 @@ public class RequestController {
 
         try {
             var request = requestService.create(requestCreationModel);
+
             return ResponseEntity.status(HttpStatus.CREATED).body(request);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

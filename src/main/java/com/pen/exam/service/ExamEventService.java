@@ -29,21 +29,24 @@ public class ExamEventService {
 
         var examEvent = new ExamEvent(examEventUpdate.getRequestId(), examEventUpdate.getCandidate(),
                 examEventUpdate.getScribe(), examEventUpdate.getExamSchedule());
-
+        log.info("ExamEvent created with id{}",examEvent.getId());
         return examEventRepository.save(examEvent);
     }
 
     public void delete(long requestId) {
         Optional<ExamEvent> examEventOptional = examEventRepository.findByRequest(requestId);
+        log.info("ExamEvent deleted with id {}", examEventOptional.isPresent() ?examEventOptional.get(): "null");
         examEventOptional.ifPresent(e -> examEventRepository.delete(e));
     }
 
     public List<ExamEvent> search(ExamEventSearchFilter filter) {
+        log.info("ExamEvent searched with params candidateid={},scribe={},schedule={}", filter.getCandidate(), filter.getScribe(), filter.getScheduledInNextHours());
         return examEventRepository.searchExamEvents(filter.getCandidate(), filter.getScribe(), filter.getScheduledInNextHours());
     }
 
     //TODO: Consider combining search for ExamEvent and ExamEventResource
     public List<ExamEventResource> searchExamEventResources(ExamEventSearchFilter filter) {
+        log.info("ExamEvent searched with params candidateid={},scribe={},schedule={} examstatus={}", filter.getCandidate(), filter.getScribe(), filter.getScheduledInNextHours(), filter.getExamStatus());
         return examEventRepository.searchExamEventResources(filter.getCandidate(), filter.getScribe(),
                 filter.getScheduledInNextHours(), filter.getExamStatus());
     }

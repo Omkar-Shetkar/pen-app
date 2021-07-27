@@ -7,6 +7,7 @@ import com.pen.scribe.domain.Availability;
 import com.pen.scribe.domain.Scribe;
 import com.pen.scribe.domain.ScribeLanguage;
 import com.pen.scribe.repository.ScribeRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class ScribeService {
 
     private final ScribeRepository scribeRepository;
@@ -26,7 +28,7 @@ public class ScribeService {
 
         Scribe scribe = findById(scribeId);
         scribe.setAvailability(scribeUpdate.getAvailability());
-
+        log.info("updateScribeAvailability  scribeId{}, scribeUpdate{}", scribeId, scribeUpdate);
         return scribeRepository.save(scribe);
     }
 
@@ -36,11 +38,14 @@ public class ScribeService {
      * @throws IllegalArgumentException - For invalid scribe id
      */
     public Scribe findById(String scribeId) {
+        log.info("findScribe by scribeId{}", scribeId );
         return scribeRepository.findById(scribeId)
                 .orElseThrow(() -> new IllegalArgumentException("Couldn't find scribe id: " + scribeId));
     }
 
     public Set<Scribe> searchScribes(ScribeSearchFilter searchFilter) {
+        log.info("Search scribe by filter candidate{} from{} To{} language{}, city{}", searchFilter.getCandidate(), searchFilter.getFrom(),
+                searchFilter.getTo(), searchFilter.getLanguage(), searchFilter.getCity());
         return scribeRepository.findByAvailabilityAndLanguage(searchFilter.getCandidate(), searchFilter.getFrom(),
                 searchFilter.getTo(), searchFilter.getLanguage(), searchFilter.getCity());
     }
@@ -50,6 +55,7 @@ public class ScribeService {
     }
 
     public Scribe create(String userId, UserResource user) {
+        log.info("CreateScribe userId{}, user{}", userId, user);
         Set<ScribeLanguage> scribeLanguages = user.getLanguages().stream()
                 .map(ScribeLanguage::new)
                 .collect(Collectors.toSet());
