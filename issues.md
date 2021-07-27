@@ -1,7 +1,0 @@
-- export Master realm and include it in the container keycloak
-- add health endpoints for backend service - Hemanth
-- Export keycloak config and upload corresponding pvc
-- create user and db in postgres pod for first time
-  - user and db for backend
-  - user and db for keycloak
-- Extract confidential information into secrets - Hemanth
