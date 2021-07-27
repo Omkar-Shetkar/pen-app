@@ -5,6 +5,7 @@ import AppForm from "../components/forms/AppForm";
 import AppFormField from "../components/forms/AppFormField";
 import SubmitButton from "../components/forms/SubmitButton";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
+import ActivityIndicator from "../components/ActivityIndicator";
 import Screen from "../components/Screen";
 import authApi from "../api/auth";
 import useAuth from "../auth/useAuth";
@@ -16,62 +17,76 @@ const validationSchema = Yup.object().shape({
 });
 
 function LoginScreen(props) {
+  const [loading, setLoading] = useState(false);
+
   const [loginFailed, setLoginFailed] = useState(false);
 
   const { login } = useAuth();
 
   const handleSubmit = async ({ mobile, password }) => {
+    setLoading(true);
+
     const result = await authApi.login({
       username: mobile,
       password: password,
     });
+
+    setLoading(false);
+
     if (!result.ok) return setLoginFailed(true);
     setLoginFailed(false);
     login(result.data.access_token);
   };
 
   return (
-    <Screen style={styles.container}>
-      <Image source={require("../assets/logo.png")} style={styles.logo}></Image>
-      {/* TODO: To be removed */}
-      <AppForm
-        initialValues={{ mobile: "111222", password: "1234" }}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
-      >
-        <AppErrorMessage
-          error="Invalid mobile or password."
-          visible={loginFailed}
-        />
-        <AppFormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="cellphone"
-          keyboardType="phone-pad"
-          name="mobile"
-          placeholder="Mobile"
-          textContentType="telephoneNumber"
-          accessible={true}
-          accessibilityHint={strings.login.a11y.mobile}
-        />
-        <AppFormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="lock"
-          name="password"
-          placeholder="Password"
-          secureTextEntry
-          textContentType="password"
-          accessible={true}
-          accessibilityHint={strings.login.a11y.password}
-        />
-        <SubmitButton
-          title="Login"
-          accessible={true}
-          accessibilityLabel={strings.login.a11y.login}
-        />
-      </AppForm>
-    </Screen>
+    <>
+      <ActivityIndicator visible={loading} />
+
+      <Screen style={styles.container}>
+        <Image
+          source={require("../assets/logo.png")}
+          style={styles.logo}
+        ></Image>
+        {/* TODO: To be removed */}
+        <AppForm
+          initialValues={{ mobile: "111222", password: "1234" }}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
+          <AppErrorMessage
+            error="Invalid mobile or password."
+            visible={loginFailed}
+          />
+          <AppFormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="cellphone"
+            keyboardType="phone-pad"
+            name="mobile"
+            placeholder="Mobile"
+            textContentType="telephoneNumber"
+            accessible={true}
+            accessibilityHint={strings.login.a11y.mobile}
+          />
+          <AppFormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="lock"
+            name="password"
+            placeholder="Password"
+            secureTextEntry
+            textContentType="password"
+            accessible={true}
+            accessibilityHint={strings.login.a11y.password}
+          />
+          <SubmitButton
+            title="Login"
+            accessible={true}
+            accessibilityLabel={strings.login.a11y.login}
+          />
+        </AppForm>
+      </Screen>
+    </>
   );
 }
 

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 
+import ActivityIndicator from "../components/ActivityIndicator";
 import Screen from "../components/Screen";
 import AppForm from "../components/forms/AppForm";
 import AppFormField from "../components/forms/AppFormField";
@@ -57,6 +58,8 @@ const validationSchema = Yup.object().shape({
 function ScribeSearchScreen({ navigation }) {
   const { user, setUser } = useContext(AuthContext);
 
+  const [loading, setLoading] = useState(false);
+
   const [error, setError] = useState();
 
   const onTimeSelection = (event, selectedDate) => {
@@ -111,10 +114,12 @@ function ScribeSearchScreen({ navigation }) {
   }, []);
 
   const handleSubmit = async (searchCriteria, { resetForm }) => {
+    setLoading(true);
     const result = await scribesApi.find({
       candidate: user.sub,
       ...searchCriteria,
     });
+    setLoading(false);
 
     if (result.data.length == 0) {
       return alert(strings.search.noScribeFound);
@@ -137,94 +142,97 @@ function ScribeSearchScreen({ navigation }) {
   };
 
   return (
-    <Screen style={styles.container}>
-      <ScrollView>
-        <AppForm
-          initialValues={{
-            examDate: "",
-            durationHours: "",
-            durationMinutes: "",
-            language: "",
-            exam: "",
-            address: "",
-            city: "",
-          }}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-        >
-          <AppErrorMessage error={error} visible={error} />
+    <>
+      <ActivityIndicator visible={loading} />
+      <Screen style={styles.container}>
+        <ScrollView>
+          <AppForm
+            initialValues={{
+              examDate: "",
+              durationHours: "",
+              durationMinutes: "",
+              language: "",
+              exam: "",
+              address: "",
+              city: "",
+            }}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+          >
+            <AppErrorMessage error={error} visible={error} />
 
-          <View style={styles.durations}>
-            <AppFormDateTimePicker
-              icon="calendar"
-              name="examDate"
-              mode="date"
-              placeholder="Exam Date"
-              editable={false}
-            />
-          </View>
+            <View style={styles.durations}>
+              <AppFormDateTimePicker
+                icon="calendar"
+                name="examDate"
+                mode="date"
+                placeholder="Exam Date"
+                editable={false}
+              />
+            </View>
 
-          <View style={styles.durations}>
+            <View style={styles.durations}>
+              <AppFormPickerField
+                icon="timer-sand"
+                name="durationHours"
+                items={hours}
+                placeholder={{
+                  label: "Hours",
+                  value: "hours",
+                }}
+                suffix="hr"
+              />
+
+              <AppFormPickerField
+                name="durationMinutes"
+                items={minutes}
+                placeholder={{
+                  label: "Minutes",
+                  value: "minutes",
+                }}
+                suffix="min"
+              />
+            </View>
+
             <AppFormPickerField
-              icon="timer-sand"
-              name="durationHours"
-              items={hours}
+              icon="alpha"
+              name="language"
+              items={languages}
               placeholder={{
-                label: "Hours",
-                value: "hours",
+                label: "Language",
+                value: "language",
               }}
-              suffix="hr"
             />
 
             <AppFormPickerField
-              name="durationMinutes"
-              items={minutes}
+              icon="tournament"
+              name="exam"
+              items={exams}
               placeholder={{
-                label: "Minutes",
-                value: "minutes",
+                label: "Exam",
+                value: "exam",
               }}
-              suffix="min"
             />
-          </View>
-
-          <AppFormPickerField
-            icon="alpha"
-            name="language"
-            items={languages}
-            placeholder={{
-              label: "Language",
-              value: "language",
-            }}
-          />
-
-          <AppFormPickerField
-            icon="tournament"
-            name="exam"
-            items={exams}
-            placeholder={{
-              label: "Exam",
-              value: "exam",
-            }}
-          />
-          <AppFormField
-            autoCorrect={false}
-            icon="map-marker-outline"
-            name="address"
-            placeholder="Address"
-          />
-          <AppFormPickerField
-            icon="map-marker-outline"
-            name="city"
-            items={cities}
-            placeholder={{
-              label: "City",
-              value: "",
-            }}
-          />
-          <SubmitButton title="Search" />
-        </AppForm>
-      </ScrollView>
-    </Screen>
+            <AppFormField
+              autoCorrect={false}
+              icon="map-marker-outline"
+              name="address"
+              placeholder="Address"
+            />
+            <AppFormPickerField
+              icon="map-marker-outline"
+              name="city"
+              items={cities}
+              placeholder={{
+                label: "City",
+                value: "",
+              }}
+            />
+            <SubmitButton title="Search" />
+          </AppForm>
+        </ScrollView>
+      </Screen>
+    </>
   );
 }
 

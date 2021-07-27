@@ -13,6 +13,7 @@ import AppForm from "../components/forms/AppForm";
 import AppFormField from "../components/forms/AppFormField";
 import AppFormMultiSelectField from "../components/forms/AppFormMultiSelectField";
 import AppFormPickerField from "../components/forms/AppFormPickerField";
+import ActivityIndicator from "../components/ActivityIndicator";
 import SubmitButton from "../components/forms/SubmitButton";
 import Screen from "../components/Screen";
 import gender from "../config/gender";
@@ -41,6 +42,8 @@ const validationSchema = Yup.object().shape({
 });
 
 function AccountScreen(props) {
+  const [loading, setLoading] = useState(false);
+
   const [error, setError] = useState();
 
   const { user } = useContext(AuthContext);
@@ -89,6 +92,8 @@ function AccountScreen(props) {
     languages,
     city,
   }) => {
+    setLoading(true);
+
     userDetails.firstName = firstName;
     userDetails.lastName = lastName;
     userDetails.email = email;
@@ -99,6 +104,8 @@ function AccountScreen(props) {
       userDetails.city = city;
     }
     updateUser(user.sub, userDetails);
+
+    setLoading(false);
 
     if (updateError) {
       Toast.show({
@@ -116,89 +123,93 @@ function AccountScreen(props) {
   };
 
   return (
-    <Screen style={styles.container}>
-      <ScrollView>
-        <AppForm
-          initialValues={userDetails}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-        >
-          <AppErrorMessage error={error} visible={error} />
-          <AppFormField
-            autoCorrect={false}
-            icon="account-circle"
-            name="userType"
-            placeholder="User Type"
-            editable={false}
-          />
-          <AppFormField
-            autoCorrect={false}
-            icon="account-outline"
-            name="firstName"
-            placeholder="First Name"
-            editable={false}
-          />
-          <AppFormField
-            autoCorrect={false}
-            icon="account-outline"
-            name="lastName"
-            placeholder="Last Name"
-            editable={false}
-          />
-          <AppFormPickerField
-            icon="gender-male-female"
-            name="gender"
-            items={genders}
-            placeholder={{
-              label: "Gender",
-              value: "",
-            }}
-          />
+    <>
+      <ActivityIndicator visible={loading} />
 
-          <AppFormField
-            autoCorrect={false}
-            icon="cellphone"
-            name="mobile"
-            placeholder="Mobile"
-            editable={false}
-          />
-          <AppFormField
-            autoCorrect={false}
-            icon="email-outline"
-            keyboardType="email-address"
-            name="email"
-            placeholder="Email"
-            editable={false}
-          />
+      <Screen style={styles.container}>
+        <ScrollView>
+          <AppForm
+            initialValues={userDetails}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+          >
+            <AppErrorMessage error={error} visible={error} />
+            <AppFormField
+              autoCorrect={false}
+              icon="account-circle"
+              name="userType"
+              placeholder="User Type"
+              editable={false}
+            />
+            <AppFormField
+              autoCorrect={false}
+              icon="account-outline"
+              name="firstName"
+              placeholder="First Name"
+              editable={false}
+            />
+            <AppFormField
+              autoCorrect={false}
+              icon="account-outline"
+              name="lastName"
+              placeholder="Last Name"
+              editable={false}
+            />
+            <AppFormPickerField
+              icon="gender-male-female"
+              name="gender"
+              items={genders}
+              placeholder={{
+                label: "Gender",
+                value: "",
+              }}
+            />
 
-          {userDetails && userDetails.userType === userTypeData.SCRIBE && (
-            <>
-              <AppFormMultiSelectField
-                uniqueKey="id"
-                name="languages"
-                items={languages}
-                selectText="Pick Languages"
-                searchInputPlaceholderText="Search Languages..."
-              />
+            <AppFormField
+              autoCorrect={false}
+              icon="cellphone"
+              name="mobile"
+              placeholder="Mobile"
+              editable={false}
+            />
+            <AppFormField
+              autoCorrect={false}
+              icon="email-outline"
+              keyboardType="email-address"
+              name="email"
+              placeholder="Email"
+              editable={false}
+            />
 
-              <AppFormPickerField
-                icon="map-marker-outline"
-                name="city"
-                items={cities}
-                placeholder={{
-                  label: "City",
-                  value: "",
-                }}
-              />
-            </>
-          )}
+            {userDetails && userDetails.userType === userTypeData.SCRIBE && (
+              <>
+                <AppFormMultiSelectField
+                  uniqueKey="id"
+                  name="languages"
+                  items={languages}
+                  selectText="Pick Languages"
+                  searchInputPlaceholderText="Search Languages..."
+                />
 
-          <SubmitButton title="Update" />
-        </AppForm>
-        {/* TODO: Logout to be implemented */}
-        <AppButton title="Logout" color="secondary" onPress={logout} />
-      </ScrollView>
-    </Screen>
+                <AppFormPickerField
+                  icon="map-marker-outline"
+                  name="city"
+                  items={cities}
+                  placeholder={{
+                    label: "City",
+                    value: "",
+                  }}
+                />
+              </>
+            )}
+
+            <SubmitButton title="Update" />
+          </AppForm>
+          {/* TODO: Logout to be implemented */}
+          <AppButton title="Logout" color="secondary" onPress={logout} />
+        </ScrollView>
+      </Screen>
+    </>
   );
 }
 

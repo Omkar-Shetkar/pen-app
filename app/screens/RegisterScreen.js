@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import * as Yup from "yup";
 import Toast from "react-native-toast-message";
 
+import ActivityIndicator from "../components/ActivityIndicator";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
 import AppForm from "../components/forms/AppForm";
 import AppFormField from "../components/forms/AppFormField";
@@ -51,6 +52,7 @@ const validationSchema = Yup.object().shape({
 });
 
 function RegisterScreen() {
+  const [loading, setLoading] = useState(false);
   const [failed, setFailed] = useState(false);
   const [isScribe, setIsScribe] = useState(false);
 
@@ -112,6 +114,8 @@ function RegisterScreen() {
     languages,
     city,
   }) => {
+    setLoading(true);
+
     let selectUserTypeValue = userTypes.find(
       (u) => u.id === selectedUserType
     ).value;
@@ -127,10 +131,11 @@ function RegisterScreen() {
       languages,
       city,
     });
-    console.log("result ", result);
     if (result.ok) {
       loginFun({ mobile, password });
     }
+
+    setLoading(false);
     if (!result.ok) return setFailed(true);
   };
 
@@ -145,119 +150,122 @@ function RegisterScreen() {
   };
 
   return (
-    <Screen style={styles.container}>
-      <ScrollView>
-        {/* TODO: To be removed */}
-        <AppForm
-          // initialValues={{
-          //   selectedUserType: "",
-          //   firstName: "Omkar",
-          //   lastName: "S",
-          //   mobile: "9844491285",
-          //   email: "omkar.shetkar@gmail.com",
-          //   password: "1234",
-          //   gender: "MALE",
-          //   // languages: [languages[1]],
-          // }}
-          // initialValues={{
-          //   selectedUserType: "",
-          //   firstName: "Vedant",
-          //   lastName: "S",
-          //   mobile: "1122334455",
-          //   email: "vedant.shetkar@gmail.com",
-          //   password: "1234",
-          //   gender: "MALE",
-          //   languages: [languages.length > 0 ? languages[1].id : ""],
-          //   // availability: "weekends",
-          //   city: cities.length > 0 ? cities[1].value : "",
-          // }}
-          initialValues={{}}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-        >
-          <AppErrorMessage error="Registration failed!" visible={failed} />
-
-          <AppFormOptionField
-            name="selectedUserType"
-            data={userTypes}
-            onSelection={onUserSelection}
-          />
-
-          <AppFormField
-            autoCorrect={false}
-            icon="account-outline"
-            name="firstName"
-            placeholder="First Name"
-          />
-          <AppFormField
-            autoCorrect={false}
-            icon="account-outline"
-            name="lastName"
-            placeholder="Last Name"
-          />
-
-          <AppFormField
-            autoCorrect={false}
-            icon="cellphone"
-            keyboardType="numeric"
-            name="mobile"
-            placeholder="Mobile"
-            textContentType="telephoneNumber"
-          />
-
-          <AppFormField
-            autoCapitalize="none"
-            autoCorrect={false}
-            icon="email-outline"
-            keyboardType="email-address"
-            name="email"
-            placeholder="Email"
-            textContentType="emailAddress"
-          />
-          <AppFormField
-            autoCapitalize="none"
-            autoCorrect={false}
-            icon="lock-outline"
-            name="password"
-            placeholder="Password"
-            secureTextEntry
-            textContentType="password"
-          />
-          <AppFormPickerField
-            icon="gender-male-female"
-            name="gender"
-            items={genders}
-            placeholder={{
-              label: "Gender",
-              value: "",
+    <>
+      <ActivityIndicator visible={loading} />
+      <Screen style={styles.container}>
+        <ScrollView>
+          {/* TODO: To be removed */}
+          <AppForm
+            // initialValues={{
+            //   selectedUserType: "",
+            //   firstName: "Omkar",
+            //   lastName: "S",
+            //   mobile: "9844491285",
+            //   email: "omkar.shetkar@gmail.com",
+            //   password: "1234",
+            //   gender: "MALE",
+            //   // languages: [languages[1]],
+            // }}
+            initialValues={{
+              selectedUserType: "",
+              firstName: "Vedant",
+              lastName: "S",
+              mobile: "1122334455",
+              email: "vedant.shetkar@gmail.com",
+              password: "1234",
+              gender: "MALE",
+              languages: [languages.length > 0 ? languages[1].id : ""],
+              // availability: "weekends",
+              city: cities.length > 0 ? cities[1].value : "",
             }}
-          />
-          {isScribe && (
-            <>
-              <AppFormMultiSelectField
-                uniqueKey="id"
-                name="languages"
-                items={languages}
-                selectText="Pick Languages"
-                searchInputPlaceholderText="Search Languages..."
-              />
+            // initialValues={{}}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+          >
+            <AppErrorMessage error="Registration failed!" visible={failed} />
 
-              <AppFormPickerField
-                icon="map-marker-outline"
-                name="city"
-                items={cities}
-                placeholder={{
-                  label: "City",
-                  value: "",
-                }}
-              />
-            </>
-          )}
+            <AppFormOptionField
+              name="selectedUserType"
+              data={userTypes}
+              onSelection={onUserSelection}
+            />
 
-          <SubmitButton title="Register" />
-        </AppForm>
-      </ScrollView>
-    </Screen>
+            <AppFormField
+              autoCorrect={false}
+              icon="account-outline"
+              name="firstName"
+              placeholder="First Name"
+            />
+            <AppFormField
+              autoCorrect={false}
+              icon="account-outline"
+              name="lastName"
+              placeholder="Last Name"
+            />
+
+            <AppFormField
+              autoCorrect={false}
+              icon="cellphone"
+              keyboardType="numeric"
+              name="mobile"
+              placeholder="Mobile"
+              textContentType="telephoneNumber"
+            />
+
+            <AppFormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              icon="email-outline"
+              keyboardType="email-address"
+              name="email"
+              placeholder="Email"
+              textContentType="emailAddress"
+            />
+            <AppFormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              icon="lock-outline"
+              name="password"
+              placeholder="Password"
+              secureTextEntry
+              textContentType="password"
+            />
+            <AppFormPickerField
+              icon="gender-male-female"
+              name="gender"
+              items={genders}
+              placeholder={{
+                label: "Gender",
+                value: "",
+              }}
+            />
+            {isScribe && (
+              <>
+                <AppFormMultiSelectField
+                  uniqueKey="id"
+                  name="languages"
+                  items={languages}
+                  selectText="Pick Languages"
+                  searchInputPlaceholderText="Search Languages..."
+                />
+
+                <AppFormPickerField
+                  icon="map-marker-outline"
+                  name="city"
+                  items={cities}
+                  placeholder={{
+                    label: "City",
+                    value: "",
+                  }}
+                />
+              </>
+            )}
+
+            <SubmitButton title="Register" />
+          </AppForm>
+        </ScrollView>
+      </Screen>
+    </>
   );
 }
 
