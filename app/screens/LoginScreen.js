@@ -12,8 +12,11 @@ import useAuth from "../auth/useAuth";
 import strings from "../config/strings";
 
 const validationSchema = Yup.object().shape({
-  mobile: Yup.number().required().label("Mobile"),
-  password: Yup.string().required().min(4).label("Password"),
+  mobile: Yup.number().required("Mobile number is required").label("Mobile"),
+  password: Yup.string()
+    .required("Password is required")
+    .min(4)
+    .label("Password"),
 });
 
 function LoginScreen(props) {
@@ -100,7 +103,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     alignSelf: "center",
-    marginTop: 50,
+    marginTop: 15,
     marginBottom: 20,
   },
 });
