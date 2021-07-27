@@ -10,6 +10,7 @@ import gender from "../config/gender";
 import requestStatus from "../config/requestStatus";
 import useAuth from "../auth/useAuth";
 import strings from "../config/strings";
+import Toast from "react-native-toast-message";
 
 function CandidateAppliedScreen({ navigation }) {
   const { user } = useAuth();
@@ -57,7 +58,16 @@ function CandidateAppliedScreen({ navigation }) {
         action: async () => {
           const result = await requestsApi.deleteRequest(item.id);
           if (result.ok) {
+            Toast.show({
+              type: "success",
+              text1: strings.request.cancel,
+            });
             callLoadListings();
+          } else {
+            Toast.show({
+              type: "error",
+              text1: strings.request.failed,
+            });
           }
         },
       },

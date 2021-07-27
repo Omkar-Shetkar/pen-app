@@ -23,7 +23,7 @@ function ScribeSearchResultsScreen({ route }) {
       setScribeList(scribeList.slice());
       Toast.show({
         type: "success",
-        text1: "Request sent successfully to " + scribe.firstName,
+        text1: strings.request.sent + scribe.firstName,
       });
     } else {
       Toast.show({

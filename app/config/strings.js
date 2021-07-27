@@ -29,6 +29,11 @@ const strings = {
     ally: {
       message: "You have selected information card for ",
     },
+    sent: "Request sent successfully to ",
+    cancel: "Cancelled the request",
+    failed: "Request update failed!",
+    accept: "Accepted the request",
+    decline: "Declined the request",
   },
   search: {
     examError: "Exam is a required field",

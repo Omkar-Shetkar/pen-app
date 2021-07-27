@@ -9,6 +9,8 @@ import requestStatus from "../config/requestStatus";
 import requestsApi from "../api/requests";
 import gender from "../config/gender";
 import useAuth from "../auth/useAuth";
+import strings from "../config/strings";
+import Toast from "react-native-toast-message";
 
 function ScribeReceivedScreen({ navigation }) {
   const { user } = useAuth();
@@ -65,9 +67,17 @@ function ScribeReceivedScreen({ navigation }) {
             requestStatus: requestStatus.ACCEPTED,
           });
           if (result.ok) {
+            Toast.show({
+              type: "success",
+              text1: strings.request.accept,
+            });
             callLoadListings();
-          }
-          //TODO: Request may fail with BAD REQUEST if scribe accepts multiple requests for the same time slot
+          } else {
+            Toast.show({
+              type: "error",
+              text1: strings.request.failed,
+            });
+          } //TODO: Request may fail with BAD REQUEST if scribe accepts multiple requests for the same time slot
         },
       },
       {
