@@ -58,6 +58,7 @@ function RegisterScreen() {
   const [isScribe, setIsScribe] = useState(false);
 
   const { login } = useAuth();
+  let registrationDetails = {};
 
   const userTypes = [
     { label: "Scribe", value: userType.SCRIBE },
@@ -89,13 +90,15 @@ function RegisterScreen() {
   }, []);
 
   const onUserSelection = (e) => {
-    setIsScribe(false);
-    let message = strings.register.candidate;
+    const current = e.value === userType.SCRIBE ? true : false;
 
-    if (e.value === userType.SCRIBE) {
-      setIsScribe(true);
-      message = strings.register.scribe;
+    if (isScribe !== current) {
+      registrationDetails = {};
     }
+    setIsScribe(current);
+    let message = isScribe
+      ? strings.register.scribe
+      : strings.register.candidate;
 
     Toast.show({
       type: "info",
@@ -175,7 +178,7 @@ function RegisterScreen() {
             //   // availability: "weekends",
             //   city: cities.length > 0 ? cities[1].value : "",
             // }}
-            initialValues={{}}
+            initialValues={registrationDetails}
             onSubmit={handleSubmit}
             validationSchema={validationSchema}
           >
