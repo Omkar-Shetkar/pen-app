@@ -19,7 +19,7 @@ import gender from "../config/gender";
 import userType from "../config/userType";
 import useAuth from "../auth/useAuth";
 import strings from "../config/strings";
-import AppFormOptionField from "../components/forms/AppFormOptionField";
+import AppFormRadioButtons from "../components/forms/AppFormRadioButtons";
 
 const mobileRegExp =
   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
@@ -39,14 +39,14 @@ const validationSchema = Yup.object().shape({
   languages: Yup.array()
     .label("Languages")
     .when("selectedUserType", {
-      is: "1",
+      is: "SCRIBE",
       then: Yup.array().min(1).required().label("Languages"),
       otherwise: Yup.array().notRequired(),
     }),
   city: Yup.string()
     .label("City")
     .when("selectedUserType", {
-      is: "1",
+      is: "SCRIBE",
       then: Yup.string().required().label("City"),
       otherwise: Yup.string().notRequired(),
     }),
@@ -60,8 +60,8 @@ function RegisterScreen() {
   const { login } = useAuth();
 
   const userTypes = [
-    { id: "1", label: "Scribe", value: userType.SCRIBE },
-    { id: "2", label: "Candidate", value: userType.CANDIDATE },
+    { label: "Scribe", value: userType.SCRIBE },
+    { label: "Candidate", value: userType.CANDIDATE },
   ];
 
   const genders = [
@@ -99,8 +99,8 @@ function RegisterScreen() {
 
     Toast.show({
       type: "info",
-      text2: message,
-      visibilityTime: 4000,
+      text1: message,
+      visibilityTime: 6000,
     });
   };
 
@@ -117,12 +117,8 @@ function RegisterScreen() {
   }) => {
     setLoading(true);
 
-    let selectUserTypeValue = userTypes.find(
-      (u) => u.id === selectedUserType
-    ).value;
-
     const result = await authApi.register({
-      userType: selectUserTypeValue,
+      userType: selectedUserType,
       firstName,
       lastName,
       email,
@@ -167,25 +163,25 @@ function RegisterScreen() {
             //   gender: "MALE",
             //   // languages: [languages[1]],
             // }}
-            initialValues={{
-              selectedUserType: "",
-              firstName: "Vedant",
-              lastName: "S",
-              mobile: "1122334455",
-              email: "vedant.shetkar@gmail.com",
-              password: "1234",
-              gender: "MALE",
-              languages: [languages.length > 0 ? languages[1].id : ""],
-              // availability: "weekends",
-              city: cities.length > 0 ? cities[1].value : "",
-            }}
-            // initialValues={{}}
+            // initialValues={{
+            //   selectedUserType: "",
+            //   firstName: "Vedant",
+            //   lastName: "S",
+            //   mobile: "1122334455",
+            //   email: "vedant.shetkar@gmail.com",
+            //   password: "1234",
+            //   gender: "MALE",
+            //   languages: [languages.length > 0 ? languages[1].id : ""],
+            //   // availability: "weekends",
+            //   city: cities.length > 0 ? cities[1].value : "",
+            // }}
+            initialValues={{}}
             onSubmit={handleSubmit}
             validationSchema={validationSchema}
           >
             <AppErrorMessage error="Registration failed!" visible={failed} />
 
-            <AppFormOptionField
+            <AppFormRadioButtons
               name="selectedUserType"
               data={userTypes}
               onSelection={onUserSelection}

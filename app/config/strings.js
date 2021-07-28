@@ -23,7 +23,7 @@ const strings = {
   },
   register: {
     scribe: "Scribe writes exams for others",
-    candidate: "Candidate gets assistance for his/her exams",
+    candidate: "Candidate gets assistance for his exams",
   },
   request: {
     ally: {
