@@ -7,7 +7,11 @@ import ScribeSearchResultsScreen from "../screens/ScribeSearchResultsScreen";
 const Stack = createStackNavigator();
 
 const ScribeSearchNavigator = () => (
-  <Stack.Navigator mode="card" screenOptions={{ headerShown: false }}>
+  <Stack.Navigator
+    mode="card"
+    screenOptions={{ headerShown: false }}
+    initialRouteName="Search"
+  >
     <Stack.Screen name="Search" component={ScribeSearchScreen} />
     <Stack.Screen
       name="ScribeSearchResults"

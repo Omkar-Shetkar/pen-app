@@ -22,7 +22,16 @@ function AppNavigator(props) {
   return (
     <AuthContext.Consumer>
       {({ isScribe }) => (
-        <Tab.Navigator initialRouteName={!isScribe ? "Search" : ""}>
+        <Tab.Navigator
+          initialRouteName={!isScribe ? "Search" : ""}
+          tabBarOptions={{
+            labelStyle: { fontSize: 12, fontWeight: "600" },
+            tabStyle: {
+              width: 100,
+              alignContent: "center",
+            },
+          }}
+        >
           <Tab.Screen
             name="Requests"
             component={RequestsNavigator}

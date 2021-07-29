@@ -8,6 +8,7 @@ import CandidateAppliedScreen from "../screens/CandidateAppliedScreen";
 import CandidateAcceptedScreen from "../screens/CandidateAcceptedScreen";
 import CandidateArchiveScreen from "../screens/CandidateArchiveScreen";
 import AuthContext from "../auth/context";
+import colors from "../config/colors";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -15,7 +16,17 @@ function RequestsNavigator(props) {
   return (
     <AuthContext.Consumer>
       {({ isScribe }) => (
-        <Tab.Navigator>
+        <Tab.Navigator
+          tabBarOptions={{
+            indicatorStyle: { height: 3 },
+            labelStyle: { fontWeight: "600" },
+            tabStyle: {
+              width: 100,
+              alignContent: "center",
+            },
+            style: { backgroundColor: colors.whiteSmoke, height: 50 },
+          }}
+        >
           {isScribe && (
             <>
               <Tab.Screen name="Received" component={ScribeReceivedScreen} />

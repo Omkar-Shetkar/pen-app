@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, FlatList } from "react-native";
+import { StyleSheet, FlatList, View } from "react-native";
 import Toast from "react-native-toast-message";
 
 import SearchResultsCardComponent from "../components/SearchResultsCardComponent";
@@ -8,8 +8,9 @@ import gender from "../config/gender";
 import requestsApi from "../api/requests";
 import AppText from "../components/AppText";
 import strings from "../config/strings";
+import colors from "../config/colors";
 
-function ScribeSearchResultsScreen({ route }) {
+function ScribeSearchResultsScreen({ route, navigation }) {
   const [scribeList, setScribeList] = useState(route.params.data);
 
   const handleOnPress = async (scribe) => {
@@ -35,11 +36,12 @@ function ScribeSearchResultsScreen({ route }) {
 
   return (
     <Screen>
-      {(!scribeList || scribeList.length === 0) && (
-        // TODO: Make it nice
-        <AppText>No Scribe Found!</AppText>
+      {scribeList && scribeList.length == 0 && (
+        <View style={styles.emptyContainer}>
+          <AppText style={styles.noData}>{strings.request.noData}</AppText>
+        </View>
       )}
-      {scribeList && (
+      {scribeList && scribeList.length > 0 && (
         <FlatList
           data={scribeList}
           keyExtractor={(item) => item.id.toString()}
@@ -59,6 +61,8 @@ function ScribeSearchResultsScreen({ route }) {
 
 const styles = StyleSheet.create({
   container: {},
+  emptyContainer: { flex: 1, alignItems: "center", justifyContent: "center" },
+  noData: { color: colors.medium },
 });
 
 export default ScribeSearchResultsScreen;
