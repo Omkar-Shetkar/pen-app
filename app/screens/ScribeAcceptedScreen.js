@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, FlatList } from "react-native";
+import { StyleSheet, FlatList, View } from "react-native";
 import moment from "moment";
 
 import RequestCardComponent from "../components/RequestCardComponent";
@@ -11,6 +11,7 @@ import gender from "../config/gender";
 import useAuth from "../auth/useAuth";
 import strings from "../config/strings";
 import Toast from "react-native-toast-message";
+import AppText from "../components/AppText";
 
 function ScribeAcceptedScreen({ navigation }) {
   const { user } = useAuth();
@@ -65,15 +66,7 @@ function ScribeAcceptedScreen({ navigation }) {
     ];
   };
 
-  const icons = {
-    subTitle: "pencil-outline",
-    examDate: "calendar",
-    duration: "av-timer",
-    language: "alpha",
-    address: "map-marker-outline",
-  };
-
-  const examDetails = ({ start, end, language, address }) => {
+  const examDetails = ({ start, end, language, address }, { mobile }) => {
     start = moment(start).format("MMMM Do, h:mm A");
     end = moment(end).format("MMMM Do, h:mm A");
     return {
@@ -81,42 +74,51 @@ function ScribeAcceptedScreen({ navigation }) {
       end,
       language,
       address,
+      mobile,
     };
   };
 
   return (
     <Screen>
-      <FlatList
-        data={listing}
-        keyExtractor={(item) => item.id.toString()}
-        onRefresh={callLoadListings}
-        refreshing={listingLoading}
-        renderItem={({ item }) => (
-          <RequestCardComponent
-            actions={actions(item)}
-            title={
-              item.candidateResource.firstName +
-              ", " +
-              item.candidateResource.lastName
-            }
-            subTitle={item.examResource.name}
-            icons={icons}
-            details={examDetails(item.examResource)}
-            thumbnailIcon={
-              item.candidateResource.gender === gender.MALE
-                ? "face"
-                : "face-woman"
-            }
-            onPress={() => handleOnPress(item)}
-          ></RequestCardComponent>
-        )}
-      ></FlatList>
+      {listing && listing.length == 0 && (
+        <View style={styles.emptyContainer}>
+          <AppText style={styles.noData}>{strings.request.noData}</AppText>
+        </View>
+      )}
+      {listing && listing.length > 0 && (
+        <FlatList
+          data={listing}
+          keyExtractor={(item) => item.id.toString()}
+          onRefresh={callLoadListings}
+          refreshing={listingLoading}
+          renderItem={({ item }) => (
+            <RequestCardComponent
+              actions={actions(item)}
+              title={
+                item.candidateResource.firstName +
+                ", " +
+                item.candidateResource.lastName
+              }
+              subTitle={item.examResource.name}
+              details={examDetails(item.examResource, item.candidateResource)}
+              thumbnailIcon={
+                item.candidateResource.gender === gender.MALE
+                  ? "male"
+                  : "female"
+              }
+              onPress={() => handleOnPress(item)}
+            ></RequestCardComponent>
+          )}
+        ></FlatList>
+      )}
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   container: {},
+  emptyContainer: { flex: 1, alignItems: "center", justifyContent: "center" },
+  noData: { color: colors.medium },
 });
 
 export default ScribeAcceptedScreen;

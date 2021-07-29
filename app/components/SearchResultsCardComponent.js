@@ -1,12 +1,10 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Fontisto } from "@expo/vector-icons";
 
 import AppText from "./AppText";
 import colors from "../config/colors";
 import defaultStyles from "../config/styles";
-import AppButton from "./AppButton";
 import ListItemButton from "./ListItemButton";
 
 function SearchResultsCardComponent({
@@ -19,7 +17,7 @@ function SearchResultsCardComponent({
     <>
       <View style={styles.card}>
         <View style={styles.icon}>
-          <MaterialCommunityIcons
+          <Fontisto
             name={thumbnailIcon}
             size={35}
             color={defaultStyles.colors.medium}
@@ -46,7 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     marginBottom: 20,
     borderRadius: 15,
-    elevation: 2,
+    elevation: 5,
     flexDirection: "row",
     justifyContent: "flex-start",
     marginBottom: 20,
@@ -66,9 +64,11 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     color: colors.secondary,
-    fontWeight: "bold",
+    fontWeight: "500",
+    fontStyle: "italic",
   },
   title: {
+    fontWeight: "500",
     marginBottom: 7,
   },
   button: {

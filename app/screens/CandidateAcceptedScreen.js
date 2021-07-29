@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
-import { StyleSheet, FlatList } from "react-native";
+import { StyleSheet, FlatList, View } from "react-native";
 import moment from "moment";
 
 import RequestCardComponent from "../components/RequestCardComponent";
 import Screen from "../components/Screen";
+import AppText from "../components/AppText";
 import requestsApi from "../api/requests";
 import requestStatus from "../config/requestStatus";
 import gender from "../config/gender";
 import useAuth from "../auth/useAuth";
 import strings from "../config/strings";
+import colors from "../config/colors";
 
 function CandidateAcceptedScreen({ navigation }) {
   const { user } = useAuth();
@@ -29,15 +31,7 @@ function CandidateAcceptedScreen({ navigation }) {
     });
   }, [navigation]);
 
-  const icons = {
-    subTitle: "pencil-outline",
-    examDate: "calendar",
-    duration: "av-timer",
-    language: "alpha",
-    address: "map-marker-outline",
-  };
-
-  const examDetails = ({ start, end, language, address }) => {
+  const examDetails = ({ start, end, language, address }, { mobile }) => {
     start = moment(start).format("MMMM Do, h:mm A");
     end = moment(end).format("MMMM Do, h:mm A");
     return {
@@ -45,6 +39,7 @@ function CandidateAcceptedScreen({ navigation }) {
       end,
       language,
       address,
+      mobile,
     };
   };
 
@@ -57,38 +52,45 @@ function CandidateAcceptedScreen({ navigation }) {
   };
 
   return (
-    // TODO: Handle case when list is empty
     <Screen>
-      <FlatList
-        data={listing}
-        keyExtractor={(listing) => listing.id.toString()}
-        onRefresh={callLoadListings}
-        refreshing={listingLoading}
-        accessible={true}
-        accessibilityLabel={strings.candidate.a11y.accepted}
-        renderItem={({ item }) => (
-          <RequestCardComponent
-            title={
-              item.scribeResource.firstName +
-              ", " +
-              item.scribeResource.lastName
-            }
-            subTitle={item.examResource.name}
-            icons={icons}
-            details={examDetails(item.examResource)}
-            thumbnailIcon={
-              item.scribeResource.gender === gender.MALE ? "face" : "face-woman"
-            }
-            onPress={() => handleOnPress(item)}
-          ></RequestCardComponent>
-        )}
-      ></FlatList>
+      {listing && listing.length == 0 && (
+        <View style={styles.emptyContainer}>
+          <AppText style={styles.noData}>{strings.request.noData}</AppText>
+        </View>
+      )}
+      {listing && listing.length > 0 && (
+        <FlatList
+          data={listing}
+          keyExtractor={(listing) => listing.id.toString()}
+          onRefresh={callLoadListings}
+          refreshing={listingLoading}
+          accessible={true}
+          accessibilityLabel={strings.candidate.a11y.accepted}
+          renderItem={({ item }) => (
+            <RequestCardComponent
+              title={
+                item.scribeResource.firstName +
+                ", " +
+                item.scribeResource.lastName
+              }
+              subTitle={item.examResource.name}
+              details={examDetails(item.examResource, item.scribeResource)}
+              thumbnailIcon={
+                item.scribeResource.gender === gender.MALE ? "male" : "female"
+              }
+              onPress={() => handleOnPress(item)}
+            ></RequestCardComponent>
+          )}
+        ></FlatList>
+      )}
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   container: {},
+  emptyContainer: { flex: 1, alignItems: "center", justifyContent: "center" },
+  noData: { color: colors.medium },
 });
 
 export default CandidateAcceptedScreen;

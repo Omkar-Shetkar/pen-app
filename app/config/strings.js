@@ -28,12 +28,17 @@ const strings = {
   request: {
     ally: {
       message: "You have selected information card for ",
+      exam: "For the exam ",
+      language: " and language as ",
+      start: "Starts at, ",
+      end: "Ends at, ",
     },
     sent: "Request sent successfully to ",
     cancel: "Cancelled the request",
     failed: "Request update failed!",
     accept: "Accepted the request",
     decline: "Declined the request",
+    noData: "No Data Found!",
   },
   search: {
     examError: "Exam is a required field",

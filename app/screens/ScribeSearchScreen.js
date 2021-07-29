@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import * as Yup from "yup";
 
 import ActivityIndicator from "../components/ActivityIndicator";
@@ -18,6 +18,8 @@ import locationApi from "../api/location";
 import strings from "../config/strings";
 import routes from "../navigation/routes";
 import AuthContext from "../auth/context";
+import AppText from "../components/AppText";
+import defaultStyles from "../config/styles";
 
 const validationSchema = Yup.object().shape({
   examDate: Yup.date()
@@ -171,6 +173,9 @@ function ScribeSearchScreen({ navigation }) {
               />
             </View>
 
+            <AppText value="Exam Duration" style={styles.label}>
+              Exam Duration
+            </AppText>
             <View style={styles.durations}>
               <AppFormPickerField
                 icon="timer-sand"
@@ -242,6 +247,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     justifyContent: "space-evenly",
+  },
+  label: {
+    paddingLeft: 10,
+    fontSize: 14,
+    color: defaultStyles.colors.medium,
   },
 });
 

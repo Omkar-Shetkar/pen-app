@@ -47,9 +47,7 @@ function ScribeSearchResultsScreen({ route }) {
             <SearchResultsCardComponent
               title={item.firstName + " " + item.lastName}
               subTitle={item.email}
-              thumbnailIcon={
-                item.gender === gender.MALE ? "face" : "face-woman"
-              }
+              thumbnailIcon={item.gender === gender.MALE ? "male" : "female"}
               onPress={() => handleOnPress(item)}
             ></SearchResultsCardComponent>
           )}

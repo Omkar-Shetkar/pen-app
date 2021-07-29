@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Image, TextInput, Text } from "react-native";
+import { StyleSheet, Image } from "react-native";
 import * as Yup from "yup";
 import AppForm from "../components/forms/AppForm";
 import AppFormField from "../components/forms/AppFormField";
@@ -59,7 +59,7 @@ function LoginScreen(props) {
           validationSchema={validationSchema}
         >
           <AppErrorMessage
-            error="Invalid mobile or password."
+            error="Invalid mobile number or password."
             visible={loginFailed}
           />
           <AppFormField
