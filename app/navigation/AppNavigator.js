@@ -7,6 +7,8 @@ import AccountScreen from "../screens/AccountScreen";
 import RequestsNavigator from "./RequestsNavigator";
 import AuthContext from "../auth/context";
 import ScribeSearchNavigator from "./ScribeSearchNavigator";
+import routes from "./routes";
+import SearchButton from "./SearchButton";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,9 +27,8 @@ function AppNavigator(props) {
         <Tab.Navigator
           initialRouteName={!isScribe ? "Search" : ""}
           tabBarOptions={{
-            labelStyle: { fontSize: 12, fontWeight: "600" },
+            labelStyle: { fontWeight: "800" },
             tabStyle: {
-              width: 100,
               alignContent: "center",
             },
           }}
@@ -45,15 +46,16 @@ function AppNavigator(props) {
             <Tab.Screen
               name="Search"
               component={ScribeSearchNavigator}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons
-                    name="account-search"
+              options={({ navigation }) => ({
+                tabBarIcon: ({ color }) => (
+                  <SearchButton
                     color={color}
-                    size={size}
+                    onPress={() => {
+                      navigation.navigate(routes.SCRIBE_SEARCH);
+                    }}
                   />
                 ),
-              }}
+              })}
             />
           )}
           {/* <Tab.Screen
