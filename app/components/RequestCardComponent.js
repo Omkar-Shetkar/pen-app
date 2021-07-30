@@ -31,7 +31,7 @@ function RequestCardComponent({
               numberOfLines={2}
               style={styles.title}
               accessible={true}
-              accessibilityLabel={strings.request.ally.message + title}
+              accessibilityLabel={strings.request.a11y.message + title}
             >
               {title}
             </AppText>
@@ -42,9 +42,9 @@ function RequestCardComponent({
                 style={styles.exam}
                 accessible={true}
                 accessibilityLabel={
-                  strings.request.ally.exam +
+                  strings.request.a11y.exam +
                   subTitle +
-                  strings.request.ally.language +
+                  strings.request.a11y.language +
                   details["language"]
                 }
               >
@@ -59,10 +59,11 @@ function RequestCardComponent({
                   style={styles.time}
                   accessible={true}
                   accessibilityLabel={
-                    strings.request.ally.start +
+                    strings.request.a11y.start +
                     ", " +
                     details["start"] +
-                    strings.request.ally.end +
+                    ", " +
+                    strings.request.a11y.end +
                     ", " +
                     details["end"]
                   }

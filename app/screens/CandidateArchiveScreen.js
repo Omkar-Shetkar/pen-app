@@ -51,7 +51,11 @@ function CandidateArchiveScreen({ navigation }) {
   return (
     <Screen>
       {listing && listing.length == 0 && (
-        <View style={styles.emptyContainer}>
+        <View
+          style={styles.emptyContainer}
+          accessible={true}
+          accessibilityLabel={strings.request.noData}
+        >
           <AppText style={styles.noData}>{strings.request.noData}</AppText>
         </View>
       )}
@@ -61,8 +65,6 @@ function CandidateArchiveScreen({ navigation }) {
           keyExtractor={(item) => item.id.toString()}
           onRefresh={callLoadListings}
           refreshing={listingLoading}
-          accessible={true}
-          accessibilityLabel={strings.candidate.a11y.archived}
           renderItem={({ item }) => (
             <RequestCardComponent
               title={

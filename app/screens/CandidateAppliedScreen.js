@@ -88,8 +88,6 @@ function CandidateAppliedScreen({ navigation }) {
           keyExtractor={(item) => item.id.toString()}
           onRefresh={callLoadListings}
           refreshing={listingLoading}
-          accessible={true}
-          accessibilityLabel={strings.candidate.a11y.applied}
           renderItem={({ item }) => (
             <RequestCardComponent
               actions={actions(item)}

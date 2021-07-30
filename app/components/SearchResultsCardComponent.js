@@ -6,6 +6,7 @@ import AppText from "./AppText";
 import colors from "../config/colors";
 import defaultStyles from "../config/styles";
 import ListItemButton from "./ListItemButton";
+import strings from "../config/strings";
 
 function SearchResultsCardComponent({
   title,
@@ -23,7 +24,11 @@ function SearchResultsCardComponent({
             color={defaultStyles.colors.medium}
           />
         </View>
-        <View style={styles.detailsContainer}>
+        <View
+          style={styles.detailsContainer}
+          accessible={true}
+          accessibilityLabel={title + ", " + strings.search.a11y.result}
+        >
           <AppText numberOfLines={2} style={styles.title}>
             {title}
           </AppText>
@@ -32,7 +37,12 @@ function SearchResultsCardComponent({
           </AppText>
         </View>
         <View style={styles.button}>
-          <ListItemButton title="Request" onPress={() => onPress()} />
+          <ListItemButton
+            title="Request"
+            accessible={true}
+            accessibilityLabel={strings.request.a11y.sendRequest + ", " + title}
+            onPress={() => onPress()}
+          />
         </View>
       </View>
     </>

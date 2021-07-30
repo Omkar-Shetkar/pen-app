@@ -22,7 +22,11 @@ function AppFormPickerField({
 
   return (
     <>
-      <View style={styles.container}>
+      <View
+        style={styles.container}
+        accessible={true}
+        accessibilityLabel={otherProperties.accessibilityLabel}
+      >
         {icon && (
           <MaterialCommunityIcons
             name={icon}

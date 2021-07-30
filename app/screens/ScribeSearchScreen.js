@@ -163,7 +163,11 @@ function ScribeSearchScreen({ navigation }) {
           >
             <AppErrorMessage error={error} visible={error} />
 
-            <View style={styles.durations}>
+            <View
+              style={styles.durations}
+              accessible={true}
+              accessibilityLabel={strings.search.a11y.examDateTime}
+            >
               <AppFormDateTimePicker
                 icon="calendar"
                 name="examDate"
@@ -186,6 +190,8 @@ function ScribeSearchScreen({ navigation }) {
                   value: "hours",
                 }}
                 suffix="hr"
+                accessible={true}
+                accessibilityLabel={strings.search.a11y.examDurationHr}
               />
 
               <AppFormPickerField
@@ -196,6 +202,8 @@ function ScribeSearchScreen({ navigation }) {
                   value: "minutes",
                 }}
                 suffix="min"
+                accessible={true}
+                accessibilityLabel={strings.search.a11y.examDurationMin}
               />
             </View>
 
@@ -207,6 +215,8 @@ function ScribeSearchScreen({ navigation }) {
                 label: "Language",
                 value: "language",
               }}
+              accessible={true}
+              accessibilityLabel={strings.search.a11y.examLanguage}
             />
 
             <AppFormPickerField
@@ -217,12 +227,16 @@ function ScribeSearchScreen({ navigation }) {
                 label: "Exam",
                 value: "exam",
               }}
+              accessible={true}
+              accessibilityLabel={strings.search.a11y.examName}
             />
             <AppFormField
               autoCorrect={false}
               icon="map-marker-outline"
               name="address"
               placeholder="Address"
+              accessible={true}
+              accessibilityLabel={strings.search.a11y.examAddress}
             />
             <AppFormPickerField
               icon="map-marker-outline"
@@ -232,6 +246,8 @@ function ScribeSearchScreen({ navigation }) {
                 label: "City",
                 value: "",
               }}
+              accessible={true}
+              accessibilityLabel={strings.search.a11y.examCity}
             />
             <SubmitButton title="Search" />
           </AppForm>

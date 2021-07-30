@@ -26,12 +26,13 @@ const strings = {
     candidate: "Candidate gets assistance for his exams",
   },
   request: {
-    ally: {
+    a11y: {
       message: "You have selected information card for ",
       exam: "For the exam ",
       language: " and language as ",
       start: "Starts at, ",
       end: "Ends at, ",
+      sendRequest: "Select to send request to ",
     },
     sent: "Request sent successfully to ",
     cancel: "Cancelled the request",
@@ -41,6 +42,16 @@ const strings = {
     noData: "No Data Found!",
   },
   search: {
+    a11y: {
+      examDateTime: "Tap to select exam date and time",
+      examDurationHr: "Select exam duration hours and minutes",
+      examDurationMin: "Select exam duration minutes",
+      examLanguage: "Select exam language",
+      examName: "Select exam name",
+      examAddress: "Enter exam location address",
+      examCity: "Select exam location city",
+      result: " is available to write exam",
+    },
     examError: "Exam is a required field",
     languageError: "Language is a required field",
     cityError: "City is a required field",

@@ -54,7 +54,11 @@ function CandidateAcceptedScreen({ navigation }) {
   return (
     <Screen>
       {listing && listing.length == 0 && (
-        <View style={styles.emptyContainer}>
+        <View
+          style={styles.emptyContainer}
+          accessible={true}
+          accessibilityLabel={strings.request.noData}
+        >
           <AppText style={styles.noData}>{strings.request.noData}</AppText>
         </View>
       )}
@@ -64,8 +68,6 @@ function CandidateAcceptedScreen({ navigation }) {
           keyExtractor={(listing) => listing.id.toString()}
           onRefresh={callLoadListings}
           refreshing={listingLoading}
-          accessible={true}
-          accessibilityLabel={strings.candidate.a11y.accepted}
           renderItem={({ item }) => (
             <RequestCardComponent
               title={
