@@ -10,15 +10,15 @@ export default function WelcomeScreen({ navigation }) {
     <ImageBackground
       source={require("../assets/background.jpg")}
       style={styles.background}
-      blurRadius={2}
+      blurRadius={8}
     >
       <View style={styles.logoContainer} accessible={true}>
-        <Image source={require("../assets/logo-red.png")} style={styles.logo} />
+        <Image source={require("../assets/logo.png")} style={styles.logo} />
         <Text
           style={styles.text}
           accessibilityLabel={strings.welcome.a11y.welcomeMessage}
         >
-          Platform for Scribe and Candidate
+          {strings.welcome.slogan}
         </Text>
       </View>
 
@@ -55,9 +55,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: "10%",
     alignItems: "center",
+    width: "100%",
   },
   logo: {
-    width: 100,
+    width: 125,
     height: 100,
   },
   registerButton: {
@@ -66,7 +67,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#4ecdc4",
   },
   text: {
+    color: colors.light,
     padding: 10,
+    fontStyle: "italic",
     fontWeight: "600",
     fontSize: 18,
   },

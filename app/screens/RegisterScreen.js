@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import * as Yup from "yup";
-import Toast from "react-native-toast-message";
 
 import ActivityIndicator from "../components/ActivityIndicator";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
@@ -61,8 +60,16 @@ function RegisterScreen() {
   let registrationDetails = {};
 
   const userTypes = [
-    { label: "Scribe", value: userType.SCRIBE },
-    { label: "Candidate", value: userType.CANDIDATE },
+    {
+      label: "Scribe",
+      value: userType.SCRIBE,
+      description: strings.register.scribe,
+    },
+    {
+      label: "Candidate",
+      value: userType.CANDIDATE,
+      description: strings.register.candidate,
+    },
   ];
 
   const genders = [
@@ -96,15 +103,6 @@ function RegisterScreen() {
       registrationDetails = {};
     }
     setIsScribe(current);
-    let message = isScribe
-      ? strings.register.scribe
-      : strings.register.candidate;
-
-    Toast.show({
-      type: "info",
-      text1: message,
-      visibilityTime: 6000,
-    });
   };
 
   const handleSubmit = async ({
@@ -226,7 +224,7 @@ function RegisterScreen() {
               autoCorrect={false}
               icon="lock-outline"
               name="password"
-              placeholder="Password"
+              placeholder="Password (at least 4 chars)"
               secureTextEntry
               textContentType="password"
             />

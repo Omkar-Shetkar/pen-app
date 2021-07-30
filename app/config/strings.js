@@ -64,6 +64,7 @@ const strings = {
       login: "Opens login screen",
       register: "Opens register screen",
     },
+    slogan: "Connecting Scribe with Aspirants",
   },
 };
 
