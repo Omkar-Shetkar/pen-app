@@ -14,7 +14,6 @@ function AppFormRadioButtons({ name, data, onSelection }) {
   values[name] = checked;
 
   const handleOnPress = (option) => {
-    console.log("option --> ", option);
     return () => {
       setChecked(option.value);
       values[name] = option.value;
@@ -24,13 +23,22 @@ function AppFormRadioButtons({ name, data, onSelection }) {
 
   const options = data.map((option) => (
     <>
-      <Pressable style={styles.optionContainer} onPress={handleOnPress(option)}>
+      <Pressable
+        style={[
+          styles.optionbuttonContainer,
+          {
+            backgroundColor:
+              checked === option.value ? colors.secondary : colors.light,
+          },
+        ]}
+        onPress={handleOnPress(option)}
+      >
         <RadioButton
           value={option.value}
           status={checked === option.value ? "checked" : "unchecked"}
           onPress={handleOnPress(option)}
         />
-        <AppText>{option.label}</AppText>
+        <AppText style={styles.label}>{option.label}</AppText>
       </Pressable>
       <View>
         {checked === option.value && (
@@ -53,9 +61,17 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
   },
-  optionContainer: {
+  optionbuttonContainer: {
     flexDirection: "row",
     alignItems: "center",
+    borderWidth: 0.5,
+    borderRadius: 30,
+    borderColor: colors.medium,
+    margin: 5,
+  },
+  label: {
+    color: colors.primary,
+    fontWeight: "800",
   },
   description: {
     color: colors.medium,
