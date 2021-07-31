@@ -9,6 +9,7 @@ import AuthContext from "../auth/context";
 import ScribeSearchNavigator from "./ScribeSearchNavigator";
 import routes from "./routes";
 import SearchButton from "./SearchButton";
+import strings from "../config/strings";
 
 const Tab = createBottomTabNavigator();
 
@@ -37,6 +38,7 @@ function AppNavigator(props) {
             name="Requests"
             component={RequestsNavigator}
             options={{
+              tabBarAccessibilityLabel: strings.request.a11y.requestButton,
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="home" color={color} size={size} />
               ),
@@ -47,6 +49,7 @@ function AppNavigator(props) {
               name="Search"
               component={ScribeSearchNavigator}
               options={({ navigation }) => ({
+                tabBarAccessibilityLabel: strings.search.a11y.searchButton,
                 tabBarIcon: ({ color }) => (
                   <SearchButton
                     color={color}
@@ -75,6 +78,7 @@ function AppNavigator(props) {
             name="Account"
             component={AccountScreen}
             options={{
+              tabBarAccessibilityLabel: strings.account.a11y.accountButton,
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons
                   name="account"

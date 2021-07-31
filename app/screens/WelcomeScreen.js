@@ -10,7 +10,7 @@ export default function WelcomeScreen({ navigation }) {
     <ImageBackground
       source={require("../assets/background.jpg")}
       style={styles.background}
-      blurRadius={8}
+      blurRadius={2}
     >
       <View style={styles.logoContainer} accessible={true}>
         <Image source={require("../assets/logo.png")} style={styles.logo} />
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     color: colors.light,
     padding: 10,
     fontStyle: "italic",
-    fontWeight: "600",
-    fontSize: 18,
+    fontWeight: "500",
+    fontSize: 20,
   },
 });

@@ -43,6 +43,7 @@ function RequestCardComponent({
                 accessible={true}
                 accessibilityLabel={
                   strings.request.a11y.exam +
+                  ", " +
                   subTitle +
                   strings.request.a11y.language +
                   details["language"]

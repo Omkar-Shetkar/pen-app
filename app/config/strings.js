@@ -1,5 +1,8 @@
 const strings = {
   account: {
+    a11y: {
+      accountButton: "Tap here to know your account information",
+    },
     success: "Updated successfully!",
     failed: "Updated failed!",
   },
@@ -27,6 +30,12 @@ const strings = {
   },
   request: {
     a11y: {
+      requestButton:
+        "Tap here to know status of requests which are applied, accepted or archived.",
+      appliedButton:
+        "Tap to know requests which are applied but not yet accepted",
+      acceptedButton: "Tap to know requests which are accepted",
+      archiveButton: "Tap to know about past requests",
       message: "You have selected information card for ",
       exam: "For the exam ",
       language: " and language as ",
@@ -43,6 +52,7 @@ const strings = {
   },
   search: {
     a11y: {
+      searchButton: "Tap here to search for scribes",
       examDateTime: "Tap to select exam date and time",
       examDurationHr: "Select exam duration hours and minutes",
       examDurationMin: "Select exam duration minutes",

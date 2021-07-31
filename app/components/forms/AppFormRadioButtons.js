@@ -4,11 +4,12 @@ import { View, StyleSheet, Pressable } from "react-native";
 import { RadioButton } from "react-native-paper";
 
 import AppText from "../AppText";
+import AppErrorMessage from "./AppErrorMessage";
 import colors from "../../config/colors";
 
 function AppFormRadioButtons({ name, data, onSelection }) {
   const [checked, setChecked] = useState("");
-  const { values } = useFormikContext();
+  const { values, errors, touched } = useFormikContext();
 
   values[name] = checked;
 
@@ -39,7 +40,12 @@ function AppFormRadioButtons({ name, data, onSelection }) {
     </>
   ));
 
-  return <View style={styles.container}>{options}</View>;
+  return (
+    <View style={styles.container}>
+      {options}
+      <AppErrorMessage error={errors[name]} visible={touched[name]} />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

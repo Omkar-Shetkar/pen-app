@@ -9,6 +9,7 @@ import CandidateAcceptedScreen from "../screens/CandidateAcceptedScreen";
 import CandidateArchiveScreen from "../screens/CandidateArchiveScreen";
 import AuthContext from "../auth/context";
 import colors from "../config/colors";
+import strings from "../config/strings";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -17,14 +18,17 @@ function RequestsNavigator(props) {
     <AuthContext.Consumer>
       {({ isScribe }) => (
         <Tab.Navigator
-          tabBarOptions={{
+          tabBrOptions={{
             indicatorStyle: { height: 3 },
             labelStyle: { fontWeight: "600" },
             tabStyle: {
               width: 100,
               alignContent: "center",
             },
-            style: { backgroundColor: colors.whiteSmoke, height: 50 },
+            style: {
+              backgroundColor: colors.whiteSmoke,
+              height: 50,
+            },
           }}
         >
           {isScribe && (
@@ -37,9 +41,27 @@ function RequestsNavigator(props) {
 
           {!isScribe && (
             <>
-              <Tab.Screen name="Applied" component={CandidateAppliedScreen} />
-              <Tab.Screen name="Accepted" component={CandidateAcceptedScreen} />
-              <Tab.Screen name="Archive" component={CandidateArchiveScreen} />
+              <Tab.Screen
+                name="Applied"
+                component={CandidateAppliedScreen}
+                options={{
+                  tabBarAccessibilityLabel: strings.request.a11y.appliedButton,
+                }}
+              />
+              <Tab.Screen
+                name="Accepted"
+                component={CandidateAcceptedScreen}
+                options={{
+                  tabBarAccessibilityLabel: strings.request.a11y.acceptedButton,
+                }}
+              />
+              <Tab.Screen
+                name="Archive"
+                component={CandidateArchiveScreen}
+                options={{
+                  tabBarAccessibilityLabel: strings.request.a11y.archiveButton,
+                }}
+              />
             </>
           )}
         </Tab.Navigator>

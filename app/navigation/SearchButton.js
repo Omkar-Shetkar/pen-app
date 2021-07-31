@@ -20,11 +20,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     borderColor: colors.white,
     borderWidth: 10,
-    borderRadius: 33,
+    borderRadius: 30,
     bottom: 10,
-    height: 65,
+    height: 60,
     justifyContent: "center",
-    width: 65,
+    width: 60,
   },
 });
 
