@@ -20,6 +20,7 @@ import useAuth from "../auth/useAuth";
 import strings from "../config/strings";
 import AppFormRadioButtons from "../components/forms/AppFormRadioButtons";
 import AppText from "../components/AppText";
+import colors from "../config/colors";
 
 const mobileRegExp =
   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
@@ -160,7 +161,7 @@ function RegisterScreen() {
           >
             <AppErrorMessage error="Registration failed!" visible={failed} />
 
-            <AppText>Please select user type</AppText>
+            <AppText style={styles.label}>{strings.register.userType}</AppText>
             <AppFormRadioButtons
               name="selectedUserType"
               data={userTypes}
@@ -249,6 +250,10 @@ function RegisterScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+  },
+  label: {
+    color: colors.medium,
+    fontWeight: "400",
   },
 });
 

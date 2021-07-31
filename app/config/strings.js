@@ -25,6 +25,7 @@ const strings = {
     sessionExpired: "Your session has expired! \n Please login again.",
   },
   register: {
+    userType: "Please select user type",
     scribe: "Scribe writes exams for others",
     candidate: "Candidate gets assistance for his exams",
   },
