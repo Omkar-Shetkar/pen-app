@@ -28,7 +28,6 @@ const validationSchema = Yup.object().shape({
   mobile: Yup.number().required().label("Mobile"),
   email: Yup.string().optional().email().label("Email"),
   gender: Yup.string().required().label("Gender"),
-  //TODO Fix the validation for languages and city
   languages: Yup.array().when("userType", {
     is: (val) => val === "SCRIBE",
     then: Yup.array().min(1).required().label("Languages"),
