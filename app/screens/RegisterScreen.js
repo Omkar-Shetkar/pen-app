@@ -19,6 +19,7 @@ import userType from "../config/userType";
 import useAuth from "../auth/useAuth";
 import strings from "../config/strings";
 import AppFormRadioButtons from "../components/forms/AppFormRadioButtons";
+import AppText from "../components/AppText";
 
 const mobileRegExp =
   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
@@ -182,6 +183,7 @@ function RegisterScreen() {
           >
             <AppErrorMessage error="Registration failed!" visible={failed} />
 
+            <AppText>Please select user type</AppText>
             <AppFormRadioButtons
               name="selectedUserType"
               data={userTypes}
