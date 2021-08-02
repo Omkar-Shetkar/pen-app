@@ -5,7 +5,7 @@ Infrastructure code for Pen app
 ## Postgres
 
 - Create postgres secret (one time or whenever DB password changes)
-  `kubectl create secret generic postgres-secret --from-file=<file-containing-password> -o yaml > postgres-secret.yaml`
+  `kubectl create secret generic postgres-secret --from-literal=<postgres-password> -o yaml > postgres-secret.yaml`
 
 - Deploy postgres pod and service.
 
@@ -26,7 +26,7 @@ create user keycloak PASSWORD 'keycloak';
 
 ## Keycloak
 
-### Realm configuration (one time or whenever realm configuration changes)
+#### Realm configuration (one time or whenever realm configuration changes)
 
 - Copy `pen-realm-export.json` to volume mount of keycloak container mentioned in the corresponding deployment configuration.
 
@@ -50,7 +50,7 @@ create user keycloak PASSWORD 'keycloak';
 
 - Access token will expire in 8 days.
 
-### Deployment
+#### Deployment
 
 - Deploy keycloak
 
