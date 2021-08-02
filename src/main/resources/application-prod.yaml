@@ -1,25 +1,3 @@
 spring:
   liquibase:
     enabled: true
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: http://keycloak-service:8080/auth/realms/pen/protocol/openid-connect/certs
-  datasource:
-    url: jdbc:postgresql://postgres-service:5432/pen
-    username: postgres
-    password: password
-    initialization-mode: always
-
-# Keycloak Configuration
-
-keycloak:
-  server: http://keycloak-service:8080/auth
-  realm: pen
-  client-id: backend
-  client-secret: 2eb7969e-d8c5-4fcc-a99f-3cbf2fce708c
-  admin:
-    realm: master
-    client-id: admin-cli
-    client-secret: a5f0a216-34d1-420c-be14-ff3ece5b0b50
