@@ -67,4 +67,8 @@ create user keycloak PASSWORD 'keycloak';
 
 `docker push omkarshetkar/pen-backend:0.0.1`
 
+- Deploy backend
+
+`kubectl apply -f backend`
+
 - `backend-service` will expose external ip to connect to application.
