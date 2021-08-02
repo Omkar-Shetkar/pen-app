@@ -5,6 +5,7 @@ Infrastructure code for Pen app
 ## Postgres
 
 - Create postgres secret (one time or whenever DB password changes)
+
   `kubectl create secret generic postgres-secret --from-literal=password=<postgres-password>`
 
 - Deploy postgres pod and service.
