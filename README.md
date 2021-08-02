@@ -4,13 +4,16 @@ Infrastructure code for Pen app
 
 ## Postgres
 
+- Create postgres secret (one time or whenever DB password changes)
+  `kubectl create secret generic postgres-secret --from-file=<file-containing-password> -o yaml > postgres-secret.yaml`
+
 - Deploy postgres pod and service.
 
-`kubectl apply -f postgres`
+  `kubectl apply -f postgres`
 
 - Connect to remote postgres.
 
-`kubectl port-forward postgres-85b84bf857-995jp 6000:5432`
+  `kubectl port-forward postgres-85b84bf857-995jp 6000:5432`
 
 - Create db and users for postgres and keycloak
 
@@ -23,13 +26,13 @@ create user keycloak PASSWORD 'keycloak';
 
 ## Keycloak
 
-### Realm configuration (one time)
+### Realm configuration (one time or whenever realm configuration changes)
 
 - Copy `pen-realm-export.json` to volume mount of keycloak container mentioned in the corresponding deployment configuration.
 
 - Login to remote keycloak.
 
-`kubectl port-forward keycloak-78fc9b8c8b-4fs7s 9090:8080`
+  `kubectl port-forward keycloak-78fc9b8c8b-4fs7s 9090:8080`
 
 - Configure client `admin-cli` of `master` realm, as per https://github.com/keycloak/keycloak-documentation/blob/master/server_development/topics/admin-rest-api.adoc#authenticate-with-a-service-account
 
@@ -51,24 +54,24 @@ create user keycloak PASSWORD 'keycloak';
 
 - Deploy keycloak
 
-`kubectl apply -f keycloak`
+  `kubectl apply -f keycloak`
 
 ## Backend
 
 - Build the image
 
-`./mvnw spring-boot:build-image`
+  `./mvnw spring-boot:build-image`
 
 - Tag the image
 
-`docker tag pen-backend:0.0.1-SNAPSHOT omkarshetkar/pen-backend:0.0.1`
+  `docker tag pen-backend:0.0.1-SNAPSHOT omkarshetkar/pen-backend:0.0.1`
 
 - Push the image to docker repository
 
-`docker push omkarshetkar/pen-backend:0.0.1`
+  `docker push omkarshetkar/pen-backend:0.0.1`
 
 - Deploy backend
 
-`kubectl apply -f backend`
+  `kubectl apply -f backend`
 
 - `backend-service` will expose external ip to connect to application.
