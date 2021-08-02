@@ -36,7 +36,7 @@ spec:
             - name: DB_PORT
               value: "5432"
             - name: KEYCLOAK_IMPORT
-              value: "/tmp/realm-export.json"
+              value: "/tmp/pen-realm-export.json"
           ports:
             - name: http
               containerPort: 8080
