@@ -5,7 +5,7 @@ Infrastructure code for Pen app
 ## Postgres
 
 - Create postgres secret (one time or whenever DB password changes)
-  `kubectl create secret generic postgres-secret --from-literal=<postgres-password> -o yaml > postgres-secret.yaml`
+  `kubectl create secret generic postgres-secret --from-literal=password=<postgres-password>`
 
 - Deploy postgres pod and service.
 
@@ -57,6 +57,10 @@ create user keycloak PASSWORD 'keycloak';
   `kubectl apply -f keycloak`
 
 ## Backend
+
+- Create config map for `SPRING_APPLICATION_JSON`
+
+`kubectl create cm spring-application-json --from-file=application-env=./backend/config/spring-application-json.json`
 
 - Build the image
 

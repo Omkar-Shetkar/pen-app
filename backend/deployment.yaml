@@ -27,3 +27,27 @@ spec:
             limits:
               memory: "1Gi"
               cpu: "1"
+          env:
+            - name: SPRING_APPLICATION_JSON
+              valueFrom:
+                configMapKeyRef:
+                  name: spring-application-json
+                  key: application-env
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: postgres-secret
+          volumeMounts:
+            - mountPath: "/etc/env/app"
+              name: config
+            - name: postgres-secret
+              mountPath: "/etc/env/secret"
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: spring-application-json
+        - name: postgres-secret
+          secret:
+            secretName: postgres-secret
