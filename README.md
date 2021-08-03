@@ -29,6 +29,20 @@ create user keycloak PASSWORD 'keycloak';
 
 #### Realm configuration (one time or whenever realm configuration changes)
 
+- Create config map for keycloak server location
+
+`kubectl create cm keycloak-server --from-literal=server=<http://<server-location>/auth>`
+
+Eg.,
+
+`kubectl create cm keycloak-server --from-literal=server=http://keycloak-service:8080/auth`
+
+- Create secrets each for `admin-cli` and `backend` clients.
+
+  `kubectl create secret generic admin-cli-secret --from-literal=secret=<admin-cli-secret>`
+
+  `kubectl create secret generic backend-secret --from-literal=secret=<backend-secret>`
+
 - Copy `pen-realm-export.json` to volume mount of keycloak container mentioned in the corresponding deployment configuration.
 
 - Login to remote keycloak.

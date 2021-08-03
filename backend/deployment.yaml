@@ -38,11 +38,35 @@ spec:
                 secretKeyRef:
                   key: password
                   name: postgres-secret
+            - name: ADMIN_CLI_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: secret
+                  name: admin-cli-secret
+            - name: BACKEND_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: secret
+                  name: backend-secret
+            - name: KEYCLOAK_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  key: server
+                  name: keycloak-server
           volumeMounts:
-            - mountPath: "/etc/env/app"
-              name: config
+            - name: config
+              mountPath: "/etc/env/app"
             - name: postgres-secret
-              mountPath: "/etc/env/secret"
+              mountPath: "/etc/env/secret/postgres"
+              readOnly: true
+            - name: admin-cli-secret
+              mountPath: "/etc/env/secret/admin-cli"
+              readOnly: true
+            - name: backend-secret
+              mountPath: "/etc/env/secret/backend"
+              readOnly: true
+            - name: keycloak-server
+              mountPath: "/etc/env/keycloak"
               readOnly: true
       volumes:
         - name: config
@@ -51,3 +75,12 @@ spec:
         - name: postgres-secret
           secret:
             secretName: postgres-secret
+        - name: admin-cli-secret
+          secret:
+            secretName: admin-cli-secret
+        - name: backend-secret
+          secret:
+            secretName: backend-secret
+        - name: keycloak-server
+          configMap:
+            name: keycloak-server
