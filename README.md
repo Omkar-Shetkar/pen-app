@@ -55,8 +55,6 @@ Eg.,
 
   `kubectl create cm keycloak-realm-pen --from-file=pen-realm=<file-location>`
 
-- Copy `pen-realm-export.json` to volume mount of keycloak container mentioned in the corresponding deployment configuration.
-
 - Login to remote keycloak.
 
   `kubectl port-forward keycloak-78fc9b8c8b-4fs7s 9090:8080`
@@ -125,11 +123,21 @@ Eg.,
   gcloud container clusters create "pen-gke-regional" \
    --region "us-west1" \
     --machine-type "e2-standard-2" --disk-type "pd-standard" --disk-size "100" \
-     --num-nodes "1" --node-locations "us-west1-a"
+     --num-nodes "1" --node-locations "us-west1-a,us-west1-b"
   ```
+
+  - Update cloud shell with cluster details
+
+    `gcloud container clusters get-credentials pen-gke-regional --region us-west1`
 
 - git clone https://github.com/Omkar-Shetkar/pen-infrastructure.git
 
 - `cd pen-infrastructure/`
+
+- Create all config maps and secrets
+
+- Create regionwide pv/pvc for database.
+
+  `kubectl apply -f postgres/prod/storage.yaml`
 
 -
