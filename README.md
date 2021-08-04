@@ -110,3 +110,26 @@ Eg.,
 ## Frontend
 
 - Update `pen-frontend/app/config/settings.js` to point to above obtained external ip.
+
+## Deployment to GCP
+
+### One time
+
+- Ensure `Container Engine API` and `Kubernetes Engine API` are enabled in cloud console.
+
+- Open cloud shell in GCP console.
+
+- Create cluster for GKE
+
+  ```
+  gcloud container clusters create "pen-gke-regional" \
+   --region "us-west1" \
+    --machine-type "e2-standard-2" --disk-type "pd-standard" --disk-size "100" \
+     --num-nodes "1" --node-locations "us-west1-a"
+  ```
+
+- git clone https://github.com/Omkar-Shetkar/pen-infrastructure.git
+
+- `cd pen-infrastructure/`
+
+-
