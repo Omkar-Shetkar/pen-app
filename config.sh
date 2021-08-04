@@ -6,7 +6,7 @@ read password
 
 kubectl create secret generic postgres-secret --from-literal=password=$password
 
-echo Keycloak server location? (eg., http://localhost:8080/auth)
+echo Keycloak server location? \(eg., http://localhost:8080/auth\)
 
 read server-location
 
