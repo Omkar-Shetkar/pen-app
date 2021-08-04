@@ -22,7 +22,10 @@ spec:
             - name: KEYCLOAK_USER
               value: "admin"
             - name: KEYCLOAK_PASSWORD
-              value: "admin"
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: keycloak-admin-password
             - name: PROXY_ADDRESS_FORWARDING
               value: "true"
             - name: DB_VENDOR
@@ -30,13 +33,16 @@ spec:
             - name: DB_USER
               value: "keycloak"
             - name: DB_PASSWORD
-              value: "keycloak"
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: keycloak-db-password
             - name: DB_ADDR
               value: "postgres-service"
             - name: DB_PORT
               value: "5432"
             - name: KEYCLOAK_IMPORT
-              value: "/tmp/pen-realm-export.json"
+              value: "/etc/env/realm/pen-realm"
           ports:
             - name: http
               containerPort: 8080
@@ -54,9 +60,22 @@ spec:
               memory: "500Mi"
               cpu: "0.5"
           volumeMounts:
-            - mountPath: /tmp
-              name: keycloak-config
+            - name: keycloak-admin-password
+              mountPath: "/etc/env/secret/admin"
+              readOnly: true
+            - name: keycloak-db-password
+              mountPath: "/etc/env/secret/db"
+              readOnly: true
+            - name: keycloak-realm-pen
+              mountPath: "/etc/env/realm"
+              readOnly: true
       volumes:
-        - name: keycloak-config
-          persistentVolumeClaim:
-            claimName: keycloak-pvc
+        - name: keycloak-admin-password
+          secret:
+            secretName: keycloak-admin-password
+        - name: keycloak-db-password
+          secret:
+            secretName: keycloak-db-password
+        - name: keycloak-realm-pen
+          configMap:
+            name: keycloak-realm-pen

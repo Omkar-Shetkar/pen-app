@@ -43,6 +43,18 @@ Eg.,
 
   `kubectl create secret generic backend-secret --from-literal=secret=<backend-secret>`
 
+- Create secret for `admin` password.
+
+  `kubectl create secret generic keycloak-admin-password --from-literal=password=<keycloak-admin-password>`
+
+- Create secret for `keycloak` db password.
+
+  `kubectl create secret generic keycloak-db-password --from-literal=password=<keycloak-db-password>`
+
+- Create config map for realm export json.
+
+  `kubectl create cm keycloak-realm-pen --from-file=pen-realm=<file-location>`
+
 - Copy `pen-realm-export.json` to volume mount of keycloak container mentioned in the corresponding deployment configuration.
 
 - Login to remote keycloak.
@@ -94,3 +106,7 @@ Eg.,
   `kubectl apply -f backend`
 
 - `backend-service` will expose external ip to connect to application.
+
+## Frontend
+
+- Update `pen-frontend/app/config/settings.js` to point to above obtained external ip.
