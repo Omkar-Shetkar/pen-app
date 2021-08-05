@@ -111,13 +111,11 @@ Eg.,
 
 ## Deployment to GCP
 
-### One time
-
 - Ensure `Container Engine API` and `Kubernetes Engine API` are enabled in cloud console.
 
 - Open cloud shell in GCP console.
 
-- Create cluster for GKE
+- Create cluster for GKE (one time)
 
   ```
   gcloud container clusters create "pen-gke-regional" \
@@ -134,10 +132,14 @@ Eg.,
 
 - `cd pen-infrastructure/`
 
-- Create all config maps and secrets
+- Create all config maps and secrets using `./scripts/config.sh` (one time)
 
 - Create regionwide pv/pvc for database.
 
   `kubectl apply -f postgres/prod/storage.yaml`
 
--
+- Create DB and users using `./scripts/db-init.sh`. (one time)
+
+- Deploy postgres pod and service.
+
+  `kubectl apply -f postgres`

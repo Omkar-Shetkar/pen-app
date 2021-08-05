@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Recreates all config and secrets
+
 echo Delete all config/secret? \(Y/N\)
 
 read delete
