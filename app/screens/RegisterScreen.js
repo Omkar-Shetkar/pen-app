@@ -27,15 +27,21 @@ const mobileRegExp =
 
 const validationSchema = Yup.object().shape({
   selectedUserType: Yup.string().required().label("User Type"),
-  firstName: Yup.string().required().label("First Name"),
-  lastName: Yup.string().required().label("Last Name"),
+  firstName: Yup.string().required().max(64).label("First Name"),
+  lastName: Yup.string().required().max(64).label("Last Name"),
   mobile: Yup.string()
     .required()
-    .max(10)
+    .length(10)
     .matches(mobileRegExp, "Mobile number not valid")
     .label("Mobile"),
-  email: Yup.string().optional().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
+  email: Yup.string().optional().email().max(64).label("Email"),
+  password: Yup.string().required().min(4).max(16).label("Password"),
+  duplicatePassword: Yup.string()
+    .required()
+    .min(4)
+    .max(16)
+    .equals([Yup.ref("password")], "Passwords are not matching")
+    .label("Password"),
   gender: Yup.string().required().label("Gender"),
   languages: Yup.array()
     .label("Languages")
@@ -205,6 +211,15 @@ function RegisterScreen() {
               icon="lock-outline"
               name="password"
               placeholder="Password (at least 4 chars)"
+              secureTextEntry
+              textContentType="password"
+            />
+            <AppFormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              icon="lock-outline"
+              name="duplicatePassword"
+              placeholder="Retype the password"
               secureTextEntry
               textContentType="password"
             />

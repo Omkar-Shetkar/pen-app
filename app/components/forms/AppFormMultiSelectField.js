@@ -28,7 +28,7 @@ function AppFormMultiSelectField({
           searchInputPlaceholderText={searchInputPlaceholderText}
           submitButtonColor={colors.primary}
           single={isSingle}
-          fixedHeight={true}
+          fixedHeight={false}
         />
       </View>
 
