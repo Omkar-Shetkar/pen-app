@@ -1,0 +1,677 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1627137483954-1
+      author: omkars (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: address_pkey
+                  name: id
+                  type: INTEGER
+              - column:
+                  name: city
+                  type: INTEGER
+              - column:
+                  name: state
+                  type: INTEGER
+              - column:
+                  name: country
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: pincode
+                  type: VARCHAR(25)
+              - column:
+                  name: gps_location
+                  type: VARCHAR(200)
+            tableName: address
+  - changeSet:
+      id: 1627137483954-2
+      author: omkars (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: city_pkey
+                  name: id
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(250)
+              - column:
+                  name: state
+                  type: INTEGER
+            tableName: city
+  - changeSet:
+      id: 1627137483954-3
+      author: omkars (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: country_pkey
+                  name: id
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(250)
+            tableName: country
+  - changeSet:
+      id: 1627137483954-4
+      author: omkars (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: state_pkey
+                  name: id
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(250)
+              - column:
+                  name: country
+                  type: INTEGER
+            tableName: state
+  - changeSet:
+      id: 1627137483954-5
+      author: omkars (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: rating
+                  type: INTEGER
+              - column:
+                  name: comment
+                  type: VARCHAR
+              - column:
+                  name: exam_event
+                  type: INTEGER
+            tableName: candidate_feedback
+  - changeSet:
+      id: 1627137483954-6
+      author: omkars (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: exam_event_pkey
+                  name: id
+                  type: INTEGER
+              - column:
+                  name: request
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: scribe
+                  type: VARCHAR(50)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: candidate
+                  type: VARCHAR(50)
+              - column:
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+                  name: otp_generated
+                  type: BOOLEAN
+              - column:
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+                  name: otp_verified
+                  type: BOOLEAN
+              - column:
+                  constraints:
+                    nullable: false
+                  name: exam_status
+                  type: VARCHAR(30)
+              - column:
+                  name: exam_schedule
+                  type: INTEGER
+            tableName: exam_event
+  - changeSet:
+      id: 1627137483954-7
+      author: omkars (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: candidate_pkey
+                  name: id
+                  type: VARCHAR(50)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: first_name
+                  type: VARCHAR(200)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: last_name
+                  type: VARCHAR(200)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: gender
+                  type: VARCHAR(25)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: mobile
+                  type: VARCHAR(25)
+              - column:
+                  name: email
+                  type: VARCHAR(200)
+            tableName: candidate
+  - changeSet:
+      id: 1627137483954-8
+      author: omkars (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: exam_schedule_pkey
+                  name: id
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: start_time
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  constraints:
+                    nullable: false
+                  name: end_time
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  name: exam
+                  type: INTEGER
+              - column:
+                  name: language
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: address
+                  type: VARCHAR(512)
+              - column:
+                  name: city
+                  type: INTEGER
+            tableName: exam_schedule
+  - changeSet:
+      id: 1627137483954-9
+      author: omkars (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: request_pkey
+                  name: id
+                  type: INTEGER
+              - column:
+                  name: candidate
+                  type: VARCHAR(50)
+              - column:
+                  name: scribe
+                  type: VARCHAR(50)
+              - column:
+                  name: exam_schedule
+                  type: INTEGER
+              - column:
+                  name: status
+                  type: VARCHAR(200)
+            tableName: request
+  - changeSet:
+      id: 1627137483954-10
+      author: omkars (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: scribe_pkey
+                  name: id
+                  type: VARCHAR(50)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: first_name
+                  type: VARCHAR(200)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: last_name
+                  type: VARCHAR(200)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: gender
+                  type: VARCHAR(25)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: mobile
+                  type: VARCHAR(25)
+              - column:
+                  name: email
+                  type: VARCHAR(200)
+              - column:
+                  name: location
+                  type: VARCHAR(200)
+              - column:
+                  name: availability
+                  type: VARCHAR(50)
+              - column:
+                  name: city
+                  type: INTEGER
+            tableName: scribe
+  - changeSet:
+      id: 1627137483954-11
+      author: omkars (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: exam_pkey
+                  name: id
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(200)
+            tableName: exam
+  - changeSet:
+      id: 1627137483954-12
+      author: omkars (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: language_pkey
+                  name: id
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(200)
+            tableName: language
+  - changeSet:
+      id: 1627137483954-13
+      author: omkars (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: rating
+                  type: INTEGER
+              - column:
+                  name: comment
+                  type: VARCHAR
+              - column:
+                  name: exam_event
+                  type: INTEGER
+            tableName: scribe_feedback
+  - changeSet:
+      id: 1627137483954-14
+      author: omkars (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: scribe
+                  type: VARCHAR(50)
+              - column:
+                  name: language
+                  type: INTEGER
+            tableName: scribe_language
+  - changeSet:
+      id: 1627137483954-15
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: city
+            baseTableName: scribe
+            constraintName: scribe_city_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: city
+            validate: true
+  - changeSet:
+      id: 1627137483954-16
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: country
+            baseTableName: state
+            constraintName: state_country_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: country
+            validate: true
+  - changeSet:
+      id: 1627137483954-17
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: exam_event
+            baseTableName: scribe_feedback
+            constraintName: scribe_feedback_exam_event_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: exam_event
+            validate: true
+  - changeSet:
+      id: 1627137483954-18
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: candidate
+            baseTableName: exam_event
+            constraintName: exam_event_candidate_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: candidate
+            validate: true
+  - changeSet:
+      id: 1627137483954-19
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: candidate
+            baseTableName: request
+            constraintName: request_candidate_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: candidate
+            validate: true
+  - changeSet:
+      id: 1627137483954-20
+      author: omkars (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: start_time, end_time, exam, language
+            constraintName: exam_schedule_start_time_end_time_exam_language_key
+            tableName: exam_schedule
+  - changeSet:
+      id: 1627137483954-21
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: exam_schedule
+            baseTableName: request
+            constraintName: request_exam_schedule_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: exam_schedule
+            validate: true
+  - changeSet:
+      id: 1627137483954-22
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: exam
+            baseTableName: exam_schedule
+            constraintName: exam_schedule_exam_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: exam
+            validate: true
+  - changeSet:
+      id: 1627137483954-23
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: language
+            baseTableName: scribe_language
+            constraintName: scribe_language_language_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: language
+            validate: true
+  - changeSet:
+      id: 1627137483954-24
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: scribe
+            baseTableName: scribe_language
+            constraintName: scribe_language_scribe_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: scribe
+            validate: true
+  - changeSet:
+      id: 1627137483954-25
+      author: omkars (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: scribe, language
+            constraintName: scribe_language_scribe_language_key
+            tableName: scribe_language
+  - changeSet:
+      id: 1627137483954-26
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: city
+            baseTableName: address
+            constraintName: address_city_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: city
+            validate: true
+  - changeSet:
+      id: 1627137483954-27
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: country
+            baseTableName: address
+            constraintName: address_country_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: country
+            validate: true
+  - changeSet:
+      id: 1627137483954-28
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: state
+            baseTableName: address
+            constraintName: address_state_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: state
+            validate: true
+  - changeSet:
+      id: 1627137483954-29
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: state
+            baseTableName: city
+            constraintName: city_state_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: state
+            validate: true
+  - changeSet:
+      id: 1627137483954-30
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: exam_event
+            baseTableName: candidate_feedback
+            constraintName: candidate_feedback_exam_event_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: exam_event
+            validate: true
+  - changeSet:
+      id: 1627137483954-31
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: exam_schedule
+            baseTableName: exam_event
+            constraintName: exam_event_exam_schedule_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: exam_schedule
+            validate: true
+  - changeSet:
+      id: 1627137483954-32
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: request
+            baseTableName: exam_event
+            constraintName: exam_event_request_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: request
+            validate: true
+  - changeSet:
+      id: 1627137483954-33
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: scribe
+            baseTableName: exam_event
+            constraintName: exam_event_scribe_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: scribe
+            validate: true
+  - changeSet:
+      id: 1627137483954-34
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: language
+            baseTableName: exam_schedule
+            constraintName: exam_schedule_language_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: language
+            validate: true
+  - changeSet:
+      id: 1627137483954-35
+      author: omkars (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: scribe
+            baseTableName: request
+            constraintName: request_scribe_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: scribe
+            validate: true
+

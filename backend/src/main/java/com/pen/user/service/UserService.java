@@ -1,0 +1,46 @@
+package com.pen.user.service;
+
+import com.pen.candidate.domain.Candidate;
+import com.pen.candidate.repository.CandidateRepository;
+import com.pen.client.exam.UserType;
+import com.pen.client.register.UserResource;
+import com.pen.scribe.domain.Scribe;
+import com.pen.scribe.repository.ScribeRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+@Slf4j
+public class UserService {
+
+    private final ScribeRepository scribeRepository;
+    private final CandidateRepository candidateRepository;
+
+    public UserService(ScribeRepository scribeRepository, CandidateRepository candidateRepository) {
+        this.scribeRepository = scribeRepository;
+        this.candidateRepository = candidateRepository;
+    }
+
+    public UserResource getUser(String userId) {
+        log.info("GetUser userId{}", userId);
+        Optional<UserResource> userResource = scribeRepository.findById(userId).map(Scribe::asUserResource);
+        if (userResource.isEmpty()) {
+            userResource = candidateRepository.findById(userId).map(Candidate::asUserResource);
+        }
+        return userResource
+                .orElseThrow(() -> new IllegalArgumentException(String.format("User %s not found!", userId)));
+    }
+
+    public UserResource updateUser(UserResource userResource) {
+        log.info("UpdateUser userResource {}", userResource);
+        if (userResource.getUserType().equals(UserType.SCRIBE)) {
+            Scribe scribe = userResource.asScribe();
+            return scribeRepository.update(scribe).asUserResource();
+        } else {
+            Candidate candidate = userResource.asCandidate();
+            return candidateRepository.update(candidate).asUserResource();
+        }
+    }
+}

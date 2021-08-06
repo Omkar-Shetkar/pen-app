@@ -1,0 +1,43 @@
+logging.level:
+  org:
+    springframework:
+#      security: DEBUG
+#      jdbc.core.JdbcTemplate: DEBUG
+
+spring:
+  profiles:
+    active: prod
+    banner:
+      location: classpath:banner.txt
+
+  info:
+    app:
+      name: "pen-backend"
+      description: "Pen backend using Spring boot"
+      encoding: "@project.build.sourceEncoding@"
+      version: "@version@"
+      java:
+        source: "@java.version@"
+        target: "@java.version@"
+
+server.port: 8900
+
+pen.exam:
+  schedule.delay-in-ms: 2700000 # 45 Mins - OTP is generated at the most given delay before start of the exam
+  otp.expire-in-ms: 3600000 # 60 Mins - OTP Expires after 1 Hr of generation
+  initial-delay-in-ms: 180000 # 3 Min
+
+
+# HEALTH ENDPOINT
+# to details across firewwalls
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  # to show details while localhost is accessed like - http://localhost:8080/actuator.
+  endpoint:
+    health:
+      show-details: always
+      readiness:
+        include: "readinessState,customCheck"

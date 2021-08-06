@@ -1,0 +1,124 @@
+databaseChangeLog:
+  - changeSet:
+      id: loadData-language
+      author: omkars
+      changes:
+        - loadData:
+            catalogName: language
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: NUMERIC
+              - column:
+                  header: name
+                  name: name
+                  type: STRING
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: languages.csv
+            quotchar: ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            separator: '\t'
+            tableName: language
+            usePreparedStatements: false
+
+  - changeSet:
+        id: loadData-exam
+        author: omkars
+        changes:
+            - loadData:
+                  catalogName: exam
+                  columns:
+                      - column:
+                            header: id
+                            name: id
+                            type: NUMERIC
+                      - column:
+                            header: name
+                            name: name
+                            type: STRING
+                  commentLineStartsWith: //
+                  encoding: UTF-8
+                  file: exams.csv
+                  quotchar: ''''
+                  relativeToChangelogFile: true
+                  schemaName: public
+                  separator: '\t'
+                  tableName: exam
+                  usePreparedStatements: false
+  - changeSet:
+      id: loadData-country
+      author: omkars
+      changes:
+        - loadData:
+            catalogName: country
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: NUMERIC
+              - column:
+                  header: name
+                  name: name
+                  type: STRING
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: countries.csv
+            quotchar: ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            separator: '\t'
+            tableName: country
+            usePreparedStatements: false
+
+  - changeSet:
+      id: loadData-state
+      author: omkars
+      changes:
+        - loadData:
+            catalogName: state
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: NUMERIC
+              - column:
+                  header: name
+                  name: name
+                  type: STRING
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: states.csv
+            quotchar: ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            separator: '\t'
+            tableName: state
+            usePreparedStatements: false
+
+  - changeSet:
+      id: loadData-city
+      author: omkars
+      changes:
+        - loadData:
+            catalogName: city
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: NUMERIC
+              - column:
+                  header: name
+                  name: name
+                  type: STRING
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: cities.csv
+            quotchar: ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            separator: '\t'
+            tableName: city
+            usePreparedStatements: false

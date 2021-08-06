@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/db.changelog-schema-v1.yaml
+  - include:
+      file: db/changelog/data/load/load-data-v1.yaml
+# To be used only for demo data population
+#  - include:
+#      file: db/changelog/data/prepare/prepare-data.yaml
