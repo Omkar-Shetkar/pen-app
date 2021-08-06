@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, FlatList, View } from "react-native";
+import { StyleSheet, FlatList, View, Alert } from "react-native";
 import moment from "moment";
 
 import RequestCardComponent from "../components/RequestCardComponent";
@@ -48,24 +48,46 @@ function CandidateAppliedScreen({ navigation }) {
       {
         color: colors.danger,
         name: "cancel",
-        action: async () => {
-          const result = await requestsApi.deleteRequest(item.id);
-          if (result.ok) {
-            Toast.show({
-              type: "success",
-              text1: strings.request.cancel,
-            });
-            callLoadListings();
-          } else {
-            Toast.show({
-              type: "error",
-              text1: strings.request.failed,
-            });
-          }
+        action: () => {
+          Alert.alert("Cancel", strings.request.cancelConfirm, [
+            {
+              text: "NO",
+              onPress: () => console.log("NO Pressed"),
+              style: "cancel",
+            },
+            {
+              text: "YES",
+              onPress: async () => {
+                const result = await requestsApi.deleteRequest(item.id);
+                if (result.ok) {
+                  Toast.show({
+                    type: "success",
+                    text1: strings.request.cancel,
+                  });
+                  callLoadListings();
+                } else {
+                  Toast.show({
+                    type: "error",
+                    text1: strings.request.failed,
+                  });
+                }
+              },
+            },
+          ]);
         },
       },
     ];
   };
+
+  const createTwoButtonAlert = () =>
+    Alert.alert(" Alert Title", "My Alert Msg", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => console.log("OK Pressed") },
+    ]);
 
   const callLoadListings = () => {
     loadListings({

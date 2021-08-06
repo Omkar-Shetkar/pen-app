@@ -52,9 +52,8 @@ function LoginScreen(props) {
           source={require("../assets/logo.png")}
           style={styles.logo}
         ></Image>
-        {/* TODO: To be removed */}
         <AppForm
-          initialValues={{ mobile: "111222", password: "1234" }}
+          initialValues={{}}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
@@ -68,7 +67,7 @@ function LoginScreen(props) {
             icon="cellphone"
             keyboardType="phone-pad"
             name="mobile"
-            placeholder="Mobile"
+            placeholder="Registered 10 digit mobile number"
             textContentType="telephoneNumber"
             accessible={true}
             accessibilityHint={strings.login.a11y.mobile}

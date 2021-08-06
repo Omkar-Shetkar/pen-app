@@ -38,7 +38,16 @@ function AppFormRadioButtons({ name, data, onSelection }) {
           status={checked === option.value ? "checked" : "unchecked"}
           onPress={handleOnPress(option)}
         />
-        <AppText style={styles.label}>{option.label}</AppText>
+        <AppText
+          style={[
+            styles.label,
+            checked === option.value
+              ? { fontWeight: "bold" }
+              : { fontWeight: "800" },
+          ]}
+        >
+          {option.label}
+        </AppText>
       </Pressable>
       <View>
         {checked === option.value && (

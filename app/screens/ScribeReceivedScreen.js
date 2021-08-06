@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, FlatList, View } from "react-native";
+import { StyleSheet, FlatList, View, Alert } from "react-native";
 import moment from "moment";
 
 import RequestCardComponent from "../components/RequestCardComponent";
@@ -74,11 +74,32 @@ function ScribeReceivedScreen({ navigation }) {
       },
       {
         name: "reject",
-        action: async () => {
-          const result = await requestsApi.deleteRequest(item.id);
-          if (result.ok) {
-            callLoadListings();
-          }
+        action: () => {
+          Alert.alert("Reject", strings.request.rejectConfirm, [
+            {
+              text: "NO",
+              onPress: () => console.log("NO Pressed"),
+              style: "cancel",
+            },
+            {
+              text: "YES",
+              onPress: async () => {
+                const result = await requestsApi.deleteRequest(item.id);
+                if (result.ok) {
+                  Toast.show({
+                    type: "success",
+                    text1: strings.request.reject,
+                  });
+                  callLoadListings();
+                } else {
+                  Toast.show({
+                    type: "error",
+                    text1: strings.request.failed,
+                  });
+                }
+              },
+            },
+          ]);
         },
         color: colors.secondary,
       },

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, FlatList, View } from "react-native";
+import { StyleSheet, FlatList, View, Alert } from "react-native";
 import moment from "moment";
 
 import RequestCardComponent from "../components/RequestCardComponent";
@@ -45,22 +45,34 @@ function ScribeAcceptedScreen({ navigation }) {
       {
         color: colors.danger,
         name: "decline",
-        action: async () => {
-          const result = await requestsApi.updateRequest(item.id, {
-            requestStatus: requestStatus.REJECTED,
-          });
-          if (result.ok) {
-            Toast.show({
-              type: "success",
-              text1: strings.request.decline,
-            });
-            callLoadListings();
-          } else {
-            Toast.show({
-              type: "error",
-              text1: strings.request.failed,
-            });
-          }
+        action: () => {
+          Alert.alert("Cancel", strings.request.declineConfirm, [
+            {
+              text: "NO",
+              onPress: () => console.log("NO Pressed"),
+              style: "cancel",
+            },
+            {
+              text: "YES",
+              onPress: async () => {
+                const result = await requestsApi.updateRequest(item.id, {
+                  requestStatus: requestStatus.REJECTED,
+                });
+                if (result.ok) {
+                  Toast.show({
+                    type: "success",
+                    text1: strings.request.decline,
+                  });
+                  callLoadListings();
+                } else {
+                  Toast.show({
+                    type: "error",
+                    text1: strings.request.failed,
+                  });
+                }
+              },
+            },
+          ]);
         },
       },
     ];
