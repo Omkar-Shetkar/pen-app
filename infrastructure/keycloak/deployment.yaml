@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+  namespace: default
+  labels:
+    app: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: jboss/keycloak:14.0.0
+          env:
+            - name: KEYCLOAK_USER
+              value: "admin"
+            - name: KEYCLOAK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: keycloak-admin-password
+            - name: PROXY_ADDRESS_FORWARDING
+              value: "true"
+            - name: DB_VENDOR
+              value: "postgres"
+            - name: DB_USER
+              value: "keycloak"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: keycloak-db-password
+            - name: DB_ADDR
+              value: "postgres-service"
+            - name: DB_PORT
+              value: "5432"
+            - name: KEYCLOAK_IMPORT
+              value: "/etc/env/realm/pen-realm"
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: https
+              containerPort: 8443
+          readinessProbe:
+            httpGet:
+              path: /auth/realms/master
+              port: 8080
+          resources:
+            requests:
+              memory: "500Mi"
+              cpu: "0.5"
+            limits:
+              memory: "500Mi"
+              cpu: "0.5"
+          volumeMounts:
+            - name: keycloak-admin-password
+              mountPath: "/etc/env/secret/admin"
+              readOnly: true
+            - name: keycloak-db-password
+              mountPath: "/etc/env/secret/db"
+              readOnly: true
+            - name: keycloak-realm-pen
+              mountPath: "/etc/env/realm"
+              readOnly: true
+      volumes:
+        - name: keycloak-admin-password
+          secret:
+            secretName: keycloak-admin-password
+        - name: keycloak-db-password
+          secret:
+            secretName: keycloak-db-password
+        - name: keycloak-realm-pen
+          configMap:
+            name: keycloak-realm-pen

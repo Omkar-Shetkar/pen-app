@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: omkarshetkar/pen-backend:0.0.1
+          ports:
+            - containerPort: 8900
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "1"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+          env:
+            - name: SPRING_APPLICATION_JSON
+              valueFrom:
+                configMapKeyRef:
+                  name: spring-application-json
+                  key: application-env
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: postgres-secret
+            - name: ADMIN_CLI_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: secret
+                  name: admin-cli-secret
+            - name: BACKEND_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: secret
+                  name: backend-secret
+            - name: KEYCLOAK_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  key: server
+                  name: keycloak-server
+          volumeMounts:
+            - name: config
+              mountPath: "/etc/env/app"
+            - name: postgres-secret
+              mountPath: "/etc/env/secret/postgres"
+              readOnly: true
+            - name: admin-cli-secret
+              mountPath: "/etc/env/secret/admin-cli"
+              readOnly: true
+            - name: backend-secret
+              mountPath: "/etc/env/secret/backend"
+              readOnly: true
+            - name: keycloak-server
+              mountPath: "/etc/env/keycloak"
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: spring-application-json
+        - name: postgres-secret
+          secret:
+            secretName: postgres-secret
+        - name: admin-cli-secret
+          secret:
+            secretName: admin-cli-secret
+        - name: backend-secret
+          secret:
+            secretName: backend-secret
+        - name: keycloak-server
+          configMap:
+            name: keycloak-server

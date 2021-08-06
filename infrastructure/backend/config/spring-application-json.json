@@ -1,0 +1,22 @@
+{
+  "spring.datasource": {
+    "url": "jdbc:postgresql://postgres-service:5432/pen",
+    "username": "postgres",
+    "password": "${POSTGRES_PASSWORD}",
+    "initialization-mode": "always"
+  },
+  "spring.security": {
+    "oauth2.resourceserver.jwt.jwk-set-uri": "${KEYCLOAK_SERVER}/realms/pen/protocol/openid-connect/certs"
+  },
+  "keycloak": {
+    "server": "${KEYCLOAK_SERVER}",
+    "realm": "pen",
+    "client-id": "backend",
+    "client-secret": "${BACKEND_SECRET}",
+    "admin": {
+      "realm": "master",
+      "client-id": "admin-cli",
+      "client-secret": "${ADMIN_CLI_SECRET}"
+    }
+  }
+}
