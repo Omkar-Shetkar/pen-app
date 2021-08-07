@@ -121,7 +121,7 @@ Eg.,
   gcloud container clusters create "pen-gke-regional" \
    --region "us-west1" \
     --machine-type "e2-medium" --disk-type "pd-standard" --disk-size "100" \
-     --num-nodes "2" --node-locations "us-west1-a"
+     --num-nodes "1" --node-locations "us-west1-a,us-west1-b"
   ```
 
   - Update cloud shell with cluster details

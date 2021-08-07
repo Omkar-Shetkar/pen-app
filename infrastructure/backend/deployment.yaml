@@ -22,11 +22,11 @@ spec:
           imagePullPolicy: Always
           resources:
             requests:
-              memory: "2Gi"
-              cpu: "1"
+              memory: "1Gi"
+              cpu: "0.5"
             limits:
-              memory: "2Gi"
-              cpu: "1"
+              memory: "1Gi"
+              cpu: "0.5"
           env:
             - name: SPRING_APPLICATION_JSON
               valueFrom:
