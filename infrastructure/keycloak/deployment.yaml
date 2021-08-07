@@ -57,7 +57,7 @@ spec:
               memory: "1Gi"
               cpu: "1"
             limits:
-              memory: "1.5Gi"
+              memory: "1Gi"
               cpu: "1"
           volumeMounts:
             - name: keycloak-admin-password

@@ -25,7 +25,7 @@ spec:
               memory: "2Gi"
               cpu: "1"
             limits:
-              memory: "2.5Gi"
+              memory: "3Gi"
               cpu: "1"
           env:
             - name: SPRING_APPLICATION_JSON
