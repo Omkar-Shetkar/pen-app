@@ -8,6 +8,9 @@ import Toast from "react-native-toast-message";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import navigationTheme from "./app/navigation/navigationTheme";
 import { navigationRef } from "./app/navigation/rootNavigation";
+import logger from "./app/utility/logger";
+
+logger.start();
 
 export default function App() {
   const [user, setUser] = useState();
