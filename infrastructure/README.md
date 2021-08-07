@@ -120,8 +120,8 @@ Eg.,
   ```
   gcloud container clusters create "pen-gke-regional" \
    --region "us-west1" \
-    --machine-type "e2-standard-2" --disk-type "pd-standard" --disk-size "100" \
-     --num-nodes "1" --node-locations "us-west1-a,us-west1-b"
+    --machine-type "e2-small" --disk-type "pd-standard" --disk-size "100" \
+     --num-nodes "2" --node-locations "us-west1-a,us-west1-b"
   ```
 
   - Update cloud shell with cluster details
@@ -138,8 +138,18 @@ Eg.,
 
   `kubectl apply -f postgres/prod/storage.yaml`
 
-- Create DB and users using `./scripts/db-init.sh`. (one time)
-
 - Deploy postgres pod and service.
 
   `kubectl apply -f postgres`
+
+- Create DB and users using
+
+  `./scripts/db-init.sh`. (one time)
+
+- Deploy Keycloak and backend
+
+  `kubectl apply -f keycloak`
+
+  `kubectl apply -f backend`
+
+- Configure Keycloak for audience mapper (one time)
