@@ -120,7 +120,7 @@ Eg.,
   ```
   gcloud container clusters create "pen-gke-regional" \
    --region "us-west1" \
-    --machine-type "e2-medium" --disk-type "pd-standard" --disk-size "120" \
+    --machine-type "e2-medium" --disk-type "pd-standard" --disk-size "100" \
      --num-nodes "2" --node-locations "us-west1-a"
   ```
 
@@ -153,3 +153,5 @@ Eg.,
   `kubectl apply -f backend`
 
 - Configure Keycloak for audience mapper (one time)
+
+- Update secrets for `admin-cli` and `backend` of keycloak.
