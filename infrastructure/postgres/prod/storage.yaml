@@ -11,7 +11,7 @@ allowedTopologies:
       - key: failure-domain.beta.kubernetes.io/zone
         values:
           - us-west1-a
-          - us-west1-b
+          # - us-west1-b
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
