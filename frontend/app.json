@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "pen",
+    "name": "Pen",
     "slug": "pen",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -21,6 +21,8 @@
       }
     },
     "android": {
+      "package": "com.tantragnyana.penapp",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

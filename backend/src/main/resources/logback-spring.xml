@@ -20,13 +20,13 @@
 
             <rollingPolicy
                     class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <!-- rollover daily and when the file reaches 10 MegaBytes -->
+                <!-- rollover daily and when the file reaches 1 MegaBytes -->
                 <fileNamePattern>${LOGS}/archived/pen-logger-%d{yyyy-MM-dd}.%i.log
                 </fileNamePattern>
                 <timeBasedFileNamingAndTriggeringPolicy
                         class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                    <!-- initialized to 5 MB size for rolling to take place - we can revise later-->
-                    <maxFileSize>5MB</maxFileSize>
+                    <!-- initialized to 1 MB size for rolling to take place - we can revise later-->
+                    <maxFileSize>1MB</maxFileSize>
                 </timeBasedFileNamingAndTriggeringPolicy>
             </rollingPolicy>
         </appender>
