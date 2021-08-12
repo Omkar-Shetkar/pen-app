@@ -38,7 +38,10 @@ spec:
                   key: password
                   name: keycloak-db-password
             - name: DB_ADDR
-              value: "postgres-service"
+              valueFrom:
+                secretKeyRef:
+                  key: server
+                  name: postgres-server
             - name: DB_PORT
               value: "5432"
             - name: KEYCLOAK_IMPORT
@@ -54,12 +57,15 @@ spec:
               port: 8080
           resources:
             requests:
-              memory: "500Mi"
-              cpu: "0.4"
+              memory: "0.5Gi"
+              cpu: "1"
             limits:
-              memory: "600Mi"
-              cpu: "0.4"
+              memory: "0.5Gi"
+              cpu: "1"
           volumeMounts:
+            - name: postgres-server
+              mountPath: "/etc/env/secret/postgres-server"
+              readOnly: true
             - name: keycloak-admin-password
               mountPath: "/etc/env/secret/admin"
               readOnly: true
@@ -70,6 +76,9 @@ spec:
               mountPath: "/etc/env/realm"
               readOnly: true
       volumes:
+        - name: postgres-server
+          secret:
+            secretName: postgres-server
         - name: keycloak-admin-password
           secret:
             secretName: keycloak-admin-password
