@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, ScrollView } from "react-native";
 import * as Yup from "yup";
 import AppForm from "../components/forms/AppForm";
 import AppFormField from "../components/forms/AppFormField";
@@ -48,47 +48,49 @@ function LoginScreen(props) {
       <ActivityIndicator visible={loading} />
 
       <Screen style={styles.container}>
-        <Image
-          source={require("../assets/logo.png")}
-          style={styles.logo}
-        ></Image>
-        <AppForm
-          initialValues={{}}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-        >
-          <AppErrorMessage
-            error="Invalid mobile number or password."
-            visible={loginFailed}
-          />
-          <AppFormField
-            autoCapitalize="none"
-            autoCorrect={false}
-            icon="cellphone"
-            keyboardType="phone-pad"
-            name="mobile"
-            placeholder="Registered 10 digit mobile number"
-            textContentType="telephoneNumber"
-            accessible={true}
-            accessibilityHint={strings.login.a11y.mobile}
-          />
-          <AppFormField
-            autoCapitalize="none"
-            autoCorrect={false}
-            icon="lock"
-            name="password"
-            placeholder="Password"
-            secureTextEntry
-            textContentType="password"
-            accessible={true}
-            accessibilityHint={strings.login.a11y.password}
-          />
-          <SubmitButton
-            title="Login"
-            accessible={true}
-            accessibilityLabel={strings.login.a11y.login}
-          />
-        </AppForm>
+        <ScrollView>
+          <Image
+            source={require("../assets/logo.png")}
+            style={styles.logo}
+          ></Image>
+          <AppForm
+            initialValues={{}}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+          >
+            <AppErrorMessage
+              error="Invalid mobile number or password."
+              visible={loginFailed}
+            />
+            <AppFormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              icon="cellphone"
+              keyboardType="phone-pad"
+              name="mobile"
+              placeholder="Registered 10 digit mobile number"
+              textContentType="telephoneNumber"
+              accessible={true}
+              accessibilityHint={strings.login.a11y.mobile}
+            />
+            <AppFormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              icon="lock"
+              name="password"
+              placeholder="Password"
+              secureTextEntry
+              textContentType="password"
+              accessible={true}
+              accessibilityHint={strings.login.a11y.password}
+            />
+            <SubmitButton
+              title="Login"
+              accessible={true}
+              accessibilityLabel={strings.login.a11y.login}
+            />
+          </AppForm>
+        </ScrollView>
       </Screen>
     </>
   );
