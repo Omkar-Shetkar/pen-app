@@ -118,10 +118,7 @@ Eg.,
 - Create cluster for GKE (one time)
 
   ```
-  gcloud container clusters create "pen-gke-regional" \
-   --region "us-west1" \
-    --machine-type "e2-medium" --disk-type "pd-standard" --disk-size "100" \
-     --num-nodes "1" --node-locations "us-west1-a,us-west1-b"
+  gcloud container clusters create pen-gke --region=us-west1 --machine-type "e2-custom-4-4096" --num-nodes "1" --node-locations "us-west1-a" --enable-ip-alias --create-subnetwork name=pen-subnet,range=10.5.0.0/20 --cluster-ipv4-cidr=10.0.0.0/14  --services-ipv4-cidr=10.4.0.0/19
   ```
 
   - Update cloud shell with cluster details
@@ -134,7 +131,11 @@ Eg.,
 
 - Create all config maps and secrets using `./scripts/config.sh` (one time)
 
-- Create regionwide pv/pvc for database.
+- Create postgres Cloud SQL instance with private IP and selecting `default` network for peered VPC network.
+    - Select public IP to connect to instance. (Only when required). Disable public IP once operation is done.
+    - To connect to DB instance from cloud shell
+    
+    `gcloud sql connect <db-instance-name> --user=postgres --quiet`
 
   `kubectl apply -f postgres/prod/storage.yaml`
 

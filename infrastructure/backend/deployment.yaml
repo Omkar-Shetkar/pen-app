@@ -23,10 +23,10 @@ spec:
           resources:
             requests:
               memory: "1Gi"
-              cpu: "0.5"
+              cpu: "1.5"
             limits:
               memory: "1Gi"
-              cpu: "0.5"
+              cpu: "1.5"
           env:
             - name: SPRING_APPLICATION_JSON
               valueFrom:
@@ -38,6 +38,11 @@ spec:
                 secretKeyRef:
                   key: password
                   name: postgres-secret
+            - name: POSTGRES_SERVER
+              valueFrom:
+                secretKeyRef:
+                  key: server
+                  name: postgres-server
             - name: ADMIN_CLI_SECRET
               valueFrom:
                 secretKeyRef:
@@ -56,8 +61,11 @@ spec:
           volumeMounts:
             - name: config
               mountPath: "/etc/env/app"
+            - name: postgres-server
+              mountPath: "/etc/env/secret/postgres-server"
+              readOnly: true
             - name: postgres-secret
-              mountPath: "/etc/env/secret/postgres"
+              mountPath: "/etc/env/secret/postgres-password"
               readOnly: true
             - name: admin-cli-secret
               mountPath: "/etc/env/secret/admin-cli"
@@ -72,6 +80,9 @@ spec:
         - name: config
           configMap:
             name: spring-application-json
+        - name: postgres-server
+          secret:
+            secretName: postgres-server
         - name: postgres-secret
           secret:
             secretName: postgres-secret

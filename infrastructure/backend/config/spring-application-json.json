@@ -1,6 +1,6 @@
 {
   "spring.datasource": {
-    "url": "jdbc:postgresql://postgres-service:5432/pen",
+    "url": "jdbc:postgresql://${POSTGRES_SERVER}:5432/pen",
     "username": "postgres",
     "password": "${POSTGRES_PASSWORD}",
     "initialization-mode": "always"
