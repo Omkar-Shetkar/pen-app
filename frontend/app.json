@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Pen",
+    "description": "An app to connect Scribe with exam writing Aspirants",
     "slug": "pen",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,7 +23,7 @@
     },
     "android": {
       "package": "com.tantragnyana.penapp",
-      "versionCode": 1,
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
