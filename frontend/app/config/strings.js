@@ -50,7 +50,7 @@ const strings = {
     failed: "Request update failed!",
     accept: "Accepted the request",
     decline: "Declined the request",
-    noData: "No Data Found!",
+    noData: "No Requests Found!",
     cancelConfirm: "Do you want to cancel the request?",
     rejectConfirm: "Do you want to reject the request?",
     declineConfirm: "Do you want to decline the request?",

@@ -107,7 +107,6 @@ function ScribeReceivedScreen({ navigation }) {
   };
 
   return (
-    // TODO: Handle case when list is empty
     <Screen>
       {listing && listing.length == 0 && (
         <View style={styles.emptyContainer}>

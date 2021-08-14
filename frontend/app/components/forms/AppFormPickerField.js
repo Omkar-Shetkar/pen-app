@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     flexDirection: "row",
     flex: 1,
+    height: 50,
     marginVertical: 10,
     paddingLeft: 10,
   },
