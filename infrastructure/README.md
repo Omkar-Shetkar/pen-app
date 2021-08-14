@@ -123,7 +123,7 @@ Eg.,
 
   - Update cloud shell with cluster details
 
-    `gcloud container clusters get-credentials pen-gke-regional --region us-west1`
+    `gcloud container clusters get-credentials pen-gke --region us-west1`
 
 - git clone https://github.com/Omkar-Shetkar/pen-infrastructure.git
 
@@ -137,22 +137,27 @@ Eg.,
     
     `gcloud sql connect <db-instance-name> --user=postgres --quiet`
 
-  `kubectl apply -f postgres/prod/storage.yaml`
 
-- Deploy postgres pod and service.
+- Create DB and users using in Cloud SQL
 
-  `kubectl apply -f postgres`
 
-- Create DB and users using
-
-  `./scripts/db-init.sh`. (one time)
-
-- Deploy Keycloak and backend
+- Deploy Keycloak
 
   `kubectl apply -f keycloak`
 
-  `kubectl apply -f backend`
 
 - Configure Keycloak for audience mapper (one time)
 
 - Update secrets for `admin-cli` and `backend` of keycloak.
+    - Create load balancer service for keycloak deployment. (temporary)
+    - After configuration changes, delete the service.
+
+- Recreate config/secrets
+
+- Redeploy Keycloak with changed config (one time)
+
+- Deploy backend
+
+    `kubectl apply f backend`
+
+
