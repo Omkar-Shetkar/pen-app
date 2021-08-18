@@ -3,7 +3,7 @@
     "name": "Pen",
     "description": "An app to connect Scribe with exam writing Aspirants",
     "slug": "pen",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
     "splash": {
@@ -23,7 +23,7 @@
     },
     "android": {
       "package": "com.tantragnyana.penapp",
-      "versionCode": 4,
+      "versionCode": 5,
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
